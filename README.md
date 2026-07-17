@@ -25,7 +25,7 @@ Agents de produto ficam no **TUI nativo** (Grok/Cursor). A API **não** integra 
 dino-platform/
 ├── apps/
 │   ├── api/     # Elysia — /health, /agents/* (native verify recipes)
-│   └── web/     # TanStack Start — agents console + /runs (club UI later)
+│   └── web/     # TanStack Start — club home (Fase 1) · /dev/agents
 ├── packages/
 │   ├── shared/
 │   ├── agents-sdk/
@@ -95,7 +95,20 @@ bun run smoke:api
 
 [MIT](./LICENSE) — permissive, standard for open-source product foundations (simple reuse, commercial OK, no warranty).
 
+## Phases
+
+See **[PHASES.md](./PHASES.md)** for the full roadmap.
+
+| Phase | Status |
+|-------|--------|
+| 0 Base stack | done |
+| 1 Club shell + home | in progress / shipping |
+| 2 Auth OTP | next |
+| 3 Feed + membership | later |
+| 4 Content parity | later |
+| 5 Production cutover | later |
+
 ## Related
 
 - Live club product: [dinoclub.blog](https://dinoclub.blog)  
-- Migration notes: [MIGRATION.md](./MIGRATION.md) · [STATUS.md](./STATUS.md)
+- [PHASES.md](./PHASES.md) · [MIGRATION.md](./MIGRATION.md) · [STATUS.md](./STATUS.md)

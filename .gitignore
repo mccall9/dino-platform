@@ -16,3 +16,5 @@ coverage
 .cache
 apps/web/.output
 apps/web/dist
+
+.vercel

@@ -1,7 +1,7 @@
 # Status — dino-platform (finalize)
 
 **Data:** 2026-07-17  
-**Fase:** base de stack **fechada**. Migração do produto = **próximo ciclo**.
+**Fase:** **1 em curso** (product shell + home clube). Ver PHASES.md.
 
 ## Done
 - [x] Monorepo Bun + Turborepo  

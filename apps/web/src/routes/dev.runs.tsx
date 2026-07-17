@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { api } from "~/lib/api"
 
-export const Route = createFileRoute("/runs")({
+export const Route = createFileRoute("/dev/runs")({
   loader: async () => {
     const { data, error } = await api.agents.runs.get()
     if (error || !data) {
@@ -45,7 +45,7 @@ function RunsPage() {
       ) : data.runs.length === 0 ? (
         <p className="text-gray-500">
           Nenhuma run ainda.{" "}
-          <Link to="/" className="text-emerald-700 underline">
+          <Link to="/dev/agents" className="text-emerald-700 underline">
             Dispare um agent
           </Link>
           .
@@ -56,7 +56,7 @@ function RunsPage() {
             <li key={run.id} className="px-4 py-3">
               <div className="flex flex-wrap items-center gap-2">
                 <Link
-                  to="/agents/$id"
+                  to="/dev/agents/$id"
                   params={{ id: run.agentId }}
                   className="font-semibold text-emerald-700 hover:underline dark:text-emerald-400"
                 >

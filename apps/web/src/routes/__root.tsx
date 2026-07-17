@@ -1,11 +1,9 @@
 /// <reference types="vite/client" />
 import {
   HeadContent,
-  Link,
   Scripts,
   createRootRoute,
 } from "@tanstack/react-router"
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools"
 import * as React from "react"
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary"
 import { NotFound } from "~/components/NotFound"
@@ -21,9 +19,9 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       ...seo({
-        title: "dino-platform · Native agents console",
+        title: "dino.blog — Clube dos Curiosos",
         description:
-          "TanStack Start + Eden Treaty console for native Grok/Cursor agents (execute-capable). No ChatGPT API agents.",
+          "O Clube dos Curiosos no dino.blog: pessoas pensando em voz alta, fazendo perguntas e construindo coisas agora.",
       }),
     ],
     links: [
@@ -41,7 +39,17 @@ export const Route = createRootRoute({
         href: "https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap",
       },
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico" },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        href: "/assets/favicon-dino-32.png",
+      },
+      {
+        rel: "apple-touch-icon",
+        sizes: "180x180",
+        href: "/assets/favicon-dino-180.png",
+      },
     ],
   }),
   errorComponent: DefaultCatchBoundary,
@@ -55,37 +63,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="min-h-screen antialiased">
-        <header className="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-          <div className="mx-auto flex max-w-5xl items-center gap-6 px-4 py-3">
-            <Link
-              to="/"
-              className="text-lg font-semibold tracking-tight text-emerald-700 dark:text-emerald-400"
-            >
-              dino-platform
-            </Link>
-            <nav className="flex gap-4 text-sm text-gray-600 dark:text-gray-300">
-              <Link
-                to="/"
-                activeProps={{ className: "font-semibold text-gray-900 dark:text-white" }}
-                activeOptions={{ exact: true }}
-              >
-                Agents
-              </Link>
-              <Link
-                to="/runs"
-                activeProps={{ className: "font-semibold text-gray-900 dark:text-white" }}
-              >
-                Runs
-              </Link>
-            </nav>
-            <span className="ml-auto rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200">
-              runtime: native · execute on
-            </span>
-          </div>
-        </header>
-        <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>
-        <TanStackRouterDevtools position="bottom-right" />
+      <body>
+        <a
+          href="#conteudo"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-50 focus:rounded-lg focus:bg-[var(--ink)] focus:px-4 focus:py-2 focus:text-white"
+        >
+          Pular para o conteúdo
+        </a>
+        {children}
         <Scripts />
       </body>
     </html>
