@@ -128,6 +128,16 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     status: "local",
     install: "Já em .agents/skills/brand-guidelines",
   },
+  {
+    id: "designer-skills",
+    name: "Designer Skills (Julian)",
+    description:
+      "Pack de design: design-brief, design-flow, design-review, design-tokens, frontend-design, IA, grill-me, brief-to-tasks.",
+    category: "designers",
+    url: "https://github.com/julianoczkowski/designer-skills",
+    status: "local",
+    install: "npx skills add julianoczkowski/designer-skills → .agents/skills/",
+  },
 
   // —— Marketing ——
   {
