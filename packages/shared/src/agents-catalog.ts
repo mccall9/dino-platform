@@ -17,8 +17,7 @@ export const AGENTS_CATALOG: AgentCatalogEntry[] = [
   {
     id: "feed-designer",
     name: "Feed Designer",
-    description:
-      "UI/UX da página /feed (Conversas). Markup e CSS feed; sem auth/Supabase.",
+    description: "Layout e UI da página de conversas do clube.",
     runtime: "native",
     capabilities: ["read", "write", "execute"],
     sourcePath: ".grok/agents/feed-designer.md",
@@ -27,7 +26,7 @@ export const AGENTS_CATALOG: AgentCatalogEntry[] = [
   {
     id: "home-designer",
     name: "Home Designer",
-    description: "Visual da home clube `/` — index.html e CSS club-*.",
+    description: "Visual da home do Clube dos Curiosos.",
     runtime: "native",
     capabilities: ["read", "write", "execute"],
     sourcePath: ".grok/agents/home-designer.md",
@@ -36,7 +35,7 @@ export const AGENTS_CATALOG: AgentCatalogEntry[] = [
   {
     id: "product-shell",
     name: "Product Shell",
-    description: "Nav, rotas, CTAs, join→feed, vercel, gates de membership.",
+    description: "Navegação, rotas, CTAs e gates de membership.",
     runtime: "native",
     capabilities: ["read", "write", "execute"],
     sourcePath: ".grok/agents/product-shell.md",
@@ -45,7 +44,7 @@ export const AGENTS_CATALOG: AgentCatalogEntry[] = [
   {
     id: "supabase-guard",
     name: "Supabase Guard",
-    description: "DB, RLS, RPC, Storage, migrations e services de dados.",
+    description: "Banco, RLS, storage e migrations com segurança.",
     runtime: "native",
     capabilities: ["read", "write", "execute"],
     sourcePath: ".grok/agents/supabase-guard.md",
@@ -54,8 +53,7 @@ export const AGENTS_CATALOG: AgentCatalogEntry[] = [
   {
     id: "ship-check",
     name: "Ship Check",
-    description:
-      "Pré-deploy: Playwright smoke, SEO privado, vercel — com execução de testes.",
+    description: "Smoke de pré-deploy e checklist antes de ir ao ar.",
     runtime: "native",
     capabilities: ["read", "write", "execute"],
     sourcePath: ".grok/agents/ship-check.md",
@@ -64,7 +62,7 @@ export const AGENTS_CATALOG: AgentCatalogEntry[] = [
   {
     id: "content-builder",
     name: "Content Builder",
-    description: "Posts, ideias, copy editorial (CONTENT_IDEAS, ideias, post).",
+    description: "Posts, ideias e copy editorial do clube.",
     runtime: "native",
     capabilities: ["read", "write", "execute"],
     sourcePath: ".grok/agents/content-builder.md",
@@ -73,4 +71,4 @@ export const AGENTS_CATALOG: AgentCatalogEntry[] = [
 ]
 
 export const AGENTS_CATALOG_NOTE =
-  "Agents nativos (Grok/Cursor). Na Vercel só o front sobe — catálogo embutido. Runs/execute pedem API local (apps/api)."
+  "Agents nativos para o produto dino.blog. Execução de recipes fica no ambiente local."

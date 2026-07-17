@@ -51,7 +51,7 @@ function AgentsHome() {
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero-eyebrow">
           <span className="hero-eyebrow-dot" />
-          Native agents · Bun · Elysia · Start
+          Agents nativos · Bun · Elysia · Start
         </div>
         <h1 id="hero-title" className="hero-title">
           Your agents.
@@ -59,9 +59,8 @@ function AgentsHome() {
           <span className="hero-accent">Organized.</span>
         </h1>
         <p className="hero-lead">
-          Console tipado via Eden Treaty. Dispare agents nativos (Grok/Cursor),
-          inventarie skills e rode recipes — sem misturar com o site do
-          dino.blog.
+          Console para agents nativos, skills e recipes — separado do site do
+          clube em dino.blog.
         </p>
         <div className="hero-actions">
           <Link to="/skills" className="btn btn-primary">
@@ -72,9 +71,7 @@ function AgentsHome() {
           </Link>
         </div>
         <p className="hero-hint">
-          {data.fromApi
-            ? `API live · ${data.apiUrl}`
-            : "Catálogo embutido · execute local com apps/api"}
+          {data.fromApi ? "API conectada" : "Pronto para explorar"}
         </p>
       </section>
 
@@ -87,9 +84,9 @@ function AgentsHome() {
             <span className="g" />
           </div>
           <strong>dino-platform</strong>
-          <span className="ml-2 hidden sm:inline">— Agents console</span>
+          <span className="ml-2 hidden sm:inline">— console de agents</span>
         </div>
-        <span>{data.fromApi ? "api connected" : "static catalog"}</span>
+        <span>{data.fromApi ? "ao vivo" : "catálogo"}</span>
       </div>
 
       {/* Product: agent grid */}
@@ -115,17 +112,13 @@ function AgentsHome() {
                 <div className="flex items-start justify-between gap-2">
                   <h2 className="card-title">{agent.name}</h2>
                   <div className="flex shrink-0 flex-col items-end gap-1">
-                    <span className="badge">{agent.runtime}</span>
+                    <span className="badge badge-green">nativo</span>
                     {agent.hasExecuteRecipe ? (
-                      <span className="badge badge-amber">shell</span>
+                      <span className="badge badge-amber">recipe</span>
                     ) : null}
                   </div>
                 </div>
                 <p className="card-desc">{agent.description}</p>
-                <p className="card-meta">
-                  caps: {agent.capabilities.join(" · ")}
-                </p>
-                <p className="card-meta font-mono">{agent.sourcePath}</p>
                 <p className="card-link">abrir agent →</p>
               </Link>
             </li>
