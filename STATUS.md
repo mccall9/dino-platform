@@ -14,12 +14,14 @@
 - [x] `DINO_PRODUCT_ROOT` → build in public  
 - [x] README + MIGRATION.md + smoke-api  
 - [x] Git repo inicial  
+- [x] **GitHub** https://github.com/mccall9/dino-platform (MIT)  
+- [x] **Vercel prod** https://dino-platform.vercel.app  
 
 ## Not done (de propósito)
 - [ ] Portar dino.blog de `build in public`  
 - [ ] Rotas de clube no Start  
 - [ ] Persistência de runs (SQLite)  
-- [ ] Deploy produção do monorepo  
+- [ ] API Elysia hospedada em produção (web na Vercel; API ainda local / host Bun)  
 
 ## Como subir
 ```bash
