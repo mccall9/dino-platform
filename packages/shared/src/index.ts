@@ -106,3 +106,8 @@ export type SkillsListResponse = {
 }
 
 export { SKILLS_CATALOG, SKILLS_CATALOG_NOTE } from "./skills-catalog"
+export {
+  AGENTS_CATALOG,
+  AGENTS_CATALOG_NOTE,
+  type AgentCatalogEntry,
+} from "./agents-catalog"

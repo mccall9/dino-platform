@@ -1,27 +1,43 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
+import {
+  AGENTS_CATALOG,
+  AGENTS_CATALOG_NOTE,
+  type AgentCatalogEntry,
+} from "@dino/shared"
 import { api, getApiBaseUrl } from "~/lib/api"
 
 export const Route = createFileRoute("/")({
   loader: async () => {
     const { data, error } = await api.agents.get()
-    if (error || !data) {
+    if (error || !data?.agents?.length) {
+      // Production (Vercel) often has no API — show catalog, not a red error
       return {
-        ok: false as const,
+        ok: true as const,
+        fromApi: false as const,
         apiUrl: getApiBaseUrl(),
-        message:
-          error?.value && typeof error.value === "object"
-            ? JSON.stringify(error.value)
-            : "API offline. Suba apps/api em :3001 (local).",
+        note: AGENTS_CATALOG_NOTE,
+        productRoot: null as string | null,
+        agents: AGENTS_CATALOG as AgentCatalogEntry[],
       }
     }
     return {
       ok: true as const,
+      fromApi: true as const,
       apiUrl: getApiBaseUrl(),
-      runtime: data.runtime,
       note: data.note,
       productRoot:
         "productRoot" in data ? (data.productRoot as string | null) : null,
-      agents: data.agents,
+      agents: data.agents.map((a) => ({
+        id: a.id,
+        name: a.name,
+        description: a.description,
+        runtime: a.runtime as "native",
+        capabilities: a.capabilities as AgentCatalogEntry["capabilities"],
+        sourcePath: a.sourcePath,
+        hasExecuteRecipe: Boolean(
+          "hasExecuteRecipe" in a && a.hasExecuteRecipe,
+        ),
+      })),
     }
   },
   component: AgentsHome,
@@ -45,47 +61,45 @@ function AgentsHome() {
           </strong>{" "}
           — o clube continua no repositório estático / dinoclub.blog.
         </p>
-        <p className="page-meta">API: {data.apiUrl}</p>
-        {data.ok && data.productRoot ? (
+        <p className="page-meta">
+          API: {data.apiUrl}
+          {data.fromApi ? " · live" : " · catálogo embutido"}
+        </p>
+        {data.productRoot ? (
           <p className="page-meta font-mono">
             DINO_PRODUCT_ROOT: {data.productRoot}
           </p>
         ) : null}
       </div>
 
-      {!data.ok ? (
-        <div className="alert alert-error">{data.message}</div>
-      ) : (
-        <>
-          <p className="page-note">{data.note}</p>
-          <ul className="card-grid">
-            {data.agents.map((agent) => (
-              <li key={agent.id}>
-                <Link
-                  to="/agents/$id"
-                  params={{ id: agent.id }}
-                  className="surface-card"
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <h2 className="card-title">{agent.name}</h2>
-                    <div className="flex shrink-0 flex-col items-end gap-1">
-                      <span className="badge">{agent.runtime}</span>
-                      {"hasExecuteRecipe" in agent && agent.hasExecuteRecipe ? (
-                        <span className="badge badge-amber">shell recipe</span>
-                      ) : null}
-                    </div>
-                  </div>
-                  <p className="card-desc">{agent.description}</p>
-                  <p className="card-meta">
-                    caps: {agent.capabilities.join(" · ")}
-                  </p>
-                  <p className="card-meta font-mono">{agent.sourcePath}</p>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
+      <p className="page-note">{data.note}</p>
+
+      <ul className="card-grid">
+        {data.agents.map((agent) => (
+          <li key={agent.id}>
+            <Link
+              to="/agents/$id"
+              params={{ id: agent.id }}
+              className="surface-card"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <h2 className="card-title">{agent.name}</h2>
+                <div className="flex shrink-0 flex-col items-end gap-1">
+                  <span className="badge">{agent.runtime}</span>
+                  {agent.hasExecuteRecipe ? (
+                    <span className="badge badge-amber">shell recipe</span>
+                  ) : null}
+                </div>
+              </div>
+              <p className="card-desc">{agent.description}</p>
+              <p className="card-meta">
+                caps: {agent.capabilities.join(" · ")}
+              </p>
+              <p className="card-meta font-mono">{agent.sourcePath}</p>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

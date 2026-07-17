@@ -49,7 +49,21 @@ function AgentDetail() {
         <Link to="/" className="card-link">
           ← Agents
         </Link>
-        <div className="alert alert-error">{data.message}</div>
+        <div className="surface-card">
+          <h1 className="page-title">{data.id}</h1>
+          <p className="page-lead">
+            Detalhe e execute só funcionam com a API local (
+            <code className="rounded-md bg-[var(--soft)] px-1.5 py-0.5 text-[0.85em]">
+              bun run dev:api
+            </code>{" "}
+            em :3001). Na Vercel o front é estático — use o catálogo em{" "}
+            <Link to="/" className="font-semibold text-[var(--green-dark)]">
+              Agents
+            </Link>
+            .
+          </p>
+          <p className="page-meta">{data.message}</p>
+        </div>
       </div>
     )
   }

@@ -36,7 +36,17 @@ function RunsPage() {
       </div>
 
       {!data.ok ? (
-        <div className="alert alert-error">{data.message}</div>
+        <div className="surface-card">
+          <p className="page-lead">
+            Runs ficam na API em memória. Em produção na Vercel não há API —
+            rode localmente com{" "}
+            <code className="rounded-md bg-[var(--soft)] px-1.5 py-0.5 text-[0.85em]">
+              bun run dev:api
+            </code>
+            .
+          </p>
+          <p className="page-meta">{data.message}</p>
+        </div>
       ) : data.runs.length === 0 ? (
         <p className="page-meta">
           Nenhuma run ainda.{" "}

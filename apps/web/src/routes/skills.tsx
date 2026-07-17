@@ -31,15 +31,13 @@ export const Route = createFileRoute("/skills")({
   loader: async () => {
     const { data, error } = await api.skills.get()
     if (error || !data?.skills?.length) {
-      // Offline / empty: still show catalog (value first — marclou/RCD)
+      // Vercel ships web only — embedded catalog is the normal production path
       return {
         ok: true as const,
         fromApi: false as const,
         apiUrl: getApiBaseUrl(),
         note: SKILLS_CATALOG_NOTE,
         skills: SKILLS_CATALOG as SkillCatalogEntry[],
-        warning:
-          "API offline ou vazia — mostrando catálogo embutido. Suba apps/api em :3001 para o Treaty live.",
       }
     }
     return {
@@ -48,7 +46,6 @@ export const Route = createFileRoute("/skills")({
       apiUrl: getApiBaseUrl(),
       note: data.note,
       skills: data.skills as SkillCatalogEntry[],
-      warning: null as string | null,
     }
   },
   component: SkillsPage,
@@ -84,16 +81,11 @@ function SkillsPage() {
           inventário claro (branco · verde · uma ação por card).
         </p>
         <p className="page-meta">
-          API: {data.apiUrl}
-          {data.fromApi ? " · live" : " · fallback embutido"}
+          {data.fromApi ? `API live · ${data.apiUrl}` : "catálogo embutido"}
         </p>
       </div>
 
-      {data.warning ? (
-        <div className="alert alert-ok">{data.warning}</div>
-      ) : (
-        <p className="page-note">{data.note}</p>
-      )}
+      <p className="page-note">{data.note}</p>
 
       <div className="chips" role="list" aria-label="Filtrar por categoria">
         {(
