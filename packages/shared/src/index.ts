@@ -71,3 +71,38 @@ export type HealthResponse = {
   productRoot?: string | null
   agentsNote: string
 }
+
+/** Install / availability status for skills catalog (platform console). */
+export type SkillStatus =
+  | "local"
+  | "installable"
+  | "plugin-only"
+  | "mcp-runtime"
+
+export type SkillCategory =
+  | "developers"
+  | "designers"
+  | "marketing"
+  | "social"
+  | "finance"
+  | "small-business"
+  | "legal"
+
+export type SkillCatalogEntry = {
+  id: string
+  name: string
+  description: string
+  category: SkillCategory
+  /** Primary public link (GitHub, Claude plugin, docs). */
+  url: string
+  status: SkillStatus
+  /** Short install / load hint. */
+  install?: string
+}
+
+export type SkillsListResponse = {
+  note: string
+  skills: SkillCatalogEntry[]
+}
+
+export { SKILLS_CATALOG, SKILLS_CATALOG_NOTE } from "./skills-catalog"

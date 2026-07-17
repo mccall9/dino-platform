@@ -75,6 +75,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                 Agents
               </Link>
               <Link
+                to="/skills"
+                activeProps={{
+                  className: "font-semibold text-gray-900 dark:text-white",
+                }}
+              >
+                Skills
+              </Link>
+              <Link
                 to="/runs"
                 activeProps={{
                   className: "font-semibold text-gray-900 dark:text-white",

@@ -2,6 +2,7 @@ import { Elysia } from "elysia"
 import { cors } from "@elysiajs/cors"
 import { resolveProductCwd } from "@dino/agents-sdk"
 import { agentsRoutes } from "./routes/agents"
+import { skillsRoutes } from "./routes/skills"
 import type { HealthResponse } from "@dino/shared"
 
 /**
@@ -24,5 +25,6 @@ export const app = new Elysia()
       "Native Grok/Cursor agents only. execute=shell recipes (e.g. ship-check npm test). No ChatGPT API.",
   }))
   .use(agentsRoutes)
+  .use(skillsRoutes)
 
 export type App = typeof app
