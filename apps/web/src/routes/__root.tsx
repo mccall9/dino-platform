@@ -4,6 +4,7 @@ import {
   Link,
   Scripts,
   createRootRoute,
+  useRouterState,
 } from "@tanstack/react-router"
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools"
 import * as React from "react"
@@ -38,7 +39,7 @@ export const Route = createRootRoute({
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap",
       },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico" },
@@ -49,54 +50,50 @@ export const Route = createRootRoute({
   shellComponent: RootDocument,
 })
 
+function NavLink({
+  to,
+  children,
+  exact,
+}: {
+  to: "/" | "/skills" | "/runs"
+  children: React.ReactNode
+  exact?: boolean
+}) {
+  const pathname = useRouterState({ select: (s) => s.location.pathname })
+  const active = exact
+    ? pathname === to
+    : pathname === to || pathname.startsWith(`${to}/`)
+
+  return (
+    <Link to={to} data-active={active ? "true" : "false"}>
+      {children}
+    </Link>
+  )
+}
+
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
       <head>
         <HeadContent />
       </head>
-      <body className="min-h-screen antialiased">
-        <header className="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-          <div className="mx-auto flex max-w-5xl items-center gap-6 px-4 py-3">
-            <Link
-              to="/"
-              className="text-lg font-semibold tracking-tight text-emerald-700 dark:text-emerald-400"
-            >
+      <body>
+        <header className="platform-header">
+          <div className="platform-header-inner">
+            <Link to="/" className="platform-brand">
               dino-platform
             </Link>
-            <nav className="flex gap-4 text-sm text-gray-600 dark:text-gray-300">
-              <Link
-                to="/"
-                activeProps={{
-                  className: "font-semibold text-gray-900 dark:text-white",
-                }}
-                activeOptions={{ exact: true }}
-              >
+            <nav className="platform-nav" aria-label="Principal">
+              <NavLink to="/" exact>
                 Agents
-              </Link>
-              <Link
-                to="/skills"
-                activeProps={{
-                  className: "font-semibold text-gray-900 dark:text-white",
-                }}
-              >
-                Skills
-              </Link>
-              <Link
-                to="/runs"
-                activeProps={{
-                  className: "font-semibold text-gray-900 dark:text-white",
-                }}
-              >
-                Runs
-              </Link>
+              </NavLink>
+              <NavLink to="/skills">Skills</NavLink>
+              <NavLink to="/runs">Runs</NavLink>
             </nav>
-            <span className="ml-auto rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200">
-              standalone · not dino.blog
-            </span>
+            <span className="platform-pill">standalone · not dino.blog</span>
           </div>
         </header>
-        <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>
+        <main className="platform-main">{children}</main>
         <TanStackRouterDevtools position="bottom-right" />
         <Scripts />
       </body>

@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@dino/api": "workspace:*",
+    "@dino/shared": "workspace:*",
     "@elysiajs/eden": "^1.4.8",
     "@tanstack/react-router": "^1.170.18",
     "@tanstack/react-router-devtools": "^1.167.0",

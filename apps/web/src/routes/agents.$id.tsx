@@ -46,10 +46,10 @@ function AgentDetail() {
   if (!data.ok) {
     return (
       <div className="space-y-4">
-        <Link to="/" className="text-sm text-emerald-700">
+        <Link to="/" className="card-link">
           ← Agents
         </Link>
-        <p className="text-red-600">{data.message}</p>
+        <div className="alert alert-error">{data.message}</div>
       </div>
     )
   }
@@ -71,9 +71,7 @@ function AgentDetail() {
         execute,
       })
       if (error || !run || "error" in run) {
-        setErr(
-          run && "error" in run ? String(run.error) : "Run failed",
-        )
+        setErr(run && "error" in run ? String(run.error) : "Run failed")
         return
       }
       setMeta({
@@ -98,50 +96,34 @@ function AgentDetail() {
 
   return (
     <div className="space-y-6">
-      <Link
-        to="/"
-        className="text-sm font-medium text-emerald-700 hover:underline dark:text-emerald-400"
-      >
+      <Link to="/" className="card-link">
         ← Agents
       </Link>
 
       <div>
         <div className="flex flex-wrap items-center gap-2">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            {agent.name}
-          </h1>
-          <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200">
-            {agent.runtime}
-          </span>
+          <h1 className="page-title">{agent.name}</h1>
+          <span className="badge badge-green">{agent.runtime}</span>
           {agent.capabilities.map((c) => (
-            <span
-              key={c}
-              className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-700 dark:bg-gray-800 dark:text-gray-300"
-            >
+            <span key={c} className="badge">
               {c}
             </span>
           ))}
           {hasRecipe ? (
-            <span className="rounded bg-amber-50 px-2 py-0.5 text-xs text-amber-900 dark:bg-amber-950 dark:text-amber-100">
+            <span className="badge badge-amber">
               recipe:{" "}
               {"executeLabel" in agent ? String(agent.executeLabel) : "shell"}
             </span>
           ) : null}
         </div>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
-          {agent.description}
-        </p>
-        <p className="mt-1 font-mono text-xs text-gray-500">
-          {agent.sourcePath}
-        </p>
+        <p className="page-lead">{agent.description}</p>
+        <p className="page-meta font-mono">{agent.sourcePath}</p>
       </div>
 
       {"scope" in agent && Array.isArray(agent.scope) ? (
-        <div>
-          <h2 className="text-sm font-semibold text-gray-800 dark:text-gray-200">
-            Scope
-          </h2>
-          <ul className="mt-1 list-inside list-disc text-sm text-gray-600 dark:text-gray-400">
+        <div className="surface-card">
+          <h2 className="card-title">Scope</h2>
+          <ul className="card-desc mt-2 list-inside list-disc">
             {agent.scope.map((s: string) => (
               <li key={s}>{s}</li>
             ))}
@@ -149,11 +131,11 @@ function AgentDetail() {
         </div>
       ) : null}
 
-      <form onSubmit={onRun} className="space-y-3">
-        <label className="block text-sm font-medium text-gray-800 dark:text-gray-200">
+      <form onSubmit={onRun} className="surface-card space-y-3">
+        <label className="block text-sm font-semibold text-[var(--ink)]">
           Task (native agent — never ChatGPT API)
           <textarea
-            className="mt-1 w-full rounded-lg border border-gray-300 bg-white p-3 text-sm dark:border-gray-700 dark:bg-gray-900"
+            className="textarea mt-1"
             rows={4}
             required
             value={prompt}
@@ -165,16 +147,16 @@ function AgentDetail() {
             }
           />
         </label>
-        <label className="block text-sm font-medium text-gray-800 dark:text-gray-200">
+        <label className="block text-sm font-semibold text-[var(--ink)]">
           Product cwd (dino.blog)
           <input
-            className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-xs dark:border-gray-700 dark:bg-gray-900"
+            className="input mt-1 font-mono text-xs"
             value={cwd}
             onChange={(e) => setCwd(e.target.value)}
             placeholder="C:\Users\…\Desktop\build in public"
           />
         </label>
-        <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+        <label className="flex items-center gap-2 text-sm text-[var(--muted)]">
           <input
             type="checkbox"
             checked={execute}
@@ -189,7 +171,7 @@ function AgentDetail() {
         <button
           type="submit"
           disabled={busy || !prompt.trim()}
-          className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50"
+          className="btn btn-primary disabled:opacity-50"
         >
           {busy
             ? execute && hasRecipe
@@ -202,44 +184,36 @@ function AgentDetail() {
       </form>
 
       {meta ? (
-        <div className="flex flex-wrap gap-2 text-xs">
-          <span className="rounded bg-gray-100 px-2 py-1 dark:bg-gray-800">
-            status: {meta.status}
-          </span>
-          <span className="rounded bg-gray-100 px-2 py-1 dark:bg-gray-800">
+        <div className="flex flex-wrap gap-2">
+          <span className="badge">status: {meta.status}</span>
+          <span className="badge">
             executed: {String(meta.executed ?? false)}
           </span>
           {typeof meta.exitCode === "number" ? (
             <span
-              className={`rounded px-2 py-1 ${
-                meta.exitCode === 0
-                  ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-100"
-                  : "bg-red-100 text-red-900 dark:bg-red-950 dark:text-red-100"
-              }`}
+              className={
+                meta.exitCode === 0 ? "badge badge-green" : "badge badge-amber"
+              }
             >
               exit: {meta.exitCode}
             </span>
           ) : null}
           {meta.runId ? (
-            <span className="rounded bg-gray-100 px-2 py-1 font-mono dark:bg-gray-800">
-              {meta.runId}
-            </span>
+            <span className="badge font-mono">{meta.runId}</span>
           ) : null}
         </div>
       ) : null}
 
       {err ? (
-        <pre className="overflow-x-auto rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-red-950 dark:text-red-200">
+        <pre className="alert alert-error overflow-x-auto whitespace-pre-wrap text-sm">
           {err}
         </pre>
       ) : null}
 
       {result ? (
-        <article className="rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
-          <h2 className="mb-2 text-sm font-semibold text-gray-800 dark:text-gray-200">
-            Report
-          </h2>
-          <pre className="max-h-[32rem] overflow-auto whitespace-pre-wrap text-sm text-gray-700 dark:text-gray-300">
+        <article className="surface-card">
+          <h2 className="card-title">Report</h2>
+          <pre className="card-desc mt-2 max-h-[32rem] overflow-auto whitespace-pre-wrap">
             {result}
           </pre>
         </article>
