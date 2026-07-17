@@ -72,13 +72,14 @@ function SkillsPage() {
 
   return (
     <div className="space-y-8">
-      <div>
+      <div className="page-head">
+        <div className="hero-eyebrow">
+          <span className="hero-eyebrow-dot" />
+          Inventário
+        </div>
         <h1 className="page-title">Skills</h1>
         <p className="page-lead">
-          Packs instaláveis com{" "}
-          <strong className="font-semibold text-[var(--ink)]">link</strong> e
-          o que cada um faz — mesmo padrão dos cards de Agents, foco em
-          inventário claro (branco · verde · uma ação por card).
+          Packs instaláveis com link e o que cada um faz — uma ação por card.
         </p>
         <p className="page-meta">
           {data.fromApi ? `API live · ${data.apiUrl}` : "catálogo embutido"}
@@ -124,7 +125,7 @@ function SkillsPage() {
               href={skill.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="surface-card"
+              className="surface-card liquid-glass"
             >
               <div className="flex items-start justify-between gap-2">
                 <h2 className="card-title">{skill.name}</h2>

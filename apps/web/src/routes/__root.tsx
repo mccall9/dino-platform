@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-router"
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools"
 import * as React from "react"
+import { BrandMark } from "~/components/BrandMark"
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary"
 import { NotFound } from "~/components/NotFound"
 import appCss from "~/styles/app.css?url"
@@ -28,10 +29,7 @@ export const Route = createRootRoute({
       }),
     ],
     links: [
-      {
-        rel: "preconnect",
-        href: "https://fonts.googleapis.com",
-      },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
       {
         rel: "preconnect",
         href: "https://fonts.gstatic.com",
@@ -39,7 +37,7 @@ export const Route = createRootRoute({
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap",
       },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico" },
@@ -78,22 +76,31 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <header className="platform-header">
-          <div className="platform-header-inner">
-            <Link to="/" className="platform-brand">
-              dino-platform
-            </Link>
-            <nav className="platform-nav" aria-label="Principal">
-              <NavLink to="/" exact>
-                Agents
-              </NavLink>
-              <NavLink to="/skills">Skills</NavLink>
-              <NavLink to="/runs">Runs</NavLink>
-            </nav>
-            <span className="platform-pill">standalone · not dino.blog</span>
+        <div className="platform-shell">
+          <div className="platform-ambient" aria-hidden="true" />
+          <div className="guide-line guide-line-l" aria-hidden="true" />
+          <div className="guide-line guide-line-r" aria-hidden="true" />
+
+          <div className="platform-content">
+            <header className="platform-header">
+              <div className="platform-header-inner">
+                <Link to="/" className="platform-brand">
+                  <BrandMark />
+                  <span>dino-platform</span>
+                </Link>
+                <nav className="platform-nav" aria-label="Principal">
+                  <NavLink to="/" exact>
+                    Agents
+                  </NavLink>
+                  <NavLink to="/skills">Skills</NavLink>
+                  <NavLink to="/runs">Runs</NavLink>
+                </nav>
+                <span className="platform-pill">standalone · not dino.blog</span>
+              </div>
+            </header>
+            <main className="platform-main">{children}</main>
           </div>
-        </header>
-        <main className="platform-main">{children}</main>
+        </div>
         <TanStackRouterDevtools position="bottom-right" />
         <Scripts />
       </body>

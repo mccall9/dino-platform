@@ -1,0 +1,14 @@
+/** Abstract 4-quadrant mark — light green brand for dino-platform */
+export function BrandMark({ className = "platform-brand-mark" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 256 256"
+      fill="currentColor"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M 0 128 C 70.692 128 128 185.308 128 256 L 64 256 C 64 220.654 35.346 192 0 192 Z M 256 192 C 220.654 192 192 220.654 192 256 L 128 256 C 128 185.308 185.308 128 256 128 Z M 128 0 C 128 70.692 70.692 128 0 128 L 0 64 C 35.346 64 64 35.346 64 0 Z M 192 0 C 192 35.346 220.654 64 256 64 L 256 128 C 185.308 128 128 70.692 128 0 Z" />
+    </svg>
+  )
+}
