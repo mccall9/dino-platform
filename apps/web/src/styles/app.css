@@ -22,6 +22,8 @@
   html,
   body {
     @apply text-gray-900 bg-gray-50 dark:bg-gray-950 dark:text-gray-200;
+    font-family: "Arvo", ui-serif, Georgia, Cambria, "Times New Roman", Times,
+      serif;
   }
 
   .using-mouse * {
