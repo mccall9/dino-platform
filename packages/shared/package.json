@@ -1,0 +1,21 @@
+{
+  "name": "@dino/shared",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "dev": "echo shared",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --declaration --emitDeclarationOnly --outDir dist || true",
+    "lint": "echo ok"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
