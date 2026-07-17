@@ -1,71 +1,31 @@
-# Fases — migração dino.blog → dino-platform
+# dino-platform — escopo (standalone)
 
-**Produção ao vivo** continua em `build in public` / dinoclub.blog até cutover.  
-Este monorepo recebe o produto por fases.
+Este monorepo **não é o dino.blog**.  
+Não misturar UI, rotas, auth, feed ou cutover de produção do clube.
 
----
+| Repo / pasta | Papel |
+|--------------|--------|
+| `build in public` / dinoclub.blog | **Produto** clube (produção). Fonte: **DM Sans** (como no site online). |
+| `dino-platform` | **Playground de stack** + console de agents nativos (Arvo ok aqui). |
+| Futuro repo de **stack test** | Clone/migração experimental do dino.blog com Bun/Elysia/Start — **outro repo**, Vercel à parte. Agents + skills guiam esse teste. |
 
-## Fase 0 — Base de stack ✅
+## O que este repo faz
 
-- Bun + Turborepo + Elysia + Eden Treaty + TanStack Start + Tailwind  
-- GitHub + Vercel web  
-- Agents nativos / recipes (dev)  
-- Docs: README, MIGRATION, LICENSE MIT  
+1. Validar Bun · Turborepo · Elysia · Eden Treaty · TanStack Start · Tailwind  
+2. Catálogo `/agents` + recipes shell nativos (sem ChatGPT API)  
+3. Deploy web na Vercel: https://dino-platform.vercel.app  
 
----
+## O que este repo NÃO faz
 
-## Fase 1 — Product shell + home clube (em curso)
+- Não vira home do Clube dos Curiosos  
+- Não altera fonte/tokens do dino.blog em produção  
+- Não faz cutover de DNS do clube  
 
-**Goal:** `/` no monorepo parece o clube (marketing shell), não o console de agents.
+## Próximo (fora deste repo)
 
-| Entrega | Detalhe |
-|---------|---------|
-| Shell | Header brand dino.blog, nav Ideias · Sobre · CTA |
-| Home | Hero clube + seções estáticas (live/featured placeholders) |
-| Assets | logo + hero no `public/assets` |
-| Tokens | ink / green / paper (paridade visual) |
-| Dev tools | Console agents em `/dev/agents` (não é homepage) |
-| Rotas stub | `/ideias`, `/about`, `/login` (placeholder até Fase 2–3) |
+Quando for o **teste de troca de stack do dino.blog**:
 
-**Done means:** deploy Vercel com home de clube em Arvo + tokens; produção estática intocada.
-
----
-
-## Fase 2 — Auth OTP
-
-- Supabase Auth no Start (ou BFF Elysia)  
-- `/login` OTP 6–8 dígitos, `?next=` seguro  
-- Session + CTA M1 (Entrar / Entrar no clube / Perfil)  
-
----
-
-## Fase 3 — Membership + feed
-
-- Join/leave Clube dos Curiosos  
-- `/feed` membros only (hard gate)  
-- Conversas, likes, avatars (RLS)  
-
----
-
-## Fase 4 — Conteúdo + paridade
-
-- `/ideias`, `/about`, `/post`, detalhe clube  
-- Redirects de `vercel.json`  
-- Playwright smoke apontando monorepo  
-
----
-
-## Fase 5 — Cutover produção
-
-- Preview parity check  
-- DNS / Vercel project = monorepo  
-- API Elysia se necessário em host Bun  
-- Aposentar HTML estático gradualmente  
-
----
-
-## Fora de fase (não bloquear)
-
-- Redesign deep do feed  
-- ChatGPT agents na API  
-- Marketplace de comunidades  
+1. Criar **novo repositório** (ex. `dino-blog-stack-test`)  
+2. Portar shell do clube **mantendo DM Sans + identidade visual do site online**  
+3. Subir na Vercel (preview)  
+4. Orquestrar com **agents** (`.grok/agents`) e **skills** do monorepo do produto  

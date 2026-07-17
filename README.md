@@ -2,48 +2,46 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](./LICENSE)
 
-Monorepo da **próxima stack** do [dino.blog](https://dinoclub.blog) / dinoclub.blog.
+**Standalone** monorepo — stack playground + native agents console.
 
-> **Produção hoje:** site estático + Supabase em outro repositório.  
-> **Este repo:** Bun · Turborepo · Elysia · Eden Treaty · TanStack Start · Tailwind — base pronta para migrar o produto.
+> **Not** the dino.blog / dinoclub.blog product.  
+> Club product stays on static `build in public` (production). Font there remains **DM Sans** (live site).  
+> This repo uses **Arvo** for its own console UI only.
 
 ## Stack
 
 | Layer | Tech |
 |-------|------|
-| Runtime / packages | [Bun](https://bun.sh) |
+| Runtime | [Bun](https://bun.sh) |
 | Monorepo | [Turborepo](https://turbo.build) |
-| Web + SSR | [TanStack Start](https://tanstack.com/start) + [Tailwind CSS](https://tailwindcss.com) |
+| Web + SSR | [TanStack Start](https://tanstack.com/start) + [Tailwind](https://tailwindcss.com) |
 | API | [Elysia](https://elysiajs.com) |
-| Typed client | [Eden Treaty](https://elysiajs.com/eden/overview) |
+| Client | [Eden Treaty](https://elysiajs.com/eden/overview) |
 
-Agents de produto ficam no **TUI nativo** (Grok/Cursor). A API **não** integra ChatGPT/OpenAI como “agent provider”.
+Native agents only (Grok/Cursor). No ChatGPT/OpenAI agent providers.
 
-## Repo layout
+## Links
+
+- **GitHub:** https://github.com/mccall9/dino-platform  
+- **Vercel:** https://dino-platform.vercel.app  
+- **Product (separate):** https://dinoclub.blog  
+
+## Structure
 
 ```
 dino-platform/
-├── apps/
-│   ├── api/     # Elysia — /health, /agents/* (native verify recipes)
-│   └── web/     # TanStack Start — club home (Fase 1) · /dev/agents
-├── packages/
-│   ├── shared/
-│   ├── agents-sdk/
-│   └── tsconfig/
-├── scripts/smoke-api.ts
-├── MIGRATION.md
-└── LICENSE      # MIT
+├── apps/api/          # Elysia · /health · /agents/*
+├── apps/web/          # Agents console · / · /runs · /agents/:id
+├── packages/shared/
+├── packages/agents-sdk/
+└── PHASES.md          # scope: standalone (not dino.blog migration)
 ```
 
-## Quick start
+## Dev
 
 ```bash
-# requires Bun: https://bun.sh
 bun install
-
-# optional: product path for native shell recipes
-cp apps/api/.env.example apps/api/.env
-
+cp apps/api/.env.example apps/api/.env   # optional DINO_PRODUCT_ROOT
 bun run dev
 ```
 
@@ -56,59 +54,17 @@ bun run dev
 bun run smoke:api
 ```
 
-## API (current)
+## Stack test for dino.blog (later, other repo)
 
-| Method | Path | Description |
-|--------|------|-------------|
-| `GET` | `/health` | Liveness + product root |
-| `GET` | `/agents` | Native agent catalog |
-| `GET` | `/agents/:id` | Agent detail |
-| `POST` | `/agents/:id/runs` | `{ prompt, cwd?, execute? }` |
-| `GET` | `/agents/runs` | In-memory run history |
-| `GET` | `/agents/runs/:runId` | Run detail |
+When testing a stack rewrite of the club product:
 
-### Native execute recipes
+1. Create a **new GitHub repo** (do not merge into this one)  
+2. Keep **live fonts/visual identity** (DM Sans, tokens from production)  
+3. Deploy that repo to Vercel for preview  
+4. Drive work with **agents + skills** from the product workspace  
 
-| Agent | Recipe |
-|-------|--------|
-| `product-shell` | files + vercel.json + robots |
-| `content-builder` | content surfaces |
-| `supabase-guard` | migrations layout |
-| `ship-check` | `npm test` (Playwright) |
-| `feed-designer` / `home-designer` | dispatch only → native TUI |
-
-## Deploy
-
-- **Web (Vercel):** monorepo root → builds `apps/web` (TanStack Start / Nitro).  
-- **API:** run with Bun (`apps/api`) on a Bun-friendly host; set `VITE_API_URL` on the web project to that URL.  
-- Product cutover plan: [MIGRATION.md](./MIGRATION.md).
-
-## Scripts
-
-| Command | Description |
-|---------|-------------|
-| `bun run dev` | API + web (turbo parallel) |
-| `bun run build` | Build workspaces |
-| `bun run smoke:api` | Health + product-shell execute |
+See [PHASES.md](./PHASES.md).
 
 ## License
 
-[MIT](./LICENSE) — permissive, standard for open-source product foundations (simple reuse, commercial OK, no warranty).
-
-## Phases
-
-See **[PHASES.md](./PHASES.md)** for the full roadmap.
-
-| Phase | Status |
-|-------|--------|
-| 0 Base stack | done |
-| 1 Club shell + home | in progress / shipping |
-| 2 Auth OTP | next |
-| 3 Feed + membership | later |
-| 4 Content parity | later |
-| 5 Production cutover | later |
-
-## Related
-
-- Live club product: [dinoclub.blog](https://dinoclub.blog)  
-- [PHASES.md](./PHASES.md) · [MIGRATION.md](./MIGRATION.md) · [STATUS.md](./STATUS.md)
+[MIT](./LICENSE)

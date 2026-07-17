@@ -1,138 +1,109 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
-import { SiteHeader } from "~/components/SiteHeader"
+import { api, getApiBaseUrl } from "~/lib/api"
 
 export const Route = createFileRoute("/")({
-  component: ClubHome,
-  head: () => ({
-    meta: [
-      { title: "dino.blog — Clube dos Curiosos" },
-      {
-        name: "description",
-        content:
-          "O Clube dos Curiosos no dino.blog: pessoas pensando em voz alta, fazendo perguntas e construindo coisas agora.",
-      },
-    ],
-  }),
+  loader: async () => {
+    const { data, error } = await api.agents.get()
+    if (error || !data) {
+      return {
+        ok: false as const,
+        apiUrl: getApiBaseUrl(),
+        message:
+          error?.value && typeof error.value === "object"
+            ? JSON.stringify(error.value)
+            : "API unreachable. Start apps/api on :3001 (local only).",
+      }
+    }
+    return {
+      ok: true as const,
+      apiUrl: getApiBaseUrl(),
+      runtime: data.runtime,
+      note: data.note,
+      productRoot:
+        "productRoot" in data ? (data.productRoot as string | null) : null,
+      agents: data.agents,
+    }
+  },
+  component: AgentsHome,
 })
 
-function ClubHome() {
+function AgentsHome() {
+  const data = Route.useLoaderData()
+
   return (
-    <div className="club-page">
-      <SiteHeader current="home" />
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+          Native agents
+        </h1>
+        <p className="mt-2 max-w-2xl text-gray-600 dark:text-gray-400">
+          Console tipado via{" "}
+          <code className="rounded bg-gray-100 px-1 text-sm dark:bg-gray-800">
+            Eden Treaty
+          </code>{" "}
+          →{" "}
+          <code className="rounded bg-gray-100 px-1 text-sm dark:bg-gray-800">
+            /agents
+          </code>
+          . Stack playground (Bun · Elysia · Start · Tailwind).{" "}
+          <strong>Não é o site do dino.blog</strong> — o clube continua no
+          repositório estático / dinoclub.blog.
+        </p>
+        <p className="mt-1 text-xs text-gray-500">API: {data.apiUrl}</p>
+        {data.ok && data.productRoot ? (
+          <p className="mt-1 font-mono text-xs text-gray-500">
+            DINO_PRODUCT_ROOT: {data.productRoot}
+          </p>
+        ) : null}
+      </div>
 
-      <main id="conteudo" className="club-shell">
-        <section className="club-hero" aria-labelledby="club-hero-title">
-          <div>
-            <span className="eyebrow">Clube dos Curiosos</span>
-            <h1 id="club-hero-title">
-              Onde a curiosidade
-              <br />
-              encontra companhia
-            </h1>
-            <p className="club-hero-lede">
-              Pessoas pensando em voz alta, fazendo perguntas e mostrando o que
-              ainda está em construção — agora.
-            </p>
-            <ul className="club-hero-points" aria-label="O que acontece aqui">
-              <li>Ideias e projetos em andamento</li>
-              <li>Perguntas sem pose de especialista</li>
-              <li>Conversas reais, não catálogo de clubes</li>
-            </ul>
-            <div className="club-hero-actions">
-              <Link to="/login" search={{ next: "/feed" }} className="btn btn-primary">
-                Entrar para participar
-              </Link>
-              <Link to="/about" className="btn btn-secondary">
-                A história do clube
-              </Link>
-            </div>
-          </div>
-          <figure className="club-hero-art">
-            <img
-              src="/assets/dino-blog-hero.png"
-              alt="Dino investigando uma ideia entre livros, uma lâmpada e objetos curiosos"
-              width={1984}
-              height={793}
-            />
-          </figure>
-        </section>
-
-        <section aria-labelledby="club-live-title">
-          <div className="club-section-head">
-            <div>
-              <span className="eyebrow">Acontecendo agora</span>
-              <h2 id="club-live-title">Conversas recentes</h2>
-              <p>
-                Prova de vida do clube — prévia pública do que a gente está
-                pensando e construindo.
-              </p>
-            </div>
-            <Link
-              to="/login"
-              search={{ next: "/feed" }}
-              className="shrink-0 text-sm font-bold text-[var(--green-dark)]"
-            >
-              Entrar para participar →
-            </Link>
-          </div>
-          <div className="club-card club-card-muted">
-            <p className="m-0">
-              <strong className="text-[var(--ink)]">Fase 1</strong> — as
-              prévias ao vivo (Supabase) chegam na Fase 3. No produto estático
-              atual isso já roda em{" "}
-              <a
-                className="font-bold text-[var(--green-dark)] underline underline-offset-2"
-                href="https://dinoclub.blog"
-                target="_blank"
-                rel="noreferrer"
-              >
-                dinoclub.blog
-              </a>
-              .
-            </p>
-          </div>
-        </section>
-
-        <section aria-labelledby="featured-club-title">
-          <div className="club-section-head">
-            <div>
-              <span className="eyebrow">Um só espaço</span>
-              <h2 id="featured-club-title">A história do clube</h2>
-              <p>
-                Entre para ler e participar das conversas. Aqui fica o contexto
-                — quem somos e como convivemos.
-              </p>
-            </div>
-          </div>
-          <article className="club-card">
-            <h3 className="mt-0 mb-2 text-xl font-bold">Clube dos Curiosos</h3>
-            <p className="m-0 text-[var(--muted)] leading-relaxed">
-              Um espaço para curiosidade sem performance. Na Fase 2–3 ligamos
-              login, membership e o feed de conversas neste monorepo.
-            </p>
-            <div className="mt-5 flex flex-wrap gap-3">
-              <Link to="/login" search={{ next: "/feed" }} className="btn btn-primary">
-                Entrar para participar
-              </Link>
-              <Link to="/about" className="btn btn-secondary">
-                Sobre
-              </Link>
-            </div>
-          </article>
-        </section>
-
-        <footer className="border-t border-[var(--line)] pt-6 text-sm text-[var(--muted)]">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <span>dino.blog · monorepo Fase 1</span>
-            <Link
-              to="/dev/agents"
-              className="text-[var(--green-dark)] underline underline-offset-2"
-            >
-              Dev: agents console
-            </Link>
-          </div>
-        </footer>
-      </main>
+      {!data.ok ? (
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-800 dark:border-red-900 dark:bg-red-950 dark:text-red-200">
+          {data.message}
+        </div>
+      ) : (
+        <>
+          <p className="text-sm text-emerald-700 dark:text-emerald-400">
+            {data.note}
+          </p>
+          <ul className="grid gap-4 sm:grid-cols-2">
+            {data.agents.map((agent) => (
+              <li key={agent.id}>
+                <Link
+                  to="/agents/$id"
+                  params={{ id: agent.id }}
+                  className="block rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:border-emerald-400 hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <h2 className="font-semibold text-gray-900 dark:text-white">
+                      {agent.name}
+                    </h2>
+                    <div className="flex shrink-0 flex-col items-end gap-1">
+                      <span className="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-gray-600 dark:bg-gray-800">
+                        {agent.runtime}
+                      </span>
+                      {"hasExecuteRecipe" in agent && agent.hasExecuteRecipe ? (
+                        <span className="rounded bg-amber-50 px-1.5 py-0.5 text-[10px] text-amber-900 dark:bg-amber-950 dark:text-amber-100">
+                          shell recipe
+                        </span>
+                      ) : null}
+                    </div>
+                  </div>
+                  <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                    {agent.description}
+                  </p>
+                  <p className="mt-3 text-xs text-gray-500">
+                    caps: {agent.capabilities.join(" · ")}
+                  </p>
+                  <p className="mt-1 font-mono text-[11px] text-gray-400">
+                    {agent.sourcePath}
+                  </p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   )
 }

@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router"
 import * as React from "react"
 import { api } from "~/lib/api"
 
-export const Route = createFileRoute("/dev/agents/$id")({
+export const Route = createFileRoute("/agents/$id")({
   loader: async ({ params }) => {
     const { data, error } = await api.agents({ id: params.id }).get()
     if (error || !data || "error" in data) {
@@ -46,7 +46,7 @@ function AgentDetail() {
   if (!data.ok) {
     return (
       <div className="space-y-4">
-        <Link to="/dev/agents" className="text-sm text-emerald-700">
+        <Link to="/" className="text-sm text-emerald-700">
           ← Agents
         </Link>
         <p className="text-red-600">{data.message}</p>
@@ -99,7 +99,7 @@ function AgentDetail() {
   return (
     <div className="space-y-6">
       <Link
-        to="/dev/agents"
+        to="/"
         className="text-sm font-medium text-emerald-700 hover:underline dark:text-emerald-400"
       >
         ← Agents

@@ -8,29 +8,13 @@
 // You should NOT make any changes in this file as it will be overwritten.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as IdeiasRouteImport } from './routes/ideias'
-import { Route as AboutRouteImport } from './routes/about'
+import { Route as RunsRouteImport } from './routes/runs'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DevRunsRouteImport } from './routes/dev.runs'
-import { Route as DevAgentsRouteImport } from './routes/dev.agents'
-import { Route as DevAgentsIdRouteImport } from './routes/dev.agents.$id'
+import { Route as AgentsIdRouteImport } from './routes/agents.$id'
 
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-
-const IdeiasRoute = IdeiasRouteImport.update({
-  id: '/ideias',
-  path: '/ideias',
-  getParentRoute: () => rootRouteImport,
-} as any)
-
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const RunsRoute = RunsRouteImport.update({
+  id: '/runs',
+  path: '/runs',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -40,90 +24,40 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 
-const DevRunsRoute = DevRunsRouteImport.update({
-  id: '/dev/runs',
-  path: '/dev/runs',
-  getParentRoute: () => rootRouteImport,
-} as any)
-
-const DevAgentsRoute = DevAgentsRouteImport.update({
-  id: '/dev/agents',
-  path: '/dev/agents',
-  getParentRoute: () => rootRouteImport,
-} as any)
-
-const DevAgentsIdRoute = DevAgentsIdRouteImport.update({
-  id: '/dev/agents/$id',
-  path: '/dev/agents/$id',
+const AgentsIdRoute = AgentsIdRouteImport.update({
+  id: '/agents/$id',
+  path: '/agents/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/ideias': typeof IdeiasRoute
-  '/login': typeof LoginRoute
-  '/dev/agents': typeof DevAgentsRoute
-  '/dev/runs': typeof DevRunsRoute
-  '/dev/agents/$id': typeof DevAgentsIdRoute
+  '/runs': typeof RunsRoute
+  '/agents/$id': typeof AgentsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/ideias': typeof IdeiasRoute
-  '/login': typeof LoginRoute
-  '/dev/agents': typeof DevAgentsRoute
-  '/dev/runs': typeof DevRunsRoute
-  '/dev/agents/$id': typeof DevAgentsIdRoute
+  '/runs': typeof RunsRoute
+  '/agents/$id': typeof AgentsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/ideias': typeof IdeiasRoute
-  '/login': typeof LoginRoute
-  '/dev/agents': typeof DevAgentsRoute
-  '/dev/runs': typeof DevRunsRoute
-  '/dev/agents/$id': typeof DevAgentsIdRoute
+  '/runs': typeof RunsRoute
+  '/agents/$id': typeof AgentsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/about'
-    | '/ideias'
-    | '/login'
-    | '/dev/agents'
-    | '/dev/runs'
-    | '/dev/agents/$id'
+  fullPaths: '/' | '/runs' | '/agents/$id'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/about'
-    | '/ideias'
-    | '/login'
-    | '/dev/agents'
-    | '/dev/runs'
-    | '/dev/agents/$id'
-  id:
-    | '__root__'
-    | '/'
-    | '/about'
-    | '/ideias'
-    | '/login'
-    | '/dev/agents'
-    | '/dev/runs'
-    | '/dev/agents/$id'
+  to: '/' | '/runs' | '/agents/$id'
+  id: '__root__' | '/' | '/runs' | '/agents/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  IdeiasRoute: typeof IdeiasRoute
-  LoginRoute: typeof LoginRoute
-  DevAgentsRoute: typeof DevAgentsRoute
-  DevRunsRoute: typeof DevRunsRoute
-  DevAgentsIdRoute: typeof DevAgentsIdRoute
+  RunsRoute: typeof RunsRoute
+  AgentsIdRoute: typeof AgentsIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -135,46 +69,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/runs': {
+      id: '/runs'
+      path: '/runs'
+      fullPath: '/runs'
+      preLoaderRoute: typeof RunsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/ideias': {
-      id: '/ideias'
-      path: '/ideias'
-      fullPath: '/ideias'
-      preLoaderRoute: typeof IdeiasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dev/agents': {
-      id: '/dev/agents'
-      path: '/dev/agents'
-      fullPath: '/dev/agents'
-      preLoaderRoute: typeof DevAgentsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dev/runs': {
-      id: '/dev/runs'
-      path: '/dev/runs'
-      fullPath: '/dev/runs'
-      preLoaderRoute: typeof DevRunsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dev/agents/$id': {
-      id: '/dev/agents/$id'
-      path: '/dev/agents/$id'
-      fullPath: '/dev/agents/$id'
-      preLoaderRoute: typeof DevAgentsIdRouteImport
+    '/agents/$id': {
+      id: '/agents/$id'
+      path: '/agents/$id'
+      fullPath: '/agents/$id'
+      preLoaderRoute: typeof AgentsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -182,12 +88,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  IdeiasRoute: IdeiasRoute,
-  LoginRoute: LoginRoute,
-  DevAgentsRoute: DevAgentsRoute,
-  DevRunsRoute: DevRunsRoute,
-  DevAgentsIdRoute: DevAgentsIdRoute,
+  RunsRoute: RunsRoute,
+  AgentsIdRoute: AgentsIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

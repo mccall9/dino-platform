@@ -1,33 +1,19 @@
-# Status — dino-platform (finalize)
+# Status — dino-platform
 
-**Data:** 2026-07-17  
-**Fase:** **1 em curso** (product shell + home clube). Ver PHASES.md.
+**Standalone** agents + stack playground. **Not** dino.blog.
 
 ## Done
-- [x] Monorepo Bun + Turborepo  
-- [x] `apps/api` Elysia + CORS + `/health` + `/agents/*`  
-- [x] Eden Treaty no `apps/web`  
-- [x] TanStack Start + Tailwind  
-- [x] Agents nativos only (sem ChatGPT API)  
-- [x] Execute recipes: product-shell, content-builder, supabase-guard, ship-check  
-- [x] UI Agents + Runs  
-- [x] `DINO_PRODUCT_ROOT` → build in public  
-- [x] README + MIGRATION.md + smoke-api  
-- [x] Git repo inicial  
-- [x] **GitHub** https://github.com/mccall9/dino-platform (MIT)  
-- [x] **Vercel prod** https://dino-platform.vercel.app  
+- [x] Bun + Turborepo + Elysia + Treaty + Start + Tailwind  
+- [x] GitHub https://github.com/mccall9/dino-platform (MIT)  
+- [x] Vercel https://dino-platform.vercel.app  
+- [x] Agents console `/` · `/runs` · `/agents/:id`  
+- [x] Native execute recipes (shell, no ChatGPT)  
+- [x] Reverted accidental club-home merge into this repo  
 
-## Not done (de propósito)
-- [ ] Portar dino.blog de `build in public`  
-- [ ] Rotas de clube no Start  
-- [ ] Persistência de runs (SQLite)  
-- [ ] API Elysia hospedada em produção (web na Vercel; API ainda local / host Bun)  
+## Explicitly out of scope here
+- Club product UI / auth / feed  
+- Changing dino.blog production font (stays DM Sans online)  
+- DNS cutover for dinoclub.blog  
 
-## Como subir
-```bash
-cd Desktop/dino-platform
-bun install
-bun run dev
-# API :3001 · Web :3000
-bun run smoke:api
-```
+## Next (when you want)
+New repo for **dino.blog stack test** + Vercel preview + agents/skills — not this repo.
