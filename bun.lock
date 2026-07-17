@@ -63,6 +63,7 @@
       "name": "@dino/shared",
       "version": "0.0.0",
       "devDependencies": {
+        "@dino/tsconfig": "workspace:*",
         "typescript": "^5.8.3",
       },
     },
