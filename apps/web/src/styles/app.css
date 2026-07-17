@@ -66,7 +66,6 @@
 .platform-shell {
   position: relative;
   min-height: 100dvh;
-  overflow-x: hidden;
 }
 
 .platform-ambient {
@@ -79,34 +78,6 @@
     radial-gradient(600px 400px at 100% 20%, rgba(216, 240, 224, 0.55), transparent 50%),
     radial-gradient(500px 360px at 0% 60%, rgba(216, 240, 224, 0.35), transparent 45%),
     var(--paper);
-}
-
-/* container guide lines — Aura pattern, light */
-.guide-line {
-  display: none;
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  z-index: 5;
-  background: color-mix(in srgb, var(--green) 12%, transparent);
-}
-
-@media (min-width: 900px) {
-  .guide-line {
-    display: block;
-  }
-
-  .guide-line-l {
-    left: 50%;
-    transform: translateX(calc(-50% - 36rem));
-  }
-
-  .guide-line-r {
-    left: 50%;
-    transform: translateX(calc(50% - 36rem));
-  }
 }
 
 .platform-content {
@@ -136,19 +107,9 @@
 }
 
 .platform-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: -0.025em;
-  color: var(--ink);
-}
-
-.platform-brand-mark {
-  width: 1.75rem;
-  height: 1.75rem;
-  flex: 0 0 auto;
   color: var(--green-dark);
 }
 
@@ -273,9 +234,12 @@
   font-size: clamp(2.25rem, 6vw, 3.75rem);
   font-weight: 700;
   letter-spacing: -0.045em;
-  line-height: 0.95;
+  line-height: 1.05;
   color: var(--ink);
   text-wrap: balance;
+  /* evita corte de descenders / gradiente no “Organized.” */
+  padding-bottom: 0.08em;
+  overflow: visible;
 }
 
 .hero-accent {

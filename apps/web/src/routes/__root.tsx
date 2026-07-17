@@ -8,7 +8,6 @@ import {
 } from "@tanstack/react-router"
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools"
 import * as React from "react"
-import { BrandMark } from "~/components/BrandMark"
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary"
 import { NotFound } from "~/components/NotFound"
 import appCss from "~/styles/app.css?url"
@@ -78,15 +77,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <div className="platform-shell">
           <div className="platform-ambient" aria-hidden="true" />
-          <div className="guide-line guide-line-l" aria-hidden="true" />
-          <div className="guide-line guide-line-r" aria-hidden="true" />
 
           <div className="platform-content">
             <header className="platform-header">
               <div className="platform-header-inner">
                 <Link to="/" className="platform-brand">
-                  <BrandMark />
-                  <span>dino-platform</span>
+                  dino-platform
                 </Link>
                 <nav className="platform-nav" aria-label="Principal">
                   <NavLink to="/" exact>
