@@ -97,7 +97,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             <main className="platform-main">{children}</main>
           </div>
         </div>
-        <TanStackRouterDevtools position="bottom-right" />
+        {import.meta.env.DEV ? (
+          <TanStackRouterDevtools position="bottom-right" />
+        ) : null}
         <Scripts />
       </body>
     </html>
