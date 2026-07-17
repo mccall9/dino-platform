@@ -17,6 +17,20 @@ export default defineConfig({
       srcDirectory: 'src',
     }),
     viteReact(),
-    nitro(),
+    // Prefer Vercel Build Output API when VERCEL=1 or NITRO_PRESET=vercel
+    nitro(
+      process.env.VERCEL || process.env.NITRO_PRESET === 'vercel'
+        ? {
+            preset: 'vercel',
+            // Stable Node runtime on Vercel (avoid experimental bun serverless)
+            vercel: {
+              functions: {
+                runtime: 'nodejs22.x',
+              },
+            },
+          }
+        : {},
+    ),
   ],
 })
+

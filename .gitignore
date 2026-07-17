@@ -5,6 +5,8 @@ dist
 .vinxi
 .nitro
 .tanstack
+.vercel
+apps/web/.vercel
 *.log
 .env
 .env.*
@@ -12,3 +14,5 @@ dist
 .DS_Store
 coverage
 .cache
+apps/web/.output
+apps/web/dist

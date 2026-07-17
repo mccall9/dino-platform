@@ -8,6 +8,7 @@
     "dev:api": "bun run --filter @dino/api dev",
     "dev:web": "bun run --filter @dino/web dev",
     "build": "turbo run build",
+    "build:vercel": "cd apps/web && bun run build && cd ../.. && node scripts/copy-vercel-output.mjs",
     "typecheck": "turbo run typecheck",
     "lint": "turbo run lint",
     "test": "turbo run test",

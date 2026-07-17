@@ -1,51 +1,48 @@
 # dino-platform
 
-**Base monorepo da futura stack do [dino.blog](https://dinoclub.blog)** (dinoclub.blog).
+[![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](./LICENSE)
 
-| Agora | Depois |
-|-------|--------|
-| Stack pronta + tools de verify nativos | Migrar produto de `build in public` (HTML estático) → este monorepo |
+Monorepo da **próxima stack** do [dino.blog](https://dinoclub.blog) / dinoclub.blog.
 
-## Stack (produto)
+> **Produção hoje:** site estático + Supabase em outro repositório.  
+> **Este repo:** Bun · Turborepo · Elysia · Eden Treaty · TanStack Start · Tailwind — base pronta para migrar o produto.
 
-| Camada | Tecnologia |
-|--------|------------|
-| Runtime / PM | **Bun** |
-| Monorepo | **Turborepo** |
-| Web + SSR | **TanStack Start** + **Tailwind** |
-| API | **Elysia** |
-| Client tipado | **Eden Treaty** |
-| Dados (produto) | **Supabase** (Auth + RLS) — no app estático atual; mesma regra no cutover |
+## Stack
 
-**Não** usamos ChatGPT/OpenAI como “agents API”. Agents de dev são **nativos** (Grok/Cursor em `.grok/agents`).
+| Layer | Tech |
+|-------|------|
+| Runtime / packages | [Bun](https://bun.sh) |
+| Monorepo | [Turborepo](https://turbo.build) |
+| Web + SSR | [TanStack Start](https://tanstack.com/start) + [Tailwind CSS](https://tailwindcss.com) |
+| API | [Elysia](https://elysiajs.com) |
+| Typed client | [Eden Treaty](https://elysiajs.com/eden/overview) |
 
-## Estrutura
+Agents de produto ficam no **TUI nativo** (Grok/Cursor). A API **não** integra ChatGPT/OpenAI como “agent provider”.
+
+## Repo layout
 
 ```
 dino-platform/
 ├── apps/
-│   ├── api/          # Elysia · /health · /agents/* (verify nativo hoje)
-│   └── web/          # TanStack Start · console agents/runs (depois: clube)
+│   ├── api/     # Elysia — /health, /agents/* (native verify recipes)
+│   └── web/     # TanStack Start — agents console + /runs (club UI later)
 ├── packages/
-│   ├── shared/       # tipos compartilhados
-│   ├── agents-sdk/   # registry + execute recipes (sem LLM)
+│   ├── shared/
+│   ├── agents-sdk/
 │   └── tsconfig/
-├── scripts/
-│   └── smoke-api.ts
-├── MIGRATION.md      # plano cutover build in public → monorepo
-└── README.md
+├── scripts/smoke-api.ts
+├── MIGRATION.md
+└── LICENSE      # MIT
 ```
 
-## Dev
+## Quick start
 
 ```bash
-# Bun no PATH (Windows: %USERPROFILE%\.bun\bin)
-cd dino-platform
+# requires Bun: https://bun.sh
 bun install
 
-# apps/api/.env — DINO_PRODUCT_ROOT aponta ao produto estático atual
+# optional: product path for native shell recipes
 cp apps/api/.env.example apps/api/.env
-# edite DINO_PRODUCT_ROOT se o path for diferente
 
 bun run dev
 ```
@@ -56,50 +53,49 @@ bun run dev
 | API | http://localhost:3001 |
 
 ```bash
-bun run smoke:api   # health + product-shell execute
+bun run smoke:api
 ```
 
-## API (hoje)
+## API (current)
 
-| Método | Path | Uso |
-|--------|------|-----|
-| GET | `/health` | liveness + productRoot |
-| GET | `/agents` | catálogo nativo |
-| GET | `/agents/:id` | detalhe |
-| POST | `/agents/:id/runs` | `{ prompt, cwd?, execute? }` |
-| GET | `/agents/runs` | histórico in-memory |
-| GET | `/agents/runs/:runId` | detalhe run |
+| Method | Path | Description |
+|--------|------|-------------|
+| `GET` | `/health` | Liveness + product root |
+| `GET` | `/agents` | Native agent catalog |
+| `GET` | `/agents/:id` | Agent detail |
+| `POST` | `/agents/:id/runs` | `{ prompt, cwd?, execute? }` |
+| `GET` | `/agents/runs` | In-memory run history |
+| `GET` | `/agents/runs/:runId` | Run detail |
 
-### Execute recipes (shell no product cwd)
+### Native execute recipes
 
 | Agent | Recipe |
 |-------|--------|
-| `product-shell` | files + vercel + robots |
-| `content-builder` | superfícies de conteúdo |
-| `supabase-guard` | layout + migrations |
+| `product-shell` | files + vercel.json + robots |
+| `content-builder` | content surfaces |
+| `supabase-guard` | migrations layout |
 | `ship-check` | `npm test` (Playwright) |
-| feed/home-designer | dispatch only → TUI nativo |
+| `feed-designer` / `home-designer` | dispatch only → native TUI |
 
-## Relação com `build in public`
+## Deploy
 
-| Repo / pasta | Papel **agora** |
-|--------------|-----------------|
-| `Desktop/build in public` | **Produção** dino.blog (estático + Supabase + Vercel) |
-| `Desktop/dino-platform` | **Base da próxima stack** — não substitui o deploy ainda |
+- **Web (Vercel):** monorepo root → builds `apps/web` (TanStack Start / Nitro).  
+- **API:** run with Bun (`apps/api`) on a Bun-friendly host; set `VITE_API_URL` on the web project to that URL.  
+- Product cutover plan: [MIGRATION.md](./MIGRATION.md).
 
-Quando migrarmos o produto, o fluxo está em **[MIGRATION.md](./MIGRATION.md)**.
+## Scripts
 
-## Princípios
+| Command | Description |
+|---------|-------------|
+| `bun run dev` | API + web (turbo parallel) |
+| `bun run build` | Build workspaces |
+| `bun run smoke:api` | Health + product-shell execute |
 
-1. Stack do monorepo = stack futura do dino.blog  
-2. Zero service role no browser  
-3. Agents de produto no TUI nativo; recipes da API só shell/verify  
-4. Não reescrever produção até cutover consciente  
+## License
 
-## Scripts root
+[MIT](./LICENSE) — permissive, standard for open-source product foundations (simple reuse, commercial OK, no warranty).
 
-| Script | Descrição |
-|--------|-----------|
-| `bun run dev` | API + web em paralelo (turbo) |
-| `bun run build` | build workspaces |
-| `bun run smoke:api` | smoke da API |
+## Related
+
+- Live club product: [dinoclub.blog](https://dinoclub.blog)  
+- Migration notes: [MIGRATION.md](./MIGRATION.md) · [STATUS.md](./STATUS.md)
