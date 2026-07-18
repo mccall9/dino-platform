@@ -1,0 +1,30 @@
+name: Skills verify
+
+on:
+  pull_request:
+    paths:
+      - "packages/dino-skills/**"
+      - "packages/shared/src/skills-catalog.ts"
+      - "packages/shared/src/skills-content.ts"
+      - "scripts/verify-skills.mjs"
+      - "scripts/sync-skill-content.mjs"
+      - "scripts/sync-dino-skills-pack.mjs"
+  push:
+    branches: [master, main]
+    paths:
+      - "packages/dino-skills/**"
+      - "packages/shared/src/skills-catalog.ts"
+      - "packages/shared/src/skills-content.ts"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install
+        run: bun install --frozen-lockfile
+      - name: Verify skills catalog ↔ folders
+        run: bun run skills:verify

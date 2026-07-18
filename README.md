@@ -2,11 +2,16 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](./LICENSE)
 
-**Standalone** monorepo — stack playground + native agents console.
+**Dino Skills** — inventário público de skills + agents (Claude Code, Cursor, Codex, Copilot…).
 
-> **Not** the dino.blog / dinoclub.blog product.  
-> Club product stays on static `build in public` (production). Font there remains **DM Sans** (live site).  
-> This repo uses **Arvo** for its own console UI only.
+Site: [dino-platform.vercel.app](https://dino-platform.vercel.app)
+
+## Links
+
+- **GitHub:** https://github.com/mccall9/dino-platform  
+- **Vercel:** https://dino-platform.vercel.app  
+- **Pack:** `npx dino-skills install` · `npx dino-skills start`  
+- **Contribute a skill:** [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## Stack
 
@@ -18,52 +23,41 @@
 | API | [Elysia](https://elysiajs.com) |
 | Client | [Eden Treaty](https://elysiajs.com/eden/overview) |
 
-Native agents only (Grok/Cursor). No ChatGPT/OpenAI agent providers.
-
-## Links
-
-- **GitHub:** https://github.com/mccall9/dino-platform  
-- **Vercel:** https://dino-platform.vercel.app  
-- **Product (separate):** https://dinoclub.blog  
-
 ## Structure
 
 ```
 dino-platform/
-├── apps/api/          # Elysia · /health · /agents/*
-├── apps/web/          # Agents console · / · /runs · /agents/:id
-├── packages/shared/
+├── apps/web/                    # Site Dino Skills + Agents
+├── apps/api/                    # Elysia · /health · /agents/*
+├── packages/dino-skills/        # npm pack + skills/*/SKILL.md
+├── packages/shared/             # catalogs (skills + runtimes)
 ├── packages/agents-sdk/
-└── PHASES.md          # scope: standalone (not dino.blog migration)
+└── CONTRIBUTING.md              # how to add a skill via PR
 ```
 
 ## Dev
 
 ```bash
 bun install
-cp apps/api/.env.example apps/api/.env   # optional DINO_PRODUCT_ROOT
-bun run dev
+bun run dev:web                  # http://localhost:3000
 ```
 
 | App | URL |
 |-----|-----|
 | Web | http://localhost:3000 |
-| API | http://localhost:3001 |
+| API | http://localhost:3001 (`bun run dev:api`) |
+
+## Add a skill (appears on the site after merge)
 
 ```bash
-bun run smoke:api
+bun run skills:new -- my-skill --name "My Skill" --category marketing
+# edit SKILL.md + catalog descriptions
+bun run skills:sync
+bun run skills:verify
+# open PR → merge → Vercel deploy → live on /skills/my-skill
 ```
 
-## Stack test for dino.blog (later, other repo)
-
-When testing a stack rewrite of the club product:
-
-1. Create a **new GitHub repo** (do not merge into this one)  
-2. Keep **live fonts/visual identity** (DM Sans, tokens from production)  
-3. Deploy that repo to Vercel for preview  
-4. Drive work with **agents + skills** from the product workspace  
-
-See [PHASES.md](./PHASES.md).
+Full guide: [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## License
 

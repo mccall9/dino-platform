@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router"
 import * as React from "react"
 import { RUNTIMES_CATALOG, SKILLS_CATALOG } from "@dino/shared"
 import { LocaleSwitch } from "~/components/LocaleSwitch"
+import { ThemeSwitch } from "~/components/ThemeSwitch"
 import { useI18n } from "~/lib/i18n"
 
 const EMAIL_KEY = "dino-skills-subscribe-email"
@@ -161,6 +162,15 @@ export function SiteOutro() {
             </li>
             <li>
               <a
+                href="https://github.com/mccall9/dino-platform/blob/master/CONTRIBUTING.md"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t("site.contribute")}
+              </a>
+            </li>
+            <li>
+              <a
                 href="https://x.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -180,6 +190,7 @@ export function SiteOutro() {
       <div className="ds-outro-bottom">
         <p>{t("site.copy", { year })}</p>
         <div className="ds-outro-bottom-right">
+          <ThemeSwitch variant="footer" />
           <LocaleSwitch />
           <a href="mailto:hello@dino.blog">{t("site.work")}</a>
         </div>

@@ -12,7 +12,10 @@
     "typecheck": "turbo run typecheck",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "smoke:api": "bun run scripts/smoke-api.ts"
+    "smoke:api": "bun run scripts/smoke-api.ts",
+    "skills:sync": "node scripts/sync-skill-content.mjs && node scripts/sync-dino-skills-pack.mjs",
+    "skills:verify": "node scripts/verify-skills.mjs",
+    "skills:new": "node scripts/new-skill.mjs"
   },
   "devDependencies": {
     "turbo": "^2.10.5",

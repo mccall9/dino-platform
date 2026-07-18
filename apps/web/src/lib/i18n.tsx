@@ -109,6 +109,10 @@ const messages = {
     "locale.en": "English",
     "locale.switch": "Idioma",
 
+    "theme.switch": "Tema",
+    "theme.dark": "Black",
+    "theme.light": "White",
+
     "updates.title": "Receba updates",
     "updates.lead": "Skills novas do dino e notas de build in public.",
     "updates.placeholder": "Seu e-mail",
@@ -131,6 +135,7 @@ const messages = {
     "site.copy": "© {year} Dino · Clube dos Curiosos",
     "site.github": "GitHub",
     "site.x": "X",
+    "site.contribute": "Contribuir skill",
   },
   "en-US": {
     "nav.skills": "Skills",
@@ -230,6 +235,10 @@ const messages = {
     "locale.en": "English",
     "locale.switch": "Language",
 
+    "theme.switch": "Theme",
+    "theme.dark": "Black",
+    "theme.light": "White",
+
     "updates.title": "Get updates",
     "updates.lead": "Fresh dino skills and build-in-public notes.",
     "updates.placeholder": "Enter your email",
@@ -252,6 +261,7 @@ const messages = {
     "site.copy": "© {year} Dino · Clube dos Curiosos",
     "site.github": "GitHub",
     "site.x": "X",
+    "site.contribute": "Contribute a skill",
   },
 } as const
 

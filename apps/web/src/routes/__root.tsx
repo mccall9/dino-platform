@@ -10,7 +10,9 @@ import * as React from "react"
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary"
 import { LocaleGate } from "~/components/LocaleGate"
 import { NotFound } from "~/components/NotFound"
+import { ThemeSwitch } from "~/components/ThemeSwitch"
 import { I18nProvider } from "~/lib/i18n"
+import { THEME_BOOT_SCRIPT, ThemeProvider } from "~/lib/theme"
 import appCss from "~/styles/app.css?url"
 import { seo } from "~/utils/seo"
 
@@ -50,18 +52,24 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" data-theme="dark" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <script
+          dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }}
+        />
       </head>
       <body>
-        <I18nProvider>
-          <LocaleGate />
-          {children}
-          {import.meta.env.DEV ? (
-            <TanStackRouterDevtools position="bottom-right" />
-          ) : null}
-        </I18nProvider>
+        <ThemeProvider>
+          <I18nProvider>
+            <LocaleGate />
+            <ThemeSwitch variant="chrome" />
+            {children}
+            {import.meta.env.DEV ? (
+              <TanStackRouterDevtools position="bottom-right" />
+            ) : null}
+          </I18nProvider>
+        </ThemeProvider>
         <Scripts />
       </body>
     </html>

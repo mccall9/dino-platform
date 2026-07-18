@@ -1,32 +1,21 @@
 import * as React from "react"
-import {
-  Bot,
-  Code2,
-  Command,
-  Cpu,
-  Moon,
-  MousePointer2,
-  Sparkles,
-  Terminal,
-  Waves,
-  Zap,
-  type LucideIcon,
-} from "lucide-react"
+import { Cpu } from "lucide-react"
 import type { RuntimeId } from "@dino/shared"
 
-const ICONS: Record<RuntimeId, LucideIcon> = {
-  "claude-code": Bot,
-  cursor: MousePointer2,
-  codex: Code2,
-  "github-copilot": Command,
-  windsurf: Waves,
-  gemini: Sparkles,
-  cline: Terminal,
-  grok: Zap,
-  kimi: Moon,
+/** Brand logos (Lobe Icons monochrome SVGs) — tinted via currentColor + accent. */
+const LOGO_SRC: Partial<Record<RuntimeId, string>> = {
+  "claude-code": "/assets/agents/claude-code.svg",
+  cursor: "/assets/agents/cursor.svg",
+  codex: "/assets/agents/codex.svg",
+  "github-copilot": "/assets/agents/github-copilot.svg",
+  windsurf: "/assets/agents/windsurf.svg",
+  gemini: "/assets/agents/gemini.svg",
+  cline: "/assets/agents/cline.svg",
+  grok: "/assets/agents/grok.svg",
+  kimi: "/assets/agents/kimi.svg",
 }
 
-/** Brand-ish icon mark for each coding agent. */
+/** Brand mark for each coding agent — same tile shape, accent palette. */
 export function AgentIcon({
   id,
   accent,
@@ -38,8 +27,8 @@ export function AgentIcon({
   size?: "sm" | "md" | "lg"
   className?: string
 }) {
-  const Icon = ICONS[id as RuntimeId] ?? Cpu
-  const px = size === "lg" ? 20 : size === "sm" ? 14 : 16
+  const src = LOGO_SRC[id as RuntimeId]
+  const logoPct = size === "lg" ? "56%" : size === "sm" ? "54%" : "55%"
 
   return (
     <span
@@ -51,8 +40,21 @@ export function AgentIcon({
       }
       aria-hidden
     >
-      <Icon size={px} strokeWidth={2.1} />
+      {src ? (
+        <span
+          className="ds-agent-icon-logo"
+          style={
+            {
+              width: logoPct,
+              height: logoPct,
+              WebkitMaskImage: `url(${src})`,
+              maskImage: `url(${src})`,
+            } as React.CSSProperties
+          }
+        />
+      ) : (
+        <Cpu size={size === "lg" ? 20 : size === "sm" ? 14 : 16} strokeWidth={2.1} />
+      )}
     </span>
   )
 }
-

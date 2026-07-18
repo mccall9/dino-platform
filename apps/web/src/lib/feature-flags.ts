@@ -7,9 +7,9 @@
  * - /runtimes/$id detail (how-to, topics, skills, other agents)
  * - Agent icons, origin links, search palette in agent mode
  *
- * Set AGENTS_LIVE = true to re-enable the full experience.
+ * Set AGENTS_LIVE = false to show the maintenance placeholder again.
  */
-export const AGENTS_LIVE = false
+export const AGENTS_LIVE = true
 
 export const AGENTS_MAINTENANCE_COPY = {
   title: "Em manutenção",

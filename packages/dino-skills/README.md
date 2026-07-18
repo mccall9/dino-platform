@@ -51,3 +51,16 @@ npm publish --access public
 Até publicar: `node packages/dino-skills/bin/dino-skills.mjs install`
 
 Catalog: https://dino-platform.vercel.app
+
+## Contribute a skill (appears on the site)
+
+Fork → add `skills/<slug>/SKILL.md` → register in `packages/shared/src/skills-catalog.ts` → PR.
+
+```bash
+# from monorepo root
+bun run skills:new -- my-skill --name "My Skill" --category marketing
+bun run skills:sync
+bun run skills:verify
+```
+
+Full guide: [CONTRIBUTING.md](../../CONTRIBUTING.md)
