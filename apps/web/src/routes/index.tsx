@@ -34,14 +34,6 @@ const CATEGORY_LABEL: Record<SkillCategory | "all", string> = {
   legal: "legal",
 }
 
-const FILTERS: Array<SkillCategory | "all"> = [
-  "all",
-  "developers",
-  "designers",
-  "marketing",
-  "social",
-]
-
 /** Primary how-to: one npm pack for the whole collection (UI Skills style). */
 const HOW_TO_CMD = "npx dino-skills start"
 const HOW_TO_PROMPT =
@@ -50,17 +42,10 @@ const HOW_TO_PROMPT =
 const OWN_SKILLS = SKILLS_CATALOG.filter(
   (s) => s.featured || s.source === "dino",
 )
-const REST_COUNT = SKILLS_CATALOG.length - OWN_SKILLS.length
 
 function DinoSkillsHome() {
-  const [filter, setFilter] = React.useState<SkillCategory | "all">("all")
-  const [showAll, setShowAll] = React.useState(false)
   const [copied, setCopied] = React.useState<"cmd" | "prompt" | null>(null)
-
-  const pool = showAll ? SKILLS_CATALOG : OWN_SKILLS
-
-  const skills: SkillCatalogEntry[] =
-    filter === "all" ? pool : pool.filter((s) => s.category === filter)
+  const skills: SkillCatalogEntry[] = OWN_SKILLS
 
   async function copyText(text: string, which: "cmd" | "prompt") {
     try {
@@ -70,16 +55,6 @@ function DinoSkillsHome() {
     } catch {
       /* ignore */
     }
-  }
-
-  function revealAll() {
-    setShowAll(true)
-    // scroll a bit so the expanded grid is obvious
-    window.requestAnimationFrame(() => {
-      document
-        .getElementById("ds-collection")
-        ?.scrollIntoView({ behavior: "smooth", block: "start" })
-    })
   }
 
   return (
@@ -172,27 +147,9 @@ function DinoSkillsHome() {
           <div className="ds-collection-title-row">
             <h2>Collection</h2>
             <span className="ds-collection-meta">
-              {showAll
-                ? `${skills.length} skills`
-                : `${OWN_SKILLS.length} dino · +${REST_COUNT} no pack`}
+              {OWN_SKILLS.length} dino · {SKILLS_CATALOG.length} no pack
             </span>
           </div>
-          {showAll ? (
-            <div className="ds-filters" role="list" aria-label="Filtrar skills">
-              {FILTERS.map((c) => (
-                <button
-                  key={c}
-                  type="button"
-                  role="listitem"
-                  className="ds-chip"
-                  data-active={filter === c ? "true" : "false"}
-                  onClick={() => setFilter(c)}
-                >
-                  {CATEGORY_LABEL[c]}
-                </button>
-              ))}
-            </div>
-          ) : null}
         </div>
 
         <main className="ds-main">
@@ -226,33 +183,12 @@ function DinoSkillsHome() {
             ))}
           </ul>
 
-          {!showAll && REST_COUNT > 0 ? (
-            <div className="ds-see-all-wrap">
-              <button
-                type="button"
-                className="ds-see-all"
-                onClick={revealAll}
-              >
-                See all skills
-                <span className="ds-see-all-count">{SKILLS_CATALOG.length}</span>
-              </button>
-            </div>
-          ) : null}
-
-          {showAll ? (
-            <div className="ds-see-all-wrap">
-              <button
-                type="button"
-                className="ds-see-all is-muted"
-                onClick={() => {
-                  setShowAll(false)
-                  setFilter("all")
-                }}
-              >
-                Show only dino
-              </button>
-            </div>
-          ) : null}
+          <div className="ds-see-all-wrap">
+            <Link to="/skills" className="ds-see-all">
+              See all skills
+              <span className="ds-see-all-count">{SKILLS_CATALOG.length}</span>
+            </Link>
+          </div>
         </main>
 
         <footer className="ds-footer">

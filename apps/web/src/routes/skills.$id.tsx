@@ -7,7 +7,6 @@ import {
 import { Check, Copy, ExternalLink } from "lucide-react"
 import * as React from "react"
 import { SKILLS_CATALOG, SKILLS_CONTENT } from "@dino/shared"
-import { SkillSearch } from "~/components/SkillSearch"
 import {
   SkillMarkdown,
   buildFallbackSkillMd,
@@ -88,23 +87,11 @@ function SkillDetailPage() {
   }
 
   return (
-    <div className="ds-shell">
-      <div className="ds-ambient" aria-hidden="true">
-        <div className="ds-orb ds-orb-a" />
-        <div className="ds-orb ds-orb-b" />
-        <div className="ds-orb ds-orb-c" />
-        <div className="ds-ambient-grid" />
-        <div className="ds-ambient-vignette" />
-      </div>
-
-      <SkillSearch />
-
-      <div className="ds-content">
-        <article className="sk-detail">
+    <article className="sk-detail">
           <nav className="sk-crumb" aria-label="Breadcrumb">
             <Link to="/">Home</Link>
             <span>/</span>
-            <Link to="/">Skills</Link>
+            <Link to="/skills">Skills</Link>
             <span>/</span>
             <span className="sk-crumb-current">{skill.id}</span>
           </nav>
@@ -230,9 +217,7 @@ function SkillDetailPage() {
               <span />
             )}
           </footer>
-        </article>
-      </div>
-    </div>
+    </article>
   )
 }
 
