@@ -1,12 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { motion } from "motion/react"
-import { Check, Copy, Search } from "lucide-react"
+import { Check, Copy } from "lucide-react"
 import * as React from "react"
 import {
   SKILLS_CATALOG,
   type SkillCatalogEntry,
   type SkillCategory,
 } from "@dino/shared"
+import { SkillSearch } from "~/components/SkillSearch"
 
 export const Route = createFileRoute("/")({
   component: DinoSkillsHome,
@@ -46,24 +47,12 @@ const HOW_TO_PROMPT =
 
 function DinoSkillsHome() {
   const [filter, setFilter] = React.useState<SkillCategory | "all">("all")
-  const [query, setQuery] = React.useState("")
   const [copied, setCopied] = React.useState(false)
 
-  const skills: SkillCatalogEntry[] = React.useMemo(() => {
-    const byCat =
-      filter === "all"
-        ? SKILLS_CATALOG
-        : SKILLS_CATALOG.filter((s) => s.category === filter)
-    const q = query.trim().toLowerCase()
-    if (!q) return byCat
-    return byCat.filter(
-      (s) =>
-        s.id.includes(q) ||
-        s.name.toLowerCase().includes(q) ||
-        s.description.toLowerCase().includes(q) ||
-        (s.source?.toLowerCase().includes(q) ?? false),
-    )
-  }, [filter, query])
+  const skills: SkillCatalogEntry[] =
+    filter === "all"
+      ? SKILLS_CATALOG
+      : SKILLS_CATALOG.filter((s) => s.category === filter)
 
   async function copyPrompt() {
     try {
@@ -77,25 +66,9 @@ function DinoSkillsHome() {
 
   return (
     <div className="ds-shell">
-      <div className="ds-content">
-        <header className="ds-header">
-          <div className="ds-header-inner">
-            <Link to="/" className="ds-brand">
-              Dino <span>Skills</span>
-            </Link>
-            <label className="ds-search">
-              <Search size={14} strokeWidth={2} aria-hidden />
-              <input
-                type="search"
-                placeholder="Buscar skill…"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                aria-label="Buscar skill"
-              />
-            </label>
-          </div>
-        </header>
+      <SkillSearch />
 
+      <div className="ds-content">
         <section className="ds-hero" aria-labelledby="ds-title">
           <motion.h1
             id="ds-title"
@@ -164,39 +137,35 @@ function DinoSkillsHome() {
         </div>
 
         <main className="ds-main">
-          {skills.length === 0 ? (
-            <p className="ds-empty">Nada nessa busca. Tenta outro termo.</p>
-          ) : (
-            <ul className="ds-grid">
-              {skills.map((skill, i) => (
-                <motion.li
-                  key={skill.id}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: Math.min(0.04 + i * 0.02, 0.35),
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
+          <ul className="ds-grid">
+            {skills.map((skill, i) => (
+              <motion.li
+                key={skill.id}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.4,
+                  delay: Math.min(0.04 + i * 0.02, 0.35),
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                <Link
+                  to="/skills/$id"
+                  params={{ id: skill.id }}
+                  className="ds-card"
                 >
-                  <Link
-                    to="/skills/$id"
-                    params={{ id: skill.id }}
-                    className="ds-card"
-                  >
-                    <h3 className="ds-card-id">{skill.id}</h3>
-                    <p>{skill.description}</p>
-                    <div className="ds-card-foot">
-                      <span className="ds-source">
-                        <i aria-hidden />
-                        {skill.source ?? CATEGORY_LABEL[skill.category]}
-                      </span>
-                    </div>
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-          )}
+                  <h3 className="ds-card-id">{skill.id}</h3>
+                  <p>{skill.description}</p>
+                  <div className="ds-card-foot">
+                    <span className="ds-source">
+                      <i aria-hidden />
+                      {skill.source ?? CATEGORY_LABEL[skill.category]}
+                    </span>
+                  </div>
+                </Link>
+              </motion.li>
+            ))}
+          </ul>
         </main>
 
         <footer className="ds-footer">

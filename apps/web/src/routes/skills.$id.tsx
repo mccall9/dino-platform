@@ -1,13 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router"
-import {
-  Check,
-  ChevronLeft,
-  ChevronRight,
-  Copy,
-  ExternalLink,
-} from "lucide-react"
+import { Check, Copy, ExternalLink } from "lucide-react"
 import * as React from "react"
 import { SKILLS_CATALOG, SKILLS_CONTENT } from "@dino/shared"
+import { SkillSearch } from "~/components/SkillSearch"
 import {
   SkillMarkdown,
   buildFallbackSkillMd,
@@ -69,47 +64,9 @@ function SkillDetailPage() {
 
   return (
     <div className="ds-shell">
-      <div className="ds-content">
-        <header className="ds-header">
-          <div className="ds-header-inner sk-header-inner">
-            <Link to="/" className="ds-brand">
-              Dino <span>Skills</span>
-            </Link>
-            <div className="sk-nav-arrows">
-              {prev ? (
-                <Link
-                  to="/skills/$id"
-                  params={{ id: prev.id }}
-                  className="sk-arrow"
-                  aria-label={`Anterior: ${prev.id}`}
-                  title={prev.id}
-                >
-                  <ChevronLeft size={16} />
-                </Link>
-              ) : (
-                <span className="sk-arrow is-disabled" aria-hidden>
-                  <ChevronLeft size={16} />
-                </span>
-              )}
-              {next ? (
-                <Link
-                  to="/skills/$id"
-                  params={{ id: next.id }}
-                  className="sk-arrow"
-                  aria-label={`Próxima: ${next.id}`}
-                  title={next.id}
-                >
-                  <ChevronRight size={16} />
-                </Link>
-              ) : (
-                <span className="sk-arrow is-disabled" aria-hidden>
-                  <ChevronRight size={16} />
-                </span>
-              )}
-            </div>
-          </div>
-        </header>
+      <SkillSearch />
 
+      <div className="ds-content">
         <article className="sk-detail">
           <nav className="sk-crumb" aria-label="Breadcrumb">
             <Link to="/">Home</Link>
