@@ -1,9 +1,19 @@
-import { createFileRoute, redirect } from "@tanstack/react-router"
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router"
 
-/** Skills is the home now — keep old /skills URL working. */
+/**
+ * Layout for /skills and /skills/$id.
+ * Only exact /skills redirects home — child routes must render via Outlet.
+ */
 export const Route = createFileRoute("/skills")({
-  beforeLoad: () => {
-    throw redirect({ to: "/" })
+  beforeLoad: ({ location }) => {
+    const path = location.pathname.replace(/\/$/, "") || "/"
+    if (path === "/skills") {
+      throw redirect({ to: "/" })
+    }
   },
-  component: () => null,
+  component: SkillsLayout,
 })
+
+function SkillsLayout() {
+  return <Outlet />
+}
