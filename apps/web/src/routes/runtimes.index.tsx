@@ -2,23 +2,44 @@ import { createFileRoute, Link } from "@tanstack/react-router"
 import { motion } from "motion/react"
 import { RUNTIMES_CATALOG } from "@dino/shared"
 import { AgentIcon } from "~/components/AgentIcon"
+import { AgentsMaintenance } from "~/components/AgentsMaintenance"
+import { AGENTS_LIVE } from "~/lib/feature-flags"
 import { skillsForRuntime } from "~/lib/runtimes"
 
 export const Route = createFileRoute("/runtimes/")({
   component: RuntimesCatalogPage,
   head: () => ({
     meta: [
-      { title: "Agents · Dino Skills" },
+      { title: AGENTS_LIVE ? "Agents · Dino Skills" : "Agents · Manutenção" },
       {
         name: "description",
-        content:
-          "Browse AI agents that support Dino Skills — Claude Code, Cursor, Codex, Copilot, and more.",
+        content: AGENTS_LIVE
+          ? "Browse AI agents that support Dino Skills — Claude Code, Cursor, Codex, Copilot, and more."
+          : "Área de Agents em manutenção.",
       },
     ],
   }),
 })
 
 function RuntimesCatalogPage() {
+  if (!AGENTS_LIVE) {
+    return (
+      <div className="ds-discover">
+        <nav className="sk-crumb" aria-label="Breadcrumb">
+          <Link to="/">Home</Link>
+          <span>/</span>
+          <span className="sk-crumb-current">Agents</span>
+        </nav>
+        <AgentsMaintenance />
+        <footer className="ds-footer">
+          <p>
+            <Link to="/">← Skills</Link>
+          </p>
+        </footer>
+      </div>
+    )
+  }
+
   return (
     <div className="ds-discover ds-discover-agent">
       <nav className="sk-crumb" aria-label="Breadcrumb">

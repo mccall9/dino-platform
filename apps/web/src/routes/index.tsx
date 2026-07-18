@@ -9,8 +9,10 @@ import {
   type SkillCategory,
 } from "@dino/shared"
 import { AgentIcon } from "~/components/AgentIcon"
+import { AgentsMaintenance } from "~/components/AgentsMaintenance"
 import { SkillSearch } from "~/components/SkillSearch"
 import { SourceChip } from "~/components/SourceChip"
+import { AGENTS_LIVE } from "~/lib/feature-flags"
 import { skillsForRuntime } from "~/lib/runtimes"
 import { ShellModeProvider } from "~/lib/shell-mode"
 
@@ -57,6 +59,11 @@ function DinoSkillsHome() {
   >(null)
   const skills: SkillCatalogEntry[] = OWN_SKILLS
   const agentMode = mode === "agents"
+  /** Full agents UI only when flag is on; otherwise maintenance, same dark theme as skills. */
+  const agentsUiLive = agentMode && AGENTS_LIVE
+  const showAgentsMaintenance = agentMode && !AGENTS_LIVE
+  /** Search follows agents only when the feature is live. */
+  const shellMode = agentsUiLive ? "agents" : "skills"
 
   async function copyText(
     text: string,
@@ -72,13 +79,13 @@ function DinoSkillsHome() {
   }
 
   return (
-    <ShellModeProvider mode={mode}>
+    <ShellModeProvider mode={shellMode}>
     <div
-      className={`ds-shell${agentMode ? " ds-mode-agent" : ""}`}
-      data-mode={mode}
+      className={`ds-shell${agentsUiLive ? " ds-mode-agent" : ""}`}
+      data-mode={agentsUiLive ? "agents" : "skills"}
     >
       <div
-        className={`ds-ambient${agentMode ? " ds-ambient-agent" : ""}`}
+        className={`ds-ambient${agentsUiLive ? " ds-ambient-agent" : ""}`}
         aria-hidden="true"
       >
         <div className="ds-orb ds-orb-a" />
@@ -119,22 +126,28 @@ function DinoSkillsHome() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
-            {agentMode ? "DINO AGENTS" : "DINO SKILLS"}
+            {showAgentsMaintenance
+              ? "DINO AGENTS"
+              : agentsUiLive
+                ? "DINO AGENTS"
+                : "DINO SKILLS"}
           </motion.h1>
 
           <motion.p
             className="ds-lead"
-            key={`lead-${mode}`}
+            key={`lead-${mode}-${AGENTS_LIVE}`}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
-            {agentMode
-              ? "Claude Code, Cursor, Codex, Copilot… — agents que carregam o pack. Mesma estrutura, modo claro + azul."
-              : "Pack npm com as skills do meu setup — design, marketing, código e o resto que o agent carrega quando constrói comigo."}
+            {showAgentsMaintenance
+              ? "Área de agents temporariamente indisponível."
+              : agentsUiLive
+                ? "Claude Code, Cursor, Codex, Copilot… — agents que carregam o pack."
+                : "Pack npm com as skills do meu setup — design, marketing, código e o resto que o agent carrega quando constrói comigo."}
           </motion.p>
 
-          {!agentMode ? (
+          {showAgentsMaintenance ? null : !agentMode ? (
             <motion.div
               className="ds-howto"
               initial={{ opacity: 0, y: 12 }}
@@ -232,58 +245,71 @@ function DinoSkillsHome() {
           )}
         </section>
 
-        <div className="ds-collection-head" id="ds-collection">
-          <div className="ds-collection-title-row">
-            <h2>{agentMode ? "Agents" : "Collection"}</h2>
-            <span className="ds-collection-meta">
-              {agentMode
-                ? `${RUNTIMES_CATALOG.length} runtimes`
-                : `${OWN_SKILLS.length} dino · ${SKILLS_CATALOG.length} no pack`}
-            </span>
+        {!showAgentsMaintenance ? (
+          <div className="ds-collection-head" id="ds-collection">
+            <div className="ds-collection-title-row">
+              <h2>{agentsUiLive ? "Agents" : "Collection"}</h2>
+              <span className="ds-collection-meta">
+                {agentsUiLive
+                  ? `${RUNTIMES_CATALOG.length} runtimes`
+                  : `${OWN_SKILLS.length} dino · ${SKILLS_CATALOG.length} no pack`}
+              </span>
+            </div>
           </div>
-        </div>
+        ) : null}
 
         <main className="ds-main">
-          {agentMode ? (
-            <ul className="ds-grid">
-              {RUNTIMES_CATALOG.map((rt, i) => {
-                const count = skillsForRuntime(rt.id).length
-                return (
-                  <motion.li
-                    key={rt.id}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.4,
-                      delay: Math.min(0.04 + i * 0.04, 0.35),
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                  >
-                    <Link
-                      to="/runtimes/$id"
-                      params={{ id: rt.id }}
-                      className="ds-card ds-card-agent"
+          {showAgentsMaintenance ? (
+            <AgentsMaintenance />
+          ) : agentsUiLive ? (
+            <>
+              <ul className="ds-grid">
+                {RUNTIMES_CATALOG.map((rt, i) => {
+                  const count = skillsForRuntime(rt.id).length
+                  return (
+                    <motion.li
+                      key={rt.id}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: Math.min(0.04 + i * 0.04, 0.35),
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
                     >
-                      <div className="ds-agent-card-top">
-                        <AgentIcon id={rt.id} accent={rt.accent} size="md" />
-                        <h3 className="ds-card-id">{rt.name}</h3>
-                      </div>
-                      <p>{rt.description}</p>
-                      <div className="ds-card-foot">
-                        <span className="ds-source">
-                          <i
-                            style={{ background: rt.accent }}
-                            aria-hidden
-                          />
-                          {rt.origin}
-                        </span>
-                        <span className="ds-agent-count">{count} skills</span>
-                      </div>
-                    </Link>
-                  </motion.li>
-                )
-              })}
-            </ul>
+                      <Link
+                        to="/runtimes/$id"
+                        params={{ id: rt.id }}
+                        className="ds-card ds-card-agent"
+                      >
+                        <div className="ds-agent-card-top">
+                          <AgentIcon id={rt.id} accent={rt.accent} size="md" />
+                          <h3 className="ds-card-id">{rt.name}</h3>
+                        </div>
+                        <p>{rt.description}</p>
+                        <div className="ds-card-foot">
+                          <span className="ds-source">
+                            <i
+                              style={{ background: rt.accent }}
+                              aria-hidden
+                            />
+                            {rt.origin}
+                          </span>
+                          <span className="ds-agent-count">
+                            {count} skills
+                          </span>
+                        </div>
+                      </Link>
+                    </motion.li>
+                  )
+                })}
+              </ul>
+              <div className="ds-see-all-wrap">
+                <Link to="/runtimes" className="ds-see-all">
+                  Open agents page
+                </Link>
+              </div>
+            </>
           ) : (
             <>
               <ul className="ds-grid">
@@ -323,14 +349,6 @@ function DinoSkillsHome() {
               </div>
             </>
           )}
-
-          {agentMode ? (
-            <div className="ds-see-all-wrap">
-              <Link to="/runtimes" className="ds-see-all">
-                Open agents page
-              </Link>
-            </div>
-          ) : null}
         </main>
 
         <footer className="ds-footer">

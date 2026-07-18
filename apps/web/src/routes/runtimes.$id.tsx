@@ -11,7 +11,9 @@ import {
   type SkillCategory,
 } from "@dino/shared"
 import { AgentIcon } from "~/components/AgentIcon"
+import { AgentsMaintenance } from "~/components/AgentsMaintenance"
 import { SourceChip } from "~/components/SourceChip"
+import { AGENTS_LIVE } from "~/lib/feature-flags"
 import { skillsForRuntimeTopic } from "~/lib/runtimes"
 
 const IDS = new Set(RUNTIMES_CATALOG.map((r) => r.id))
@@ -58,6 +60,26 @@ function RuntimeDetailPage() {
   const { runtime, prev, next, others } = Route.useLoaderData()
   const [topic, setTopic] = React.useState<SkillCategory | "all">("all")
   const [copied, setCopied] = React.useState<"cmd" | "prompt" | null>(null)
+
+  if (!AGENTS_LIVE) {
+    return (
+      <div className="ds-discover">
+        <nav className="sk-crumb" aria-label="Breadcrumb">
+          <Link to="/">Home</Link>
+          <span>/</span>
+          <Link to="/runtimes">Agents</Link>
+          <span>/</span>
+          <span className="sk-crumb-current">{runtime.name}</span>
+        </nav>
+        <AgentsMaintenance />
+        <footer className="ds-footer">
+          <p>
+            <Link to="/">← Skills</Link>
+          </p>
+        </footer>
+      </div>
+    )
+  }
 
   const topics: Array<SkillCategory | "all"> = [
     "all",
