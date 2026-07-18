@@ -10,6 +10,7 @@ import {
 } from "@dino/shared"
 import { AgentIcon } from "~/components/AgentIcon"
 import { AgentsMaintenance } from "~/components/AgentsMaintenance"
+import { SiteOutro } from "~/components/SiteOutro"
 import { SkillSearch } from "~/components/SkillSearch"
 import { SourceChip } from "~/components/SourceChip"
 import { AGENTS_LIVE } from "~/lib/feature-flags"
@@ -343,9 +344,7 @@ function DinoSkillsHome() {
           )}
         </main>
 
-        <footer className="ds-footer">
-          <p>{t("home.footer")}</p>
-        </footer>
+        {!agentMode ? <SiteOutro /> : null}
       </div>
     </div>
     </ShellModeProvider>

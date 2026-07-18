@@ -6,6 +6,7 @@ import {
   type SkillCatalogEntry,
   type SkillCategory,
 } from "@dino/shared"
+import { SiteOutro } from "~/components/SiteOutro"
 import { SourceChip } from "~/components/SourceChip"
 import { useI18n } from "~/lib/i18n"
 
@@ -124,13 +125,13 @@ function SkillsCatalogPage() {
         <p className="ds-empty">{t("skills.emptyTopic")}</p>
       ) : null}
 
-      <footer className="ds-footer">
-        <p>
-          <strong>{skills.length}</strong> {t("skills.footerPack")}{" "}
-          <code className="ds-inline-code">dino-skills</code>
-          {filter !== "all" ? ` · ${label(filter)}` : ""}
-        </p>
-      </footer>
+      <p className="ds-footer" style={{ borderTop: "none", paddingBottom: 0 }}>
+        <strong>{skills.length}</strong> {t("skills.footerPack")}{" "}
+        <code className="ds-inline-code">dino-skills</code>
+        {filter !== "all" ? ` · ${label(filter)}` : ""}
+      </p>
+
+      <SiteOutro />
     </div>
   )
 }
