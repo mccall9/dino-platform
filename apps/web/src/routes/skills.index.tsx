@@ -7,6 +7,7 @@ import {
   type SkillCategory,
 } from "@dino/shared"
 import { SourceChip } from "~/components/SourceChip"
+import { useI18n } from "~/lib/i18n"
 
 export const Route = createFileRoute("/skills/")({
   component: SkillsCatalogPage,
@@ -15,22 +16,11 @@ export const Route = createFileRoute("/skills/")({
       { title: "All Skills · Dino Skills" },
       {
         name: "description",
-        content: `Coleção de ${SKILLS_CATALOG.length} skills do pack dino — design, marketing, social e mais.`,
+        content: `Coleção de ${SKILLS_CATALOG.length} skills do pack dino.`,
       },
     ],
   }),
 })
-
-const CATEGORY_LABEL: Record<SkillCategory | "all", string> = {
-  all: "All",
-  developers: "Dev",
-  designers: "Design",
-  marketing: "Marketing",
-  social: "Social",
-  finance: "Finance",
-  "small-business": "Business",
-  legal: "Legal",
-}
 
 const FILTERS: Array<SkillCategory | "all"> = [
   "all",
@@ -41,7 +31,17 @@ const FILTERS: Array<SkillCategory | "all"> = [
 ]
 
 function SkillsCatalogPage() {
+  const { t } = useI18n()
   const [filter, setFilter] = React.useState<SkillCategory | "all">("all")
+
+  const label = (c: SkillCategory | "all") => {
+    if (c === "all") return t("skills.filterAll")
+    if (c === "developers") return t("skills.filterDev")
+    if (c === "designers") return t("skills.filterDesign")
+    if (c === "marketing") return t("skills.filterMarketing")
+    if (c === "social") return t("skills.filterSocial")
+    return c
+  }
 
   const skills: SkillCatalogEntry[] =
     filter === "all"
@@ -51,9 +51,9 @@ function SkillsCatalogPage() {
   return (
     <div className="ds-discover">
       <nav className="sk-crumb" aria-label="Breadcrumb">
-        <Link to="/">Home</Link>
+        <Link to="/">{t("nav.home")}</Link>
         <span>/</span>
-        <span className="sk-crumb-current">Skills</span>
+        <span className="sk-crumb-current">{t("nav.skills")}</span>
       </nav>
 
       <header className="ds-discover-hero">
@@ -62,20 +62,22 @@ function SkillsCatalogPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
-          Discover the full dino pack
+          {t("skills.discoverTitle")}
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
         >
-          A collection of {SKILLS_CATALOG.length} high-quality skills for
-          shipping in public — design, marketing, social, revenue and agent
-          workflows. Load with{" "}
+          {t("skills.discoverLead", { n: SKILLS_CATALOG.length })}{" "}
           <code className="ds-inline-code">npx dino-skills start</code>.
         </motion.p>
 
-        <div className="ds-filters ds-filters-left" role="list" aria-label="Filter">
+        <div
+          className="ds-filters ds-filters-left"
+          role="list"
+          aria-label="Filter"
+        >
           {FILTERS.map((c) => (
             <button
               key={c}
@@ -85,7 +87,7 @@ function SkillsCatalogPage() {
               data-active={filter === c ? "true" : "false"}
               onClick={() => setFilter(c)}
             >
-              {CATEGORY_LABEL[c]}
+              {label(c)}
             </button>
           ))}
         </div>
@@ -119,14 +121,14 @@ function SkillsCatalogPage() {
       </ul>
 
       {skills.length === 0 ? (
-        <p className="ds-empty">Nada nessa categoria.</p>
+        <p className="ds-empty">{t("skills.emptyTopic")}</p>
       ) : null}
 
       <footer className="ds-footer">
         <p>
-          <strong>{skills.length}</strong> skills
-          {filter !== "all" ? ` · ${CATEGORY_LABEL[filter]}` : ""} · pack{" "}
+          <strong>{skills.length}</strong> {t("skills.footerPack")}{" "}
           <code className="ds-inline-code">dino-skills</code>
+          {filter !== "all" ? ` · ${label(filter)}` : ""}
         </p>
       </footer>
     </div>

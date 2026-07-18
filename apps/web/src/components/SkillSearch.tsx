@@ -8,6 +8,7 @@ import {
   type SkillCatalogEntry,
 } from "@dino/shared"
 import { AgentIcon } from "~/components/AgentIcon"
+import { useI18n } from "~/lib/i18n"
 import { useShellMode, type ShellMode } from "~/lib/shell-mode"
 
 function filterSkills(query: string): SkillCatalogEntry[] {
@@ -43,6 +44,7 @@ function isModK(e: KeyboardEvent) {
 /** Floating Search button (top-right) + command palette modal. */
 export function SkillSearch() {
   const mode = useShellMode()
+  const { t } = useI18n()
   const [open, setOpen] = React.useState(false)
   const isMac = React.useMemo(() => {
     if (typeof navigator === "undefined") return false
@@ -73,12 +75,12 @@ export function SkillSearch() {
         type="button"
         className="ds-search-trigger"
         onClick={() => setOpen(true)}
-        aria-label={isAgent ? "Buscar agents" : "Buscar skills"}
+        aria-label={isAgent ? t("nav.searchAgents") : t("nav.search")}
         aria-haspopup="dialog"
         aria-expanded={open}
       >
         <Search size={14} strokeWidth={2} aria-hidden />
-        <span>{isAgent ? "Agents" : "Search"}</span>
+        <span>{isAgent ? t("nav.searchAgents") : t("nav.search")}</span>
         <kbd className="ds-search-kbd">{isMac ? "⌘K" : "Ctrl K"}</kbd>
       </button>
 
@@ -96,6 +98,7 @@ function SkillSearchPalette({
   mode: ShellMode
   onClose: () => void
 }) {
+  const { t } = useI18n()
   const navigate = useNavigate()
   const [query, setQuery] = React.useState("")
   const [active, setActive] = React.useState(0)
@@ -188,7 +191,7 @@ function SkillSearchPalette({
         className="ds-palette"
         role="dialog"
         aria-modal="true"
-        aria-label={isAgent ? "Buscar agents" : "Buscar skills"}
+        aria-label={isAgent ? t("nav.searchAgents") : t("nav.search")}
       >
         <div className="ds-palette-search">
           <Search size={16} strokeWidth={2} aria-hidden />
@@ -199,7 +202,9 @@ function SkillSearchPalette({
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={onInputKey}
             placeholder={
-              isAgent ? "Search agents…" : "Search skills…"
+              isAgent
+                ? t("search.placeholderAgents")
+                : t("search.placeholderSkills")
             }
             autoComplete="off"
             spellCheck={false}
@@ -209,9 +214,7 @@ function SkillSearchPalette({
         <div className="ds-palette-list" ref={listRef} role="listbox">
           {resultCount === 0 ? (
             <p className="ds-palette-empty">
-              {isAgent
-                ? "Nenhum agent encontrado."
-                : "Nenhuma skill encontrada."}
+              {isAgent ? t("search.noAgents") : t("search.noSkills")}
             </p>
           ) : isAgent ? (
             agentResults.map((rt, i) => (
@@ -261,16 +264,17 @@ function SkillSearchPalette({
 
         <div className="ds-palette-foot">
           <span>
-            {resultCount} {isAgent ? "agents" : "results"}
+            {resultCount}{" "}
+            {isAgent ? t("search.agents") : t("search.results")}
           </span>
           <span className="ds-palette-hints">
             <kbd>↑</kbd>
             <kbd>↓</kbd>
-            <span>move</span>
+            <span>{t("search.move")}</span>
             <kbd>Enter</kbd>
-            <span>open</span>
+            <span>{t("search.open")}</span>
             <kbd>Esc</kbd>
-            <span>close</span>
+            <span>{t("search.close")}</span>
           </span>
         </div>
       </div>

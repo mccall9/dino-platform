@@ -14,7 +14,8 @@ import { AgentIcon } from "~/components/AgentIcon"
 import { AgentsMaintenance } from "~/components/AgentsMaintenance"
 import { SourceChip } from "~/components/SourceChip"
 import { AGENTS_LIVE } from "~/lib/feature-flags"
-import { skillsForRuntimeTopic } from "~/lib/runtimes"
+import { useI18n } from "~/lib/i18n"
+import { skillsForRuntime, skillsForRuntimeTopic } from "~/lib/runtimes"
 
 const IDS = new Set(RUNTIMES_CATALOG.map((r) => r.id))
 
@@ -57,6 +58,7 @@ export const Route = createFileRoute("/runtimes/$id")({
 })
 
 function RuntimeDetailPage() {
+  const { t } = useI18n()
   const { runtime, prev, next, others } = Route.useLoaderData()
   const [topic, setTopic] = React.useState<SkillCategory | "all">("all")
   const [copied, setCopied] = React.useState<"cmd" | "prompt" | null>(null)
@@ -65,16 +67,16 @@ function RuntimeDetailPage() {
     return (
       <div className="ds-discover">
         <nav className="sk-crumb" aria-label="Breadcrumb">
-          <Link to="/">Home</Link>
+          <Link to="/">{t("nav.home")}</Link>
           <span>/</span>
-          <Link to="/runtimes">Agents</Link>
+          <Link to="/runtimes">{t("nav.agents")}</Link>
           <span>/</span>
           <span className="sk-crumb-current">{runtime.name}</span>
         </nav>
         <AgentsMaintenance />
         <footer className="ds-footer">
           <p>
-            <Link to="/">← Skills</Link>
+            <Link to="/">{t("agents.backSkills")}</Link>
           </p>
         </footer>
       </div>
@@ -90,6 +92,15 @@ function RuntimeDetailPage() {
 
   const skills = skillsForRuntimeTopic(runtime.id, topic)
 
+  const topicLabel = (c: SkillCategory | "all") => {
+    if (c === "all") return t("topic.all")
+    if (c === "developers") return t("topic.dev")
+    if (c === "designers") return t("topic.design")
+    if (c === "marketing") return t("topic.marketing")
+    if (c === "social") return t("topic.social")
+    return c
+  }
+
   async function copy(text: string, which: "cmd" | "prompt") {
     try {
       await navigator.clipboard.writeText(text)
@@ -103,9 +114,9 @@ function RuntimeDetailPage() {
   return (
     <article className="sk-detail sk-detail-agent ds-agent-detail">
       <nav className="sk-crumb" aria-label="Breadcrumb">
-        <Link to="/">Home</Link>
+        <Link to="/">{t("nav.home")}</Link>
         <span>/</span>
-        <Link to="/runtimes">Agents</Link>
+        <Link to="/runtimes">{t("nav.agents")}</Link>
         <span>/</span>
         <span className="sk-crumb-current">{runtime.name}</span>
       </nav>
@@ -122,23 +133,20 @@ function RuntimeDetailPage() {
         ) : null}
         {runtime.bestFor ? (
           <p className="ds-agent-bestfor">
-            Most relevant when you’re working on{" "}
+            {t("agents.bestFor")}{" "}
             <strong>{runtime.bestFor}</strong>.
           </p>
         ) : null}
       </header>
 
       <section className="ds-howto ds-howto-agent" aria-labelledby="rt-howto">
-        <h2 id="rt-howto">How to use</h2>
-        <p>
-          Ask your agent to run the CLI first so it can choose the right skill
-          before making changes.
-        </p>
+        <h2 id="rt-howto">{t("agents.howto")}</h2>
+        <p>{t("agents.howtoBody")}</p>
         <button
           type="button"
           className="ds-cmd"
           onClick={() => copy(runtime.howTo, "cmd")}
-          aria-label="Copiar install"
+          aria-label={t("skill.install")}
         >
           <code>
             <span className="tok-cmd">npx</span>{" "}
@@ -157,31 +165,29 @@ function RuntimeDetailPage() {
           type="button"
           className="ds-cmd ds-cmd-secondary"
           onClick={() => copy(runtime.howToPrompt, "prompt")}
-          aria-label="Copiar prompt"
+          aria-label={t("home.howto")}
         >
           <code>{runtime.howToPrompt}</code>
           <span className="ds-cmd-icon" aria-hidden>
             {copied === "prompt" ? <Check size={15} /> : <Copy size={15} />}
           </span>
         </button>
-        <p className="ds-howto-foot">
-          Or browse the collection below for the best skills for this agent.
-        </p>
+        <p className="ds-howto-foot">{t("agents.howtoFoot")}</p>
       </section>
 
       <section className="ds-agent-topics" aria-labelledby="rt-topics">
-        <h2 id="rt-topics">Explore topics</h2>
+        <h2 id="rt-topics">{t("agents.topics")}</h2>
         <div className="ds-filters ds-filters-left" role="list">
-          {topicList.map((t) => (
+          {topicList.map((topicKey) => (
             <button
-              key={t}
+              key={topicKey}
               type="button"
               role="listitem"
               className="ds-chip"
-              data-active={topic === t ? "true" : "false"}
-              onClick={() => setTopic(t)}
+              data-active={topic === topicKey ? "true" : "false"}
+              onClick={() => setTopic(topicKey)}
             >
-              {TOPIC_LABEL[t] ?? t}
+              {topicLabel(topicKey)}
             </button>
           ))}
         </div>
@@ -204,13 +210,13 @@ function RuntimeDetailPage() {
           ))}
         </ul>
         {skills.length === 0 ? (
-          <p className="ds-empty">Nenhuma skill nesse tópico.</p>
+          <p className="ds-empty">{t("agents.emptyTopic")}</p>
         ) : null}
       </section>
 
       {others.length > 0 ? (
         <section className="ds-other-agents" aria-labelledby="rt-others">
-          <h2 id="rt-others">Other agents</h2>
+          <h2 id="rt-others">{t("agents.other")}</h2>
           <ul className="ds-grid ds-grid-2">
             {others.map((rt) => (
               <li key={rt.id}>
@@ -238,7 +244,7 @@ function RuntimeDetailPage() {
             params={{ id: prev.id }}
             className="sk-pager-link"
           >
-            <span>← anterior</span>
+            <span>{t("agents.prev")}</span>
             <strong>{prev.name}</strong>
           </Link>
         ) : (
@@ -250,7 +256,7 @@ function RuntimeDetailPage() {
             params={{ id: next.id }}
             className="sk-pager-link is-next"
           >
-            <span>próximo →</span>
+            <span>{t("agents.next")}</span>
             <strong>{next.name}</strong>
           </Link>
         ) : (

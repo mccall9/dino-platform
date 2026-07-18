@@ -13,6 +13,7 @@ import { AgentsMaintenance } from "~/components/AgentsMaintenance"
 import { SkillSearch } from "~/components/SkillSearch"
 import { SourceChip } from "~/components/SourceChip"
 import { AGENTS_LIVE } from "~/lib/feature-flags"
+import { useI18n } from "~/lib/i18n"
 import { skillsForRuntime } from "~/lib/runtimes"
 import { ShellModeProvider } from "~/lib/shell-mode"
 
@@ -30,21 +31,8 @@ export const Route = createFileRoute("/")({
   }),
 })
 
-const CATEGORY_LABEL: Record<SkillCategory | "all", string> = {
-  all: "todas",
-  developers: "dev",
-  designers: "design",
-  marketing: "marketing",
-  social: "social",
-  finance: "finance",
-  "small-business": "business",
-  legal: "legal",
-}
-
 const HOW_TO_INSTALL = "npx dino-skills install"
 const HOW_TO_START = "npx dino-skills start"
-const HOW_TO_PROMPT =
-  "Run `npx dino-skills install` then `npx dino-skills start` and pick the right skill."
 
 const OWN_SKILLS = SKILLS_CATALOG.filter(
   (s) => s.featured || s.source === "dino",
@@ -53,6 +41,7 @@ const OWN_SKILLS = SKILLS_CATALOG.filter(
 type HomeMode = "skills" | "agents"
 
 function DinoSkillsHome() {
+  const { t, locale } = useI18n()
   const [mode, setMode] = React.useState<HomeMode>("skills")
   const [copied, setCopied] = React.useState<
     "install" | "start" | "prompt" | null
@@ -64,6 +53,7 @@ function DinoSkillsHome() {
   const showAgentsMaintenance = agentMode && !AGENTS_LIVE
   /** Search follows agents only when the feature is live. */
   const shellMode = agentsUiLive ? "agents" : "skills"
+  const howToPrompt = t("home.howto.prompt")
 
   async function copyText(
     text: string,
@@ -104,7 +94,7 @@ function DinoSkillsHome() {
           data-active={mode === "skills" ? "true" : "false"}
           onClick={() => setMode("skills")}
         >
-          Skills
+          {t("nav.skills")}
         </button>
         <button
           type="button"
@@ -112,7 +102,7 @@ function DinoSkillsHome() {
           data-active={mode === "agents" ? "true" : "false"}
           onClick={() => setMode("agents")}
         >
-          Agents
+          {t("nav.agents")}
         </button>
       </div>
 
@@ -121,30 +111,26 @@ function DinoSkillsHome() {
           <motion.h1
             id="ds-title"
             className="ds-title"
-            key={mode}
+            key={`${mode}-${locale}`}
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
-            {showAgentsMaintenance
-              ? "DINO AGENTS"
-              : agentsUiLive
-                ? "DINO AGENTS"
-                : "DINO SKILLS"}
+            {agentMode ? t("home.titleAgents") : t("home.titleSkills")}
           </motion.h1>
 
           <motion.p
             className="ds-lead"
-            key={`lead-${mode}-${AGENTS_LIVE}`}
+            key={`lead-${mode}-${locale}`}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
             {showAgentsMaintenance
-              ? "Área de agents temporariamente indisponível."
+              ? t("home.leadAgentsMaint")
               : agentsUiLive
-                ? "Claude Code, Cursor, Codex, Copilot… — agents que carregam o pack."
-                : "Pack npm com as skills do meu setup — design, marketing, código e o resto que o agent carrega quando constrói comigo."}
+                ? t("home.leadAgentsLive")
+                : t("home.leadSkills")}
           </motion.p>
 
           {showAgentsMaintenance ? null : !agentMode ? (
@@ -158,17 +144,19 @@ function DinoSkillsHome() {
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <h2>How to use</h2>
+              <h2>{t("home.howto")}</h2>
               <p>
-                <strong>Install</strong> baixa o pack no agent.{" "}
-                <strong>Start</strong> roda o protocol pra escolher a skill.
+                <strong>{t("home.howto.installStrong")}</strong>{" "}
+                {t("home.howto.installRest")}{" "}
+                <strong>{t("home.howto.startStrong")}</strong>{" "}
+                {t("home.howto.startRest")}
               </p>
-              <p className="ds-howto-label">1 · Baixar o pack</p>
+              <p className="ds-howto-label">{t("home.howto.step1")}</p>
               <button
                 type="button"
                 className="ds-cmd"
                 onClick={() => copyText(HOW_TO_INSTALL, "install")}
-                aria-label="Copiar comando install"
+                aria-label={t("home.howto.step1")}
               >
                 <code>
                   <span className="tok-cmd">npx</span>{" "}
@@ -183,12 +171,12 @@ function DinoSkillsHome() {
                   )}
                 </span>
               </button>
-              <p className="ds-howto-label">2 · Rodar / escolher skill</p>
+              <p className="ds-howto-label">{t("home.howto.step2")}</p>
               <button
                 type="button"
                 className="ds-cmd"
                 onClick={() => copyText(HOW_TO_START, "start")}
-                aria-label="Copiar comando start"
+                aria-label={t("home.howto.step2")}
               >
                 <code>
                   <span className="tok-cmd">npx</span>{" "}
@@ -206,10 +194,10 @@ function DinoSkillsHome() {
               <button
                 type="button"
                 className="ds-cmd ds-cmd-secondary"
-                onClick={() => copyText(HOW_TO_PROMPT, "prompt")}
-                aria-label="Copiar prompt de exemplo"
+                onClick={() => copyText(howToPrompt, "prompt")}
+                aria-label={t("home.howto")}
               >
-                <code>{HOW_TO_PROMPT}</code>
+                <code>{howToPrompt}</code>
                 <span className="ds-cmd-icon" aria-hidden>
                   {copied === "prompt" ? (
                     <Check size={15} />
@@ -219,7 +207,7 @@ function DinoSkillsHome() {
                 </span>
               </button>
               <p className="ds-howto-foot">
-                Flags:{" "}
+                {t("home.howto.flags")}{" "}
                 <code className="ds-inline-code">install --global</code> ·{" "}
                 <code className="ds-inline-code">install --dir ./skills</code>
               </p>
@@ -235,10 +223,9 @@ function DinoSkillsHome() {
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <h2>How to use</h2>
+              <h2>{t("home.howto")}</h2>
               <p>
-                Escolhe o agent → vê origem + skills que encaixam. O pack é o
-                mesmo:{" "}
+                {t("home.howto.agentsLive")}{" "}
                 <code className="ds-inline-code">npx dino-skills install</code>
               </p>
             </motion.div>
@@ -248,11 +235,16 @@ function DinoSkillsHome() {
         {!showAgentsMaintenance ? (
           <div className="ds-collection-head" id="ds-collection">
             <div className="ds-collection-title-row">
-              <h2>{agentsUiLive ? "Agents" : "Collection"}</h2>
+              <h2>
+                {agentsUiLive ? t("home.agentsSection") : t("home.collection")}
+              </h2>
               <span className="ds-collection-meta">
                 {agentsUiLive
-                  ? `${RUNTIMES_CATALOG.length} runtimes`
-                  : `${OWN_SKILLS.length} dino · ${SKILLS_CATALOG.length} no pack`}
+                  ? t("home.metaRuntimes", { n: RUNTIMES_CATALOG.length })
+                  : t("home.metaDino", {
+                      n: OWN_SKILLS.length,
+                      total: SKILLS_CATALOG.length,
+                    })}
               </span>
             </div>
           </div>
@@ -296,7 +288,7 @@ function DinoSkillsHome() {
                             {rt.origin}
                           </span>
                           <span className="ds-agent-count">
-                            {count} skills
+                            {t("agents.skillsCount", { n: count })}
                           </span>
                         </div>
                       </Link>
@@ -306,7 +298,7 @@ function DinoSkillsHome() {
               </ul>
               <div className="ds-see-all-wrap">
                 <Link to="/runtimes" className="ds-see-all">
-                  Open agents page
+                  {t("home.openAgents")}
                 </Link>
               </div>
             </>
@@ -341,7 +333,7 @@ function DinoSkillsHome() {
 
               <div className="ds-see-all-wrap">
                 <Link to="/skills" className="ds-see-all">
-                  See all skills
+                  {t("home.seeAll")}
                   <span className="ds-see-all-count">
                     {SKILLS_CATALOG.length}
                   </span>
@@ -352,10 +344,7 @@ function DinoSkillsHome() {
         </main>
 
         <footer className="ds-footer">
-          <p>
-            <strong>Dino Skills</strong> · inventário vivo · dino.blog / Clube
-            dos Curiosos
-          </p>
+          <p>{t("home.footer")}</p>
         </footer>
       </div>
     </div>

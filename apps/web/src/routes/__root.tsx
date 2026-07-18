@@ -8,7 +8,9 @@ import {
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools"
 import * as React from "react"
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary"
+import { LocaleSwitch } from "~/components/LocaleSwitch"
 import { NotFound } from "~/components/NotFound"
+import { I18nProvider } from "~/lib/i18n"
 import appCss from "~/styles/app.css?url"
 import { seo } from "~/utils/seo"
 
@@ -53,10 +55,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        {children}
-        {import.meta.env.DEV ? (
-          <TanStackRouterDevtools position="bottom-right" />
-        ) : null}
+        <I18nProvider>
+          <LocaleSwitch />
+          {children}
+          {import.meta.env.DEV ? (
+            <TanStackRouterDevtools position="bottom-right" />
+          ) : null}
+        </I18nProvider>
         <Scripts />
       </body>
     </html>

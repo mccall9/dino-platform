@@ -4,6 +4,7 @@ import { RUNTIMES_CATALOG } from "@dino/shared"
 import { AgentIcon } from "~/components/AgentIcon"
 import { AgentsMaintenance } from "~/components/AgentsMaintenance"
 import { AGENTS_LIVE } from "~/lib/feature-flags"
+import { useI18n } from "~/lib/i18n"
 import { skillsForRuntime } from "~/lib/runtimes"
 
 export const Route = createFileRoute("/runtimes/")({
@@ -22,18 +23,20 @@ export const Route = createFileRoute("/runtimes/")({
 })
 
 function RuntimesCatalogPage() {
+  const { t } = useI18n()
+
   if (!AGENTS_LIVE) {
     return (
       <div className="ds-discover">
         <nav className="sk-crumb" aria-label="Breadcrumb">
-          <Link to="/">Home</Link>
+          <Link to="/">{t("nav.home")}</Link>
           <span>/</span>
-          <span className="sk-crumb-current">Agents</span>
+          <span className="sk-crumb-current">{t("nav.agents")}</span>
         </nav>
         <AgentsMaintenance />
         <footer className="ds-footer">
           <p>
-            <Link to="/">← Skills</Link>
+            <Link to="/">{t("agents.backSkills")}</Link>
           </p>
         </footer>
       </div>
@@ -43,9 +46,9 @@ function RuntimesCatalogPage() {
   return (
     <div className="ds-discover ds-discover-agent">
       <nav className="sk-crumb" aria-label="Breadcrumb">
-        <Link to="/">Home</Link>
+        <Link to="/">{t("nav.home")}</Link>
         <span>/</span>
-        <span className="sk-crumb-current">Agents</span>
+        <span className="sk-crumb-current">{t("nav.agents")}</span>
       </nav>
 
       <header className="ds-discover-hero">
@@ -54,15 +57,14 @@ function RuntimesCatalogPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
-          Agents
+          {t("agents.title")}
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
         >
-          Browse AI agents that support Dino Skills. Same pack — install once,
-          load in Claude Code, Cursor, Codex, Copilot, and friends.
+          {t("agents.lead")}
         </motion.p>
       </header>
 
@@ -95,7 +97,9 @@ function RuntimesCatalogPage() {
                     <i style={{ background: rt.accent }} aria-hidden />
                     {rt.origin}
                   </span>
-                  <span className="ds-agent-count">{count} skills</span>
+                  <span className="ds-agent-count">
+                    {t("agents.skillsCount", { n: count })}
+                  </span>
                 </div>
               </Link>
             </motion.li>
@@ -105,7 +109,7 @@ function RuntimesCatalogPage() {
 
       <footer className="ds-footer">
         <p>
-          <Link to="/">← Skills mode</Link>
+          <Link to="/">{t("agents.skillsMode")}</Link>
           {" · "}
           <code className="ds-inline-code">npx dino-skills install</code>
         </p>

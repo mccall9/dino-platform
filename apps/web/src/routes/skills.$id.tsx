@@ -8,6 +8,7 @@ import { Check, Copy, ExternalLink } from "lucide-react"
 import * as React from "react"
 import { SKILLS_CATALOG, SKILLS_CONTENT } from "@dino/shared"
 import { SourceChip } from "~/components/SourceChip"
+import { useI18n } from "~/lib/i18n"
 import {
   SkillMarkdown,
   buildFallbackSkillMd,
@@ -63,6 +64,7 @@ export const Route = createFileRoute("/skills/$id")({
 })
 
 function SkillDetailPage() {
+  const { t } = useI18n()
   const { skill, prev, next, related } = Route.useLoaderData()
   const installCmd = resolveInstallCmd(skill)
   const altInstall = resolveAltInstallCmd(skill)
@@ -91,9 +93,9 @@ function SkillDetailPage() {
   return (
     <article className="sk-detail">
           <nav className="sk-crumb" aria-label="Breadcrumb">
-            <Link to="/">Home</Link>
+            <Link to="/">{t("nav.home")}</Link>
             <span>/</span>
-            <Link to="/skills">Skills</Link>
+            <Link to="/skills">{t("nav.skills")}</Link>
             <span>/</span>
             <span className="sk-crumb-current">{skill.id}</span>
           </nav>
@@ -125,7 +127,7 @@ function SkillDetailPage() {
                   rel="noopener noreferrer"
                   className="sk-origin-url"
                 >
-                  origem ↗
+                  {t("skill.origin")}
                 </a>
               ) : null}
             </div>
@@ -134,7 +136,7 @@ function SkillDetailPage() {
           </header>
 
           <section className="sk-install" aria-labelledby="sk-install-title">
-            <h2 id="sk-install-title">Install</h2>
+            <h2 id="sk-install-title">{t("skill.install")}</h2>
             <button
               type="button"
               className="sk-install-cmd"
@@ -175,7 +177,7 @@ function SkillDetailPage() {
               className="sk-doc-copy"
               onClick={() => copy(md, "md")}
             >
-              {copiedMd ? "Copied" : "Copy"}
+              {copiedMd ? t("skill.copied") : t("skill.copy")}
             </button>
             <SkillMarkdown source={md} />
           </section>
@@ -183,7 +185,9 @@ function SkillDetailPage() {
           {related.length > 0 ? (
             <section className="sk-related" aria-labelledby="sk-related-title">
               <h2 id="sk-related-title">
-                More from {skill.source ?? "collection"}
+                {t("skill.moreFrom", {
+                  source: skill.source ?? "collection",
+                })}
               </h2>
               <ul className="sk-related-grid">
                 {related.map((r) => (
@@ -211,7 +215,7 @@ function SkillDetailPage() {
                 params={{ id: prev.id }}
                 className="sk-pager-link"
               >
-                <span>← anterior</span>
+                <span>{t("skill.prev")}</span>
                 <strong>{prev.id}</strong>
               </Link>
             ) : (
@@ -223,7 +227,7 @@ function SkillDetailPage() {
                 params={{ id: next.id }}
                 className="sk-pager-link is-next"
               >
-                <span>próxima →</span>
+                <span>{t("skill.next")}</span>
                 <strong>{next.id}</strong>
               </Link>
             ) : (
