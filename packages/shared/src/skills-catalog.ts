@@ -1,12 +1,34 @@
 import type { SkillCatalogEntry } from "./index"
 
+const GH_DINO = "https://github.com/mccall9/dino-platform"
+const GH_MARKETING = "https://github.com/coreyhaines31/marketingskills"
+const GH_SOCIAL = "https://github.com/charlie947/social-media-skills"
+const GH_DESIGNER = "https://github.com/julianoczkowski/designer-skills"
+const GH_ANTHROPIC = "https://github.com/anthropics/skills"
+const GH_TASTE = "https://github.com/Leonxlnx/taste-skill"
+const GH_TRANSITIONS = "https://github.com/Jakubantalik/transitions.dev"
+const GH_SUPERPOWERS = "https://github.com/obra/superpowers"
+const GH_CONTEXT7 = "https://github.com/upstash/context7"
+
 /**
- * Inventário vivo do setup do dino — o que está instalado e em uso
- * (`.agents/skills`, `~/.grok/skills`, skills do projeto).
- * Não é marketplace genérico: é o manual real do agent.
+ * Inventário vivo — skills com link + install copiável.
+ * dino-review: pack npm `dino-skills` (nossa marca).
  */
 export const SKILLS_CATALOG: SkillCatalogEntry[] = [
-  // —— Developers / agent ops ——
+  // —— Dino pack (ours) ——
+  {
+    id: "dino-review",
+    source: "dino",
+    name: "Dino Review",
+    description:
+      "Review de landing/SaaS no padrão dino (ship viral): hero, CTA único, prova, pricing, OG. Roda com npx dino-skills.",
+    category: "marketing",
+    url: `${GH_DINO}/tree/master/packages/dino-skills/skills/dino-review`,
+    status: "installable",
+    install: "npx dino-skills start",
+  },
+
+  // —— Developers ——
   {
     id: "create-skill",
     source: "grok",
@@ -14,7 +36,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Cria skill nova no Grok (SKILL.md + scripts) com entrevista e scaffold completo.",
     category: "developers",
-    url: "",
+    url: GH_DINO,
     status: "local",
     install: "~/.grok/skills/create-skill",
   },
@@ -25,9 +47,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Verifica o trabalho com subagent: diff, build, testes e correção antes de dar por pronto.",
     category: "developers",
-    url: "",
+    url: GH_DINO,
     status: "local",
-    install: "~/.grok/skills/check-work · /check-work",
+    install: "/check-work · ~/.grok/skills/check-work",
   },
   {
     id: "superpowers",
@@ -36,7 +58,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Processo agentic: brainstorm → plano → TDD → subagents → review. Evita o agent sair codando no escuro.",
     category: "developers",
-    url: "https://github.com/obra/superpowers",
+    url: GH_SUPERPOWERS,
     status: "installable",
     install: "/plugin install superpowers@claude-plugins-official",
   },
@@ -47,7 +69,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Docs e exemplos de libs no contexto (anti-hallucination de API antiga). CLI ou MCP.",
     category: "developers",
-    url: "https://github.com/upstash/context7",
+    url: GH_CONTEXT7,
     status: "mcp-runtime",
     install: "npx ctx7 setup",
   },
@@ -58,7 +80,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Workflow de image_gen / image_edit no Grok: prompt craft, referência e consistência de asset.",
     category: "developers",
-    url: "",
+    url: GH_DINO,
     status: "local",
     install: "~/.grok/skills/imagine",
   },
@@ -69,7 +91,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Mapa do inventário de packs (dev, design, marketing, social…) e como carregar cada um.",
     category: "developers",
-    url: "",
+    url: GH_DINO,
     status: "local",
     install: "~/.agents/skills/company-skills-catalog",
   },
@@ -82,9 +104,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Anti-slop de landing/portfolio: direção visual real, audit-first, sem UI genérica de IA.",
     category: "designers",
-    url: "",
-    status: "local",
-    install: "~/.agents/skills/design-taste-frontend",
+    url: GH_TASTE,
+    status: "installable",
+    install: `npx skills add ${GH_TASTE}`,
   },
   {
     id: "frontend-design",
@@ -93,9 +115,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Interfaces com filosofia estética nomeada — tipografia, cor e composição intencional.",
     category: "designers",
-    url: "https://github.com/anthropics/skills/tree/main/skills/frontend-design",
+    url: `${GH_ANTHROPIC}/tree/main/skills/frontend-design`,
     status: "local",
-    install: "dino-platform/.agents/skills/frontend-design",
+    install: `npx skills add ${GH_ANTHROPIC} --skill frontend-design`,
   },
   {
     id: "design-brief",
@@ -104,9 +126,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Brief de design por entrevista + exploração do código — base antes de construir UI.",
     category: "designers",
-    url: "https://github.com/julianoczkowski/designer-skills",
-    status: "local",
-    install: "dino-platform/.agents/skills/design-brief",
+    url: GH_DESIGNER,
+    status: "installable",
+    install: `npx skills add ${GH_DESIGNER} --skill design-brief`,
   },
   {
     id: "design-flow",
@@ -115,9 +137,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Fluxo completo design→build: brief, tokens, frontend, review em sequência guiada.",
     category: "designers",
-    url: "https://github.com/julianoczkowski/designer-skills",
-    status: "local",
-    install: "dino-platform/.agents/skills/design-flow",
+    url: GH_DESIGNER,
+    status: "installable",
+    install: `npx skills add ${GH_DESIGNER} --skill design-flow`,
   },
   {
     id: "design-review",
@@ -126,9 +148,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Crítica estruturada: hierarquia, consistência, responsivo, a11y e fidelidade ao brief.",
     category: "designers",
-    url: "https://github.com/julianoczkowski/designer-skills",
-    status: "local",
-    install: "dino-platform/.agents/skills/design-review",
+    url: GH_DESIGNER,
+    status: "installable",
+    install: `npx skills add ${GH_DESIGNER} --skill design-review`,
   },
   {
     id: "design-tokens",
@@ -137,9 +159,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Gera tokens (CSS vars / Tailwind): light/dark, type ramp, spacing e componentes.",
     category: "designers",
-    url: "https://github.com/julianoczkowski/designer-skills",
-    status: "local",
-    install: "dino-platform/.agents/skills/design-tokens",
+    url: GH_DESIGNER,
+    status: "installable",
+    install: `npx skills add ${GH_DESIGNER} --skill design-tokens`,
   },
   {
     id: "grill-me",
@@ -148,9 +170,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Entrevista implacável até fechar decisões de design/plano — zero ambiguidade.",
     category: "designers",
-    url: "https://github.com/julianoczkowski/designer-skills",
-    status: "local",
-    install: ".agents/skills/grill-me",
+    url: GH_DESIGNER,
+    status: "installable",
+    install: `npx skills add ${GH_DESIGNER} --skill grill-me`,
   },
   {
     id: "brief-to-tasks",
@@ -159,9 +181,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Quebra o brief em checklist de fatias verticais independentes e buildáveis.",
     category: "designers",
-    url: "https://github.com/julianoczkowski/designer-skills",
-    status: "local",
-    install: "dino-platform/.agents/skills/brief-to-tasks",
+    url: GH_DESIGNER,
+    status: "installable",
+    install: `npx skills add ${GH_DESIGNER} --skill brief-to-tasks`,
   },
   {
     id: "information-architecture",
@@ -170,9 +192,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Estrutura do produto: nav, hierarquia, URLs, fluxos — antes do visual.",
     category: "designers",
-    url: "https://github.com/julianoczkowski/designer-skills",
-    status: "local",
-    install: "dino-platform/.agents/skills/information-architecture",
+    url: GH_DESIGNER,
+    status: "installable",
+    install: `npx skills add ${GH_DESIGNER} --skill information-architecture`,
   },
   {
     id: "emil-design-eng",
@@ -192,7 +214,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Gestos, springs, materiais, tipografia óptica — fundações de interface no estilo Apple.",
     category: "designers",
-    url: "",
+    url: GH_DINO,
     status: "local",
     install: "~/.grok/skills/apple-design",
   },
@@ -203,9 +225,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Micro-transições de produção (modal, badge, sheet…) com tokens de duração/easing.",
     category: "designers",
-    url: "https://github.com/Jakubantalik/transitions.dev",
-    status: "local",
-    install: "~/.agents/skills/transitions-dev",
+    url: GH_TRANSITIONS,
+    status: "installable",
+    install: `npx skills add ${GH_TRANSITIONS}`,
   },
   {
     id: "improve-animations",
@@ -214,7 +236,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Auditoria de motion no código + plano priorizado do que animar (e do que não).",
     category: "designers",
-    url: "",
+    url: GH_DINO,
     status: "local",
     install: "~/.grok/skills/improve-animations",
   },
@@ -225,7 +247,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Brand kits premium: logo system, guidelines board, identidade dark-tech / editorial.",
     category: "designers",
-    url: "",
+    url: GH_DINO,
     status: "local",
     install: "~/.agents/skills/brandkit",
   },
@@ -236,23 +258,12 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Padrões de agência: type, sombra, card, spacing — bloqueia defaults baratos de IA.",
     category: "designers",
-    url: "",
+    url: GH_DINO,
     status: "local",
     install: "~/.agents/skills/high-end-visual-design",
   },
 
-  // —— Marketing (pack Corey + Marc Lou) ——
-  {
-    id: "marclou-review",
-    source: "Marc Lou",
-    name: "Marc Lou Review",
-    description:
-      "Review brutal de landing/SaaS no estilo Marc Lou: hero, CTA único, prova, pricing, OG e copy viral.",
-    category: "marketing",
-    url: "",
-    status: "local",
-    install: "~/.grok/skills/marclou-review · /marclou-review",
-  },
+  // —— Marketing ——
   {
     id: "product-marketing",
     source: "coreyhaines",
@@ -260,9 +271,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Contexto de produto (ICP, positioning) em `.agents/product-marketing.md` — base das outras skills de growth.",
     category: "marketing",
-    url: "https://github.com/coreyhaines31/marketingskills",
-    status: "local",
-    install: "~/.agents/skills/product-marketing",
+    url: `${GH_MARKETING}/tree/main/skills/product-marketing`,
+    status: "installable",
+    install: `npx skills add ${GH_MARKETING} --skill product-marketing`,
   },
   {
     id: "copywriting",
@@ -271,9 +282,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Copy de conversão para home, landing, pricing e feature pages — claro, específico, acionável.",
     category: "marketing",
-    url: "https://github.com/coreyhaines31/marketingskills",
-    status: "local",
-    install: "~/.agents/skills/copywriting",
+    url: `${GH_MARKETING}/tree/main/skills/copywriting`,
+    status: "installable",
+    install: `npx skills add ${GH_MARKETING} --skill copywriting`,
   },
   {
     id: "cro",
@@ -282,9 +293,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Otimização de conversão em páginas e forms: o que mata o clique e o que consertar primeiro.",
     category: "marketing",
-    url: "https://github.com/coreyhaines31/marketingskills",
-    status: "local",
-    install: "~/.agents/skills/cro",
+    url: `${GH_MARKETING}/tree/main/skills/cro`,
+    status: "installable",
+    install: `npx skills add ${GH_MARKETING} --skill cro`,
   },
   {
     id: "launch",
@@ -293,9 +304,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Plano de lançamento / PH / feature release: checklist, momentum e conversão de interesse.",
     category: "marketing",
-    url: "https://github.com/coreyhaines31/marketingskills",
-    status: "local",
-    install: "~/.agents/skills/launch",
+    url: `${GH_MARKETING}/tree/main/skills/launch`,
+    status: "installable",
+    install: `npx skills add ${GH_MARKETING} --skill launch`,
   },
   {
     id: "marketing-plan",
@@ -304,9 +315,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Plano AARRR completo (90 dias / 12 meses): aquisição, ativação, retenção, referral, revenue.",
     category: "marketing",
-    url: "https://github.com/coreyhaines31/marketingskills",
-    status: "local",
-    install: "~/.agents/skills/marketing-plan",
+    url: `${GH_MARKETING}/tree/main/skills/marketing-plan`,
+    status: "installable",
+    install: `npx skills add ${GH_MARKETING} --skill marketing-plan`,
   },
   {
     id: "marketing-ideas",
@@ -315,9 +326,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Ideias e táticas de growth quando trava o “como divulgar isso?”.",
     category: "marketing",
-    url: "https://github.com/coreyhaines31/marketingskills",
-    status: "local",
-    install: "~/.agents/skills/marketing-ideas",
+    url: `${GH_MARKETING}/tree/main/skills/marketing-ideas`,
+    status: "installable",
+    install: `npx skills add ${GH_MARKETING} --skill marketing-ideas`,
   },
   {
     id: "offers",
@@ -326,9 +337,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Desenho de oferta: value stack, bônus, garantia, scarcity — o que está por baixo da copy.",
     category: "marketing",
-    url: "https://github.com/coreyhaines31/marketingskills",
-    status: "local",
-    install: "~/.agents/skills/offers",
+    url: `${GH_MARKETING}/tree/main/skills/offers`,
+    status: "installable",
+    install: `npx skills add ${GH_MARKETING} --skill offers`,
   },
   {
     id: "pricing",
@@ -337,9 +348,20 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Decisões de preço, packaging, freemium vs pago e framing de valor.",
     category: "marketing",
-    url: "https://github.com/coreyhaines31/marketingskills",
-    status: "local",
-    install: "~/.agents/skills/pricing",
+    url: `${GH_MARKETING}/tree/main/skills/pricing`,
+    status: "installable",
+    install: `npx skills add ${GH_MARKETING} --skill pricing`,
+  },
+  {
+    id: "revops",
+    source: "coreyhaines",
+    name: "RevOps / Revenue",
+    description:
+      "Revenue operations: MQL/SQL, scoring, routing, pipeline, CRM, handoff marketing→sales.",
+    category: "marketing",
+    url: `${GH_MARKETING}/tree/main/skills/revops`,
+    status: "installable",
+    install: `npx skills add ${GH_MARKETING} --skill revops`,
   },
   {
     id: "seo-audit",
@@ -348,9 +370,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Auditoria técnica e on-page: ranking, indexação, Core Web Vitals e drops de tráfego.",
     category: "marketing",
-    url: "https://github.com/coreyhaines31/marketingskills",
-    status: "local",
-    install: "~/.agents/skills/seo-audit",
+    url: `${GH_MARKETING}/tree/main/skills/seo-audit`,
+    status: "installable",
+    install: `npx skills add ${GH_MARKETING} --skill seo-audit`,
   },
   {
     id: "ads",
@@ -359,9 +381,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Campanhas pagas (Google/Meta/LinkedIn): targeting, ROAS, retargeting e budget.",
     category: "marketing",
-    url: "https://github.com/coreyhaines31/marketingskills",
-    status: "local",
-    install: "~/.agents/skills/ads",
+    url: `${GH_MARKETING}/tree/main/skills/ads`,
+    status: "installable",
+    install: `npx skills add ${GH_MARKETING} --skill ads`,
   },
   {
     id: "ab-testing",
@@ -370,9 +392,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Hipótese, variantes, significância e backlog de experimentos de growth.",
     category: "marketing",
-    url: "https://github.com/coreyhaines31/marketingskills",
-    status: "local",
-    install: "~/.agents/skills/ab-testing",
+    url: `${GH_MARKETING}/tree/main/skills/ab-testing`,
+    status: "installable",
+    install: `npx skills add ${GH_MARKETING} --skill ab-testing`,
   },
   {
     id: "emails",
@@ -381,9 +403,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Sequências, drip, onboarding e lifecycle e-mail com automação.",
     category: "marketing",
-    url: "https://github.com/coreyhaines31/marketingskills",
-    status: "local",
-    install: "~/.agents/skills/emails",
+    url: `${GH_MARKETING}/tree/main/skills/emails`,
+    status: "installable",
+    install: `npx skills add ${GH_MARKETING} --skill emails`,
   },
   {
     id: "customer-research",
@@ -392,9 +414,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "ICP, entrevistas, VOC, reviews e mining — o que o cliente realmente diz.",
     category: "marketing",
-    url: "https://github.com/coreyhaines31/marketingskills",
-    status: "local",
-    install: "~/.agents/skills/customer-research",
+    url: `${GH_MARKETING}/tree/main/skills/customer-research`,
+    status: "installable",
+    install: `npx skills add ${GH_MARKETING} --skill customer-research`,
   },
 
   // —— Social ——
@@ -405,9 +427,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Posts LinkedIn na minha voz (about-me / voice.md) a partir de notas ou ideia solta.",
     category: "social",
-    url: "https://github.com/charlie947/social-media-skills",
-    status: "local",
-    install: "~/.agents/skills/post-writer",
+    url: GH_SOCIAL,
+    status: "installable",
+    install: `npx skills add ${GH_SOCIAL} --skill post-writer`,
   },
   {
     id: "post-scorer",
@@ -416,9 +438,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Nota o post com base no histórico real de performance — não em dica genérica.",
     category: "social",
-    url: "https://github.com/charlie947/social-media-skills",
-    status: "local",
-    install: "~/.agents/skills/post-scorer",
+    url: GH_SOCIAL,
+    status: "installable",
+    install: `npx skills add ${GH_SOCIAL} --skill post-scorer`,
   },
   {
     id: "content-matrix",
@@ -427,9 +449,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "32+ ideias de post cruzando pilares × formatos (tabela pronta pro mês).",
     category: "social",
-    url: "https://github.com/charlie947/social-media-skills",
-    status: "local",
-    install: "~/.agents/skills/content-matrix",
+    url: GH_SOCIAL,
+    status: "installable",
+    install: `npx skills add ${GH_SOCIAL} --skill content-matrix`,
   },
   {
     id: "hook-generator",
@@ -438,9 +460,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "6 aberturas clickbait no formato 2 linhas — dígitos, “How I”, contraste.",
     category: "social",
-    url: "https://github.com/charlie947/social-media-skills",
-    status: "local",
-    install: "~/.agents/skills/hook-generator",
+    url: GH_SOCIAL,
+    status: "installable",
+    install: `npx skills add ${GH_SOCIAL} --skill hook-generator`,
   },
   {
     id: "gemini-carousel",
@@ -449,9 +471,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Carrossel LinkedIn slide a slide: brief → aprovação → prompts de imagem.",
     category: "social",
-    url: "https://github.com/charlie947/social-media-skills",
-    status: "local",
-    install: "~/.agents/skills/gemini-carousel",
+    url: GH_SOCIAL,
+    status: "installable",
+    install: `npx skills add ${GH_SOCIAL} --skill gemini-carousel`,
   },
   {
     id: "voice-builder",
@@ -460,9 +482,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Perfil de voz a partir de entrevista + samples — base de todo conteúdo escrito.",
     category: "social",
-    url: "https://github.com/charlie947/social-media-skills",
-    status: "local",
-    install: "~/.agents/skills/voice-builder",
+    url: GH_SOCIAL,
+    status: "installable",
+    install: `npx skills add ${GH_SOCIAL} --skill voice-builder`,
   },
   {
     id: "youtube-thumbnail",
@@ -471,9 +493,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Thumbnail de alta CTR com foto de referência, título e cores de marca.",
     category: "social",
-    url: "https://github.com/charlie947/social-media-skills",
-    status: "local",
-    install: "~/.agents/skills/youtube-thumbnail",
+    url: GH_SOCIAL,
+    status: "installable",
+    install: `npx skills add ${GH_SOCIAL} --skill youtube-thumbnail`,
   },
   {
     id: "reels-scripting",
@@ -482,9 +504,9 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Script de Reel a partir de referência + newsletter — tom e repurpose.",
     category: "social",
-    url: "https://github.com/charlie947/social-media-skills",
-    status: "local",
-    install: "~/.agents/skills/reels-scripting",
+    url: GH_SOCIAL,
+    status: "installable",
+    install: `npx skills add ${GH_SOCIAL} --skill reels-scripting`,
   },
   {
     id: "social",
@@ -493,11 +515,11 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     description:
       "Conteúdo e calendário multi-rede: LinkedIn, X, Reels, Shorts, scheduling.",
     category: "social",
-    url: "https://github.com/charlie947/social-media-skills",
-    status: "local",
-    install: "~/.agents/skills/social",
+    url: GH_SOCIAL,
+    status: "installable",
+    install: `npx skills add ${GH_SOCIAL} --skill social`,
   },
 ]
 
 export const SKILLS_CATALOG_NOTE =
-  "Inventário vivo do setup do dino — skills instaladas em .agents/skills e ~/.grok/skills (inclui Marc Lou, marketing pack, design e social)."
+  "Inventário dino — links + install. dino-review via npx dino-skills; marketing/social/design com skills add."

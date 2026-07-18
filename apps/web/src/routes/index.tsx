@@ -43,7 +43,7 @@ const FILTERS: Array<SkillCategory | "all"> = [
 ]
 
 const HOW_TO_PROMPT =
-  "Roda marclou-review na home do dino e me dá o scorecard + top 5 fixes."
+  "Roda dino-review na home do dino e me dá o scorecard + top 5 fixes."
 
 function DinoSkillsHome() {
   const [filter, setFilter] = React.useState<SkillCategory | "all">("all")

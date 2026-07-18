@@ -1,4 +1,9 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router"
+import {
+  createFileRoute,
+  Link,
+  notFound,
+  redirect,
+} from "@tanstack/react-router"
 import { Check, Copy, ExternalLink } from "lucide-react"
 import * as React from "react"
 import { SKILLS_CATALOG, SKILLS_CONTENT } from "@dino/shared"
@@ -6,19 +11,37 @@ import { SkillSearch } from "~/components/SkillSearch"
 import {
   SkillMarkdown,
   buildFallbackSkillMd,
+  resolveAltInstallCmd,
   resolveInstallCmd,
 } from "~/lib/skill-md"
 
+const ALIASES: Record<string, string> = {
+  "marclou-review": "dino-review",
+  marclou: "dino-review",
+  revenue: "revops",
+}
+
 export const Route = createFileRoute("/skills/$id")({
   loader: ({ params }) => {
+    const alias = ALIASES[params.id]
+    if (alias) {
+      throw redirect({ to: "/skills/$id", params: { id: alias } })
+    }
     const skill = SKILLS_CATALOG.find((s) => s.id === params.id)
     if (!skill) throw notFound()
     const idx = SKILLS_CATALOG.findIndex((s) => s.id === params.id)
+    const related = SKILLS_CATALOG.filter(
+      (s) =>
+        s.id !== skill.id &&
+        skill.source &&
+        s.source === skill.source,
+    ).slice(0, 6)
     return {
       skill,
       idx,
       prev: idx > 0 ? SKILLS_CATALOG[idx - 1] : null,
       next: idx < SKILLS_CATALOG.length - 1 ? SKILLS_CATALOG[idx + 1] : null,
+      related,
     }
   },
   head: ({ loaderData }) => ({
@@ -38,24 +61,25 @@ export const Route = createFileRoute("/skills/$id")({
 })
 
 function SkillDetailPage() {
-  const { skill, prev, next } = Route.useLoaderData()
+  const { skill, prev, next, related } = Route.useLoaderData()
   const installCmd = resolveInstallCmd(skill)
-  const md =
-    SKILLS_CONTENT[skill.id] ??
-    buildFallbackSkillMd(skill)
+  const altInstall = resolveAltInstallCmd(skill)
+  const md = SKILLS_CONTENT[skill.id] ?? buildFallbackSkillMd(skill)
 
-  const [copiedInstall, setCopiedInstall] = React.useState(false)
+  const [copiedInstall, setCopiedInstall] = React.useState<"main" | "alt" | null>(
+    null,
+  )
   const [copiedMd, setCopiedMd] = React.useState(false)
 
-  async function copy(text: string, which: "install" | "md") {
+  async function copy(text: string, which: "main" | "alt" | "md") {
     try {
       await navigator.clipboard.writeText(text)
-      if (which === "install") {
-        setCopiedInstall(true)
-        window.setTimeout(() => setCopiedInstall(false), 1600)
-      } else {
+      if (which === "md") {
         setCopiedMd(true)
         window.setTimeout(() => setCopiedMd(false), 1600)
+      } else {
+        setCopiedInstall(which)
+        window.setTimeout(() => setCopiedInstall(null), 1600)
       }
     } catch {
       /* ignore */
@@ -113,14 +137,35 @@ function SkillDetailPage() {
             <button
               type="button"
               className="sk-install-cmd"
-              onClick={() => copy(installCmd, "install")}
+              onClick={() => copy(installCmd, "main")}
               aria-label="Copiar comando de install"
             >
               <InstallHighlight cmd={installCmd} />
               <span className="sk-copy-ico" aria-hidden>
-                {copiedInstall ? <Check size={15} /> : <Copy size={15} />}
+                {copiedInstall === "main" ? (
+                  <Check size={15} />
+                ) : (
+                  <Copy size={15} />
+                )}
               </span>
             </button>
+            {altInstall ? (
+              <button
+                type="button"
+                className="sk-install-cmd sk-install-cmd-alt"
+                onClick={() => copy(altInstall, "alt")}
+                aria-label="Copiar comando alternativo"
+              >
+                <InstallHighlight cmd={altInstall} />
+                <span className="sk-copy-ico" aria-hidden>
+                  {copiedInstall === "alt" ? (
+                    <Check size={15} />
+                  ) : (
+                    <Copy size={15} />
+                  )}
+                </span>
+              </button>
+            ) : null}
           </section>
 
           <section className="sk-doc" aria-label={`SKILL.md de ${skill.id}`}>
@@ -133,6 +178,30 @@ function SkillDetailPage() {
             </button>
             <SkillMarkdown source={md} />
           </section>
+
+          {related.length > 0 ? (
+            <section className="sk-related" aria-labelledby="sk-related-title">
+              <h2 id="sk-related-title">
+                More from {skill.source ?? "collection"}
+              </h2>
+              <ul className="sk-related-grid">
+                {related.map((r) => (
+                  <li key={r.id}>
+                    <Link
+                      to="/skills/$id"
+                      params={{ id: r.id }}
+                      className="sk-related-card"
+                    >
+                      <span className="sk-related-id">
+                        {skill.source ? `${skill.source}/${r.id}` : r.id}
+                      </span>
+                      <span className="sk-related-desc">{r.description}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
 
           <footer className="sk-pager">
             {prev ? (
@@ -167,21 +236,35 @@ function SkillDetailPage() {
 }
 
 function InstallHighlight({ cmd }: { cmd: string }) {
-  // Color first tokens like: npx skills add URL --skill name
   const parts = cmd.split(/(\s+)/)
   return (
     <code className="sk-install-code">
       {parts.map((part, i) => {
-        if (/^\s+$/.test(part)) return <React.Fragment key={i}>{part}</React.Fragment>
+        if (/^\s+$/.test(part))
+          return <React.Fragment key={i}>{part}</React.Fragment>
         const lower = part.toLowerCase()
-        if (i === 0 || lower === "npx" || lower === "bun" || lower === "npm") {
+        if (
+          i === 0 ||
+          lower === "npx" ||
+          lower === "bun" ||
+          lower === "npm"
+        ) {
           return (
             <span key={i} className="tok-cmd">
               {part}
             </span>
           )
         }
-        if (lower === "skills" || lower === "add" || lower === "install" || lower === "plugin") {
+        if (
+          lower === "skills" ||
+          lower === "dino-skills" ||
+          lower === "add" ||
+          lower === "install" ||
+          lower === "plugin" ||
+          lower === "start" ||
+          lower === "get" ||
+          lower === "list"
+        ) {
           return (
             <span key={i} className="tok-sub">
               {part}
@@ -207,4 +290,3 @@ function InstallHighlight({ cmd }: { cmd: string }) {
     </code>
   )
 }
-

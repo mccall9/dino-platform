@@ -1,0 +1,35 @@
+{
+  "name": "dino-skills",
+  "version": "0.1.0",
+  "description": "Dino Skills CLI — ship-ready agent skills (dino-review and more).",
+  "type": "module",
+  "bin": {
+    "dino-skills": "./bin/dino-skills.mjs"
+  },
+  "files": [
+    "bin",
+    "skills",
+    "README.md"
+  ],
+  "keywords": [
+    "skills",
+    "agents",
+    "dino",
+    "marc-lou",
+    "product-review",
+    "cli"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mccall9/dino-platform",
+    "directory": "packages/dino-skills"
+  },
+  "homepage": "https://dino-platform.vercel.app",
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

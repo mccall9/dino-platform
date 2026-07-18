@@ -253,12 +253,30 @@ export function resolveInstallCmd(skill: {
   status: string
 }): string {
   const raw = skill.install?.split("·")[0]?.trim()
-  if (raw && (/^(npx|\/plugin|bun|npm)/.test(raw) || raw.includes("skills add"))) {
+  if (
+    raw &&
+    (/^(npx|\/plugin|bun|npm)/.test(raw) || raw.includes("skills add"))
+  ) {
     return raw
   }
+  if (skill.id === "dino-review") {
+    return "npx dino-skills start"
+  }
   if (skill.url?.includes("github.com")) {
-    return `npx skills add ${skill.url} --skill ${skill.id}`
+    const base = skill.url.replace(/\/tree\/[^/]+.*$/, "")
+    return `npx skills add ${base} --skill ${skill.id}`
   }
   if (raw) return raw
   return `já no setup · ${skill.id}`
+}
+
+/** Optional second install line (agent registry style). */
+export function resolveAltInstallCmd(skill: {
+  id: string
+  url?: string
+}): string | null {
+  if (skill.id === "dino-review") {
+    return "npx skills add https://github.com/mccall9/dino-platform --skill dino-review"
+  }
+  return null
 }

@@ -9,6 +9,7 @@ const ids = [...cat.matchAll(/id: "([^"]+)"/g)].map((m) => m[1])
 
 const home = process.env.USERPROFILE || process.env.HOME || ""
 const roots = [
+  path.join(root, "packages", "dino-skills", "skills"),
   path.join(home, ".agents", "skills"),
   path.join(home, ".grok", "skills"),
   path.join(root, ".agents", "skills"),
