@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { motion } from "motion/react"
 import { RUNTIMES_CATALOG } from "@dino/shared"
+import { AgentIcon } from "~/components/AgentIcon"
 import { skillsForRuntime } from "~/lib/runtimes"
 
 export const Route = createFileRoute("/runtimes/")({
@@ -64,9 +65,7 @@ function RuntimesCatalogPage() {
                 className="ds-card ds-card-agent"
               >
                 <div className="ds-agent-card-top">
-                  <span className="ds-agent-mark" aria-hidden>
-                    {rt.mark}
-                  </span>
+                  <AgentIcon id={rt.id} accent={rt.accent} size="md" />
                   <h3 className="ds-card-id">{rt.name}</h3>
                 </div>
                 <p>{rt.description}</p>

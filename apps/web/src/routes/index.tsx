@@ -8,6 +8,7 @@ import {
   type SkillCatalogEntry,
   type SkillCategory,
 } from "@dino/shared"
+import { AgentIcon } from "~/components/AgentIcon"
 import { SkillSearch } from "~/components/SkillSearch"
 import { SourceChip } from "~/components/SourceChip"
 import { skillsForRuntime } from "~/lib/runtimes"
@@ -262,9 +263,7 @@ function DinoSkillsHome() {
                       className="ds-card ds-card-agent"
                     >
                       <div className="ds-agent-card-top">
-                        <span className="ds-agent-mark" aria-hidden>
-                          {rt.mark}
-                        </span>
+                        <AgentIcon id={rt.id} accent={rt.accent} size="md" />
                         <h3 className="ds-card-id">{rt.name}</h3>
                       </div>
                       <p>{rt.description}</p>

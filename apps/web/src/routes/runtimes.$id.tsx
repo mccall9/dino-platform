@@ -10,8 +10,9 @@ import {
   type RuntimeId,
   type SkillCategory,
 } from "@dino/shared"
-import { skillsForRuntime, skillsForRuntimeTopic } from "~/lib/runtimes"
+import { AgentIcon } from "~/components/AgentIcon"
 import { SourceChip } from "~/components/SourceChip"
+import { skillsForRuntimeTopic } from "~/lib/runtimes"
 
 const IDS = new Set(RUNTIMES_CATALOG.map((r) => r.id))
 
@@ -89,9 +90,7 @@ function RuntimeDetailPage() {
 
       <header className="sk-detail-head">
         <div className="sk-title-row ds-agent-title-row">
-          <span className="ds-agent-mark ds-agent-mark-lg" aria-hidden>
-            {runtime.mark}
-          </span>
+          <AgentIcon id={runtime.id} accent={runtime.accent} size="lg" />
           <h1>{runtime.name}</h1>
         </div>
 
@@ -199,9 +198,7 @@ function RuntimeDetailPage() {
                   className="ds-card ds-card-agent"
                 >
                   <div className="ds-agent-card-top">
-                    <span className="ds-agent-mark" aria-hidden>
-                      {rt.mark}
-                    </span>
+                    <AgentIcon id={rt.id} accent={rt.accent} size="sm" />
                     <h3 className="ds-card-id">{rt.name}</h3>
                   </div>
                   <p>{rt.description}</p>

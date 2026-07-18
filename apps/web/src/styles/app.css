@@ -21,17 +21,19 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Agent mode — white dominant + soft sky blue */
+/* Agent mode — white + stronger sky blue, darker type */
 .ds-mode-agent {
-  --bg: #f4f8fc;
+  --bg: #e8f4fc;
   --bg-elev: #ffffff;
-  --bg-soft: #eef5fb;
-  --ink: #0f172a;
-  --muted: rgba(15, 23, 42, 0.62);
-  --faint: rgba(15, 23, 42, 0.42);
-  --line: rgba(14, 165, 233, 0.14);
-  --line-strong: rgba(14, 165, 233, 0.28);
-  --green: #0ea5e9;
+  --bg-soft: #d9eefb;
+  --ink: #0b1220;
+  --muted: rgba(11, 18, 32, 0.78);
+  --faint: rgba(11, 18, 32, 0.58);
+  --line: rgba(2, 132, 199, 0.22);
+  --line-strong: rgba(2, 132, 199, 0.4);
+  --green: #0284c7;
+  --agent-blue: #38bdf8;
+  --agent-blue-deep: #0ea5e9;
   color-scheme: light;
 }
 
@@ -164,6 +166,34 @@
   color: var(--ink);
 }
 
+.ds-agent-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 0.65rem;
+  color: var(--agent-accent, #0ea5e9);
+  background: color-mix(in srgb, var(--agent-accent, #0ea5e9) 14%, #fff);
+  border: 1px solid color-mix(in srgb, var(--agent-accent, #0ea5e9) 35%, transparent);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+}
+
+.ds-agent-icon-sm {
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 0.5rem;
+}
+
+.ds-agent-icon-md {
+  width: 2.15rem;
+  height: 2.15rem;
+}
+
+.ds-agent-icon-lg {
+  width: 2.65rem;
+  height: 2.65rem;
+  border-radius: 0.75rem;
+}
+
 .ds-agent-mark-lg {
   width: 2.25rem;
   height: 2.25rem;
@@ -254,117 +284,170 @@
   }
 }
 
-/* agent ambient — soft blue wash */
+/* agent ambient — stronger blue wash */
 .ds-ambient-agent {
   background:
-    radial-gradient(120% 80% at 50% -20%, rgba(125, 211, 252, 0.45), transparent 55%),
-    radial-gradient(80% 50% at 100% 20%, rgba(186, 230, 253, 0.5), transparent 50%),
+    radial-gradient(120% 80% at 50% -15%, rgba(56, 189, 248, 0.55), transparent 55%),
+    radial-gradient(90% 55% at 100% 15%, rgba(14, 165, 233, 0.35), transparent 52%),
+    radial-gradient(70% 45% at 0% 80%, rgba(125, 211, 252, 0.4), transparent 50%),
     var(--bg);
 }
 
 .ds-mode-agent .ds-orb-a {
-  background: radial-gradient(circle, rgba(125, 211, 252, 0.65) 0%, transparent 70%);
-  opacity: 0.7;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.85) 0%, transparent 70%);
+  opacity: 0.85;
 }
 
 .ds-mode-agent .ds-orb-b {
-  background: radial-gradient(circle, rgba(147, 197, 253, 0.5) 0%, transparent 70%);
-  opacity: 0.55;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.65) 0%, transparent 70%);
+  opacity: 0.7;
 }
 
 .ds-mode-agent .ds-orb-c {
-  background: radial-gradient(circle, rgba(224, 242, 254, 0.9) 0%, transparent 70%);
-  opacity: 0.6;
+  background: radial-gradient(circle, rgba(186, 230, 253, 0.95) 0%, transparent 70%);
+  opacity: 0.75;
 }
 
 .ds-mode-agent .ds-ambient-grid {
-  opacity: 0.35;
+  opacity: 0.45;
   background-image:
-    linear-gradient(rgba(14, 165, 233, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(14, 165, 233, 0.08) 1px, transparent 1px);
+    linear-gradient(rgba(2, 132, 199, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(2, 132, 199, 0.14) 1px, transparent 1px);
 }
 
 .ds-mode-agent .ds-ambient-vignette {
   background: radial-gradient(
     ellipse 90% 70% at 50% 40%,
-    transparent 35%,
-    rgba(244, 248, 252, 0.65) 100%
+    transparent 30%,
+    rgba(232, 244, 252, 0.55) 100%
   );
 }
 
 .ds-mode-agent .ds-title {
-  color: #0f172a;
+  color: #0b1220;
   text-shadow: none;
 }
 
+.ds-mode-agent .ds-lead,
+.ds-mode-agent .ds-discover-hero > p,
+.ds-mode-agent .sk-desc {
+  color: rgba(11, 18, 32, 0.78) !important;
+}
+
+.ds-mode-agent .ds-discover-hero h1,
+.ds-mode-agent .sk-detail h1 {
+  color: #0b1220;
+}
+
+.ds-mode-agent .sk-crumb,
+.ds-mode-agent .sk-crumb-current,
+.ds-mode-agent .ds-collection-meta,
+.ds-mode-agent .ds-agent-count,
+.ds-mode-agent .ds-howto-foot,
+.ds-mode-agent .ds-source,
+.ds-mode-agent .sk-related-desc,
+.ds-mode-agent .ds-card p {
+  color: rgba(11, 18, 32, 0.62);
+}
+
+.ds-mode-agent .sk-crumb a:hover {
+  color: #0284c7;
+}
+
 .ds-mode-agent .ds-search-trigger {
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--muted);
-  border-color: rgba(14, 165, 233, 0.2);
-  box-shadow: 0 4px 20px rgba(14, 165, 233, 0.08);
+  background: rgba(255, 255, 255, 0.95);
+  color: rgba(11, 18, 32, 0.7);
+  border-color: rgba(2, 132, 199, 0.28);
+  box-shadow: 0 4px 20px rgba(2, 132, 199, 0.12);
 }
 
 .ds-mode-agent .ds-card {
-  background: rgba(255, 255, 255, 0.82);
-  border-color: rgba(14, 165, 233, 0.14);
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(2, 132, 199, 0.22);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 10px 36px rgba(14, 165, 233, 0.08);
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 10px 36px rgba(2, 132, 199, 0.12);
 }
 
-.ds-mode-agent .ds-card-id {
-  color: #0f172a;
+.ds-mode-agent .ds-card-id,
+.ds-mode-agent .sk-related-id,
+.ds-mode-agent .sk-pager-link strong {
+  color: #0b1220;
 }
 
 .ds-mode-agent a.ds-card:hover {
   background: #fff;
-  border-color: rgba(14, 165, 233, 0.35);
+  border-color: rgba(2, 132, 199, 0.45);
   box-shadow:
     inset 0 1px 0 #fff,
-    0 16px 40px rgba(14, 165, 233, 0.12);
+    0 16px 40px rgba(2, 132, 199, 0.16);
 }
 
-.ds-mode-agent .ds-howto {
-  background: rgba(255, 255, 255, 0.75);
-  border-color: rgba(14, 165, 233, 0.16);
+.ds-mode-agent .ds-howto,
+.ds-mode-agent .ds-howto-agent {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(2, 132, 199, 0.24);
+}
+
+.ds-mode-agent .ds-howto h2,
+.ds-mode-agent .ds-agent-topics h2,
+.ds-mode-agent .ds-other-agents h2 {
+  color: #0b1220;
 }
 
 .ds-mode-agent .ds-cmd {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(14, 165, 233, 0.2);
-  color: var(--ink);
+  background: #fff;
+  border-color: rgba(2, 132, 199, 0.28);
+  color: #0b1220;
+}
+
+.ds-mode-agent .ds-cmd code {
+  color: #0b1220;
+}
+
+.ds-mode-agent .ds-chip {
+  color: rgba(11, 18, 32, 0.75);
+  border-color: rgba(2, 132, 199, 0.22);
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.ds-mode-agent .ds-chip[data-active="true"] {
+  background: #0284c7;
+  border-color: #0284c7;
+  color: #fff;
 }
 
 .ds-mode-agent .ds-see-all {
-  background: rgba(255, 255, 255, 0.9);
-  color: #0f172a;
-  border-color: rgba(14, 165, 233, 0.22);
+  background: #fff;
+  color: #0b1220;
+  border-color: rgba(2, 132, 199, 0.3);
 }
 
 .ds-mode-agent .ds-see-all-count {
-  background: rgba(14, 165, 233, 0.12);
-  border-color: rgba(14, 165, 233, 0.3);
-  color: #0284c7;
+  background: rgba(2, 132, 199, 0.14);
+  border-color: rgba(2, 132, 199, 0.35);
+  color: #0369a1;
 }
 
 .ds-mode-agent .ds-footer {
-  border-top-color: rgba(14, 165, 233, 0.15);
-}
-
-.ds-mode-agent .sk-detail h1,
-.ds-mode-agent .sk-detail .sk-related-id {
-  color: #0f172a;
+  border-top-color: rgba(2, 132, 199, 0.22);
+  color: rgba(11, 18, 32, 0.58);
 }
 
 .ds-mode-agent .sk-install-cmd,
 .ds-mode-agent .sk-related-card,
 .ds-mode-agent .sk-pager-link {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: rgba(14, 165, 233, 0.16);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(2, 132, 199, 0.22);
 }
 
 .ds-mode-agent .sk-install-code {
-  color: #0f172a;
+  color: #0b1220;
+}
+
+.ds-mode-agent .ds-inline-code {
+  background: rgba(2, 132, 199, 0.1);
+  color: #0c4a6e;
 }
 
 /* ambient motion background */
