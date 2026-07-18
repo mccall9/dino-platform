@@ -7,12 +7,14 @@ import {
 import { Check, Copy, ExternalLink } from "lucide-react"
 import * as React from "react"
 import { SKILLS_CATALOG, SKILLS_CONTENT } from "@dino/shared"
+import { SourceChip } from "~/components/SourceChip"
 import {
   SkillMarkdown,
   buildFallbackSkillMd,
   resolveAltInstallCmd,
   resolveInstallCmd,
 } from "~/lib/skill-md"
+import { resolveSourceOrigin } from "@dino/shared"
 
 const ALIASES: Record<string, string> = {
   "marclou-review": "dino-review",
@@ -113,8 +115,19 @@ function SkillDetailPage() {
             </div>
 
             <div className="sk-source-line">
-              <i aria-hidden />
-              <span>{skill.source ?? skill.category}</span>
+              <SourceChip source={skill.source} />
+              {resolveSourceOrigin(skill.source)?.url || skill.url ? (
+                <a
+                  href={
+                    resolveSourceOrigin(skill.source)?.url ?? skill.url
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="sk-origin-url"
+                >
+                  origem ↗
+                </a>
+              ) : null}
             </div>
 
             <p className="sk-desc">{skill.description}</p>

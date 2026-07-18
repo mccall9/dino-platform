@@ -105,6 +105,8 @@ export type SkillCatalogEntry = {
    * Rest of the catalog appears after “See all skills”.
    */
   featured?: boolean
+  /** AI runtimes this skill is tuned for (claude, gpt, grok, kimi). */
+  runtimes?: Array<"claude" | "gpt" | "grok" | "kimi">
 }
 
 export type SkillsListResponse = {
@@ -119,3 +121,11 @@ export {
   AGENTS_CATALOG_NOTE,
   type AgentCatalogEntry,
 } from "./agents-catalog"
+export {
+  RUNTIMES_CATALOG,
+  RUNTIMES_CATALOG_NOTE,
+  SOURCE_ORIGINS,
+  resolveSourceOrigin,
+  type RuntimeId,
+  type RuntimeCatalogEntry,
+} from "./runtimes-catalog"

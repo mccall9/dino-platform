@@ -10,15 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SkillsRouteImport } from './routes/skills'
+import { Route as RuntimesRouteImport } from './routes/runtimes'
 import { Route as RunsRouteImport } from './routes/runs'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AgentsIdRouteImport } from './routes/agents.$id'
 import { Route as SkillsIndexRouteImport } from './routes/skills.index'
 import { Route as SkillsIdRouteImport } from './routes/skills.$id'
+import { Route as RuntimesIndexRouteImport } from './routes/runtimes.index'
+import { Route as RuntimesIdRouteImport } from './routes/runtimes.$id'
 
 const SkillsRoute = SkillsRouteImport.update({
   id: '/skills',
   path: '/skills',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RuntimesRoute = RuntimesRouteImport.update({
+  id: '/runtimes',
+  path: '/runtimes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RunsRoute = RunsRouteImport.update({
@@ -46,30 +54,48 @@ const SkillsIdRoute = SkillsIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => SkillsRoute,
 } as any)
+const RuntimesIndexRoute = RuntimesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => RuntimesRoute,
+} as any)
+const RuntimesIdRoute = RuntimesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => RuntimesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/runs': typeof RunsRoute
   '/skills': typeof SkillsRouteWithChildren
+  '/runtimes': typeof RuntimesRouteWithChildren
   '/agents/$id': typeof AgentsIdRoute
   '/skills/': typeof SkillsIndexRoute
   '/skills/$id': typeof SkillsIdRoute
+  '/runtimes/': typeof RuntimesIndexRoute
+  '/runtimes/$id': typeof RuntimesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/runs': typeof RunsRoute
   '/skills': typeof SkillsIndexRoute
+  '/runtimes': typeof RuntimesIndexRoute
   '/agents/$id': typeof AgentsIdRoute
   '/skills/$id': typeof SkillsIdRoute
+  '/runtimes/$id': typeof RuntimesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/runs': typeof RunsRoute
   '/skills': typeof SkillsRouteWithChildren
+  '/runtimes': typeof RuntimesRouteWithChildren
   '/agents/$id': typeof AgentsIdRoute
   '/skills/': typeof SkillsIndexRoute
   '/skills/$id': typeof SkillsIdRoute
+  '/runtimes/': typeof RuntimesIndexRoute
+  '/runtimes/$id': typeof RuntimesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -77,25 +103,39 @@ export interface FileRouteTypes {
     | '/'
     | '/runs'
     | '/skills'
+    | '/runtimes'
     | '/agents/$id'
     | '/skills/'
     | '/skills/$id'
+    | '/runtimes/'
+    | '/runtimes/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/runs' | '/skills' | '/agents/$id' | '/skills/$id'
+  to:
+    | '/'
+    | '/runs'
+    | '/skills'
+    | '/runtimes'
+    | '/agents/$id'
+    | '/skills/$id'
+    | '/runtimes/$id'
   id:
     | '__root__'
     | '/'
     | '/runs'
     | '/skills'
+    | '/runtimes'
     | '/agents/$id'
     | '/skills/'
     | '/skills/$id'
+    | '/runtimes/'
+    | '/runtimes/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   RunsRoute: typeof RunsRoute
   SkillsRoute: typeof SkillsRouteWithChildren
+  RuntimesRoute: typeof RuntimesRouteWithChildren
   AgentsIdRoute: typeof AgentsIdRoute
 }
 
@@ -106,6 +146,13 @@ declare module '@tanstack/react-router' {
       path: '/skills'
       fullPath: '/skills'
       preLoaderRoute: typeof SkillsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/runtimes': {
+      id: '/runtimes'
+      path: '/runtimes'
+      fullPath: '/runtimes'
+      preLoaderRoute: typeof RuntimesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/runs': {
@@ -143,6 +190,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SkillsIdRouteImport
       parentRoute: typeof SkillsRoute
     }
+    '/runtimes/': {
+      id: '/runtimes/'
+      path: '/'
+      fullPath: '/runtimes/'
+      preLoaderRoute: typeof RuntimesIndexRouteImport
+      parentRoute: typeof RuntimesRoute
+    }
+    '/runtimes/$id': {
+      id: '/runtimes/$id'
+      path: '/$id'
+      fullPath: '/runtimes/$id'
+      preLoaderRoute: typeof RuntimesIdRouteImport
+      parentRoute: typeof RuntimesRoute
+    }
   }
 }
 
@@ -159,10 +220,24 @@ const SkillsRouteChildren: SkillsRouteChildren = {
 const SkillsRouteWithChildren =
   SkillsRoute._addFileChildren(SkillsRouteChildren)
 
+interface RuntimesRouteChildren {
+  RuntimesIndexRoute: typeof RuntimesIndexRoute
+  RuntimesIdRoute: typeof RuntimesIdRoute
+}
+
+const RuntimesRouteChildren: RuntimesRouteChildren = {
+  RuntimesIndexRoute: RuntimesIndexRoute,
+  RuntimesIdRoute: RuntimesIdRoute,
+}
+
+const RuntimesRouteWithChildren =
+  RuntimesRoute._addFileChildren(RuntimesRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   RunsRoute: RunsRoute,
   SkillsRoute: SkillsRouteWithChildren,
+  RuntimesRoute: RuntimesRouteWithChildren,
   AgentsIdRoute: AgentsIdRoute,
 }
 export const routeTree = rootRouteImport

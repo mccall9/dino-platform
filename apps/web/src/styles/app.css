@@ -11,12 +11,28 @@
   --line: rgba(255, 255, 255, 0.1);
   --line-strong: rgba(255, 255, 255, 0.16);
   --green: #3ecf7a;
+  --agent-blue: #7dd3fc;
+  --agent-blue-deep: #38bdf8;
   --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --max: 44rem;
   --max-wide: 52rem;
   --radius: 0.9rem;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Agent mode — white dominant + soft sky blue */
+.ds-mode-agent {
+  --bg: #f4f8fc;
+  --bg-elev: #ffffff;
+  --bg-soft: #eef5fb;
+  --ink: #0f172a;
+  --muted: rgba(15, 23, 42, 0.62);
+  --faint: rgba(15, 23, 42, 0.42);
+  --line: rgba(14, 165, 233, 0.14);
+  --line-strong: rgba(14, 165, 233, 0.28);
+  --green: #0ea5e9;
+  color-scheme: light;
 }
 
 @layer base {
@@ -59,6 +75,229 @@
 .ds-content {
   position: relative;
   z-index: 1;
+}
+
+/* mode toggle (skills / agents) */
+.ds-mode-bar {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 40;
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.28rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg-elev) 88%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+}
+
+.ds-mode-btn {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  padding: 0.38rem 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.15s var(--ease);
+}
+
+.ds-mode-btn:hover {
+  color: var(--ink);
+}
+
+.ds-mode-btn[data-active="true"] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.ds-mode-agent .ds-mode-btn[data-active="true"] {
+  background: #0ea5e9;
+  color: #fff;
+}
+
+.ds-source-link {
+  text-decoration: none;
+  transition: color 0.15s var(--ease);
+}
+
+.ds-source-link:hover {
+  color: var(--green);
+}
+
+.sk-origin-url {
+  margin-left: 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--faint);
+  text-decoration: none;
+}
+
+.sk-origin-url:hover {
+  color: var(--green);
+}
+
+.ds-agent-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.ds-agent-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--agent-blue) 25%, transparent);
+}
+
+.ds-agent-count {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--faint);
+  margin-left: auto;
+}
+
+.ds-agent-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.ds-chip-static {
+  cursor: default;
+  pointer-events: none;
+}
+
+.ds-grid-2 {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .ds-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* agent ambient — soft blue wash */
+.ds-ambient-agent {
+  background:
+    radial-gradient(120% 80% at 50% -20%, rgba(125, 211, 252, 0.45), transparent 55%),
+    radial-gradient(80% 50% at 100% 20%, rgba(186, 230, 253, 0.5), transparent 50%),
+    var(--bg);
+}
+
+.ds-mode-agent .ds-orb-a {
+  background: radial-gradient(circle, rgba(125, 211, 252, 0.65) 0%, transparent 70%);
+  opacity: 0.7;
+}
+
+.ds-mode-agent .ds-orb-b {
+  background: radial-gradient(circle, rgba(147, 197, 253, 0.5) 0%, transparent 70%);
+  opacity: 0.55;
+}
+
+.ds-mode-agent .ds-orb-c {
+  background: radial-gradient(circle, rgba(224, 242, 254, 0.9) 0%, transparent 70%);
+  opacity: 0.6;
+}
+
+.ds-mode-agent .ds-ambient-grid {
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(14, 165, 233, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.08) 1px, transparent 1px);
+}
+
+.ds-mode-agent .ds-ambient-vignette {
+  background: radial-gradient(
+    ellipse 90% 70% at 50% 40%,
+    transparent 35%,
+    rgba(244, 248, 252, 0.65) 100%
+  );
+}
+
+.ds-mode-agent .ds-title {
+  color: #0f172a;
+  text-shadow: none;
+}
+
+.ds-mode-agent .ds-search-trigger {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--muted);
+  border-color: rgba(14, 165, 233, 0.2);
+  box-shadow: 0 4px 20px rgba(14, 165, 233, 0.08);
+}
+
+.ds-mode-agent .ds-card {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(14, 165, 233, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 10px 36px rgba(14, 165, 233, 0.08);
+}
+
+.ds-mode-agent .ds-card-id {
+  color: #0f172a;
+}
+
+.ds-mode-agent a.ds-card:hover {
+  background: #fff;
+  border-color: rgba(14, 165, 233, 0.35);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 16px 40px rgba(14, 165, 233, 0.12);
+}
+
+.ds-mode-agent .ds-howto {
+  background: rgba(255, 255, 255, 0.75);
+  border-color: rgba(14, 165, 233, 0.16);
+}
+
+.ds-mode-agent .ds-cmd {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(14, 165, 233, 0.2);
+  color: var(--ink);
+}
+
+.ds-mode-agent .ds-see-all {
+  background: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
+  border-color: rgba(14, 165, 233, 0.22);
+}
+
+.ds-mode-agent .ds-see-all-count {
+  background: rgba(14, 165, 233, 0.12);
+  border-color: rgba(14, 165, 233, 0.3);
+  color: #0284c7;
+}
+
+.ds-mode-agent .ds-footer {
+  border-top-color: rgba(14, 165, 233, 0.15);
+}
+
+.ds-mode-agent .sk-detail h1,
+.ds-mode-agent .sk-detail .sk-related-id {
+  color: #0f172a;
+}
+
+.ds-mode-agent .sk-install-cmd,
+.ds-mode-agent .sk-related-card,
+.ds-mode-agent .sk-pager-link {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(14, 165, 233, 0.16);
+}
+
+.ds-mode-agent .sk-install-code {
+  color: #0f172a;
 }
 
 /* ambient motion background */

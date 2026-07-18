@@ -6,6 +6,7 @@ import {
   type SkillCatalogEntry,
   type SkillCategory,
 } from "@dino/shared"
+import { SourceChip } from "~/components/SourceChip"
 
 export const Route = createFileRoute("/skills/")({
   component: SkillsCatalogPage,
@@ -110,10 +111,7 @@ function SkillsCatalogPage() {
               <h3 className="ds-card-id">{skill.id}</h3>
               <p>{skill.description}</p>
               <div className="ds-card-foot">
-                <span className="ds-source">
-                  <i aria-hidden />
-                  {skill.source ?? CATEGORY_LABEL[skill.category]}
-                </span>
+                <SourceChip source={skill.source} />
               </div>
             </Link>
           </motion.li>
