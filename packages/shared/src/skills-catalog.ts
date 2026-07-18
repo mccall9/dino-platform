@@ -11,21 +11,32 @@ const GH_SUPERPOWERS = "https://github.com/obra/superpowers"
 const GH_CONTEXT7 = "https://github.com/upstash/context7"
 
 /**
- * Inventário vivo — skills com link + install copiável.
- * dino-review: pack npm `dino-skills` (nossa marca).
+ * Inventário vivo — pack npm `dino-skills` com todas as skills.
+ * How to use principal: npx dino-skills start
  */
 export const SKILLS_CATALOG: SkillCatalogEntry[] = [
-  // —— Dino pack (ours) ——
+  // —— Pack root ——
+  {
+    id: "dino-skills-root",
+    source: "dino",
+    name: "Dino Skills Root",
+    description:
+      "Router do pack npm dino-skills — escolhe a skill certa (design, marketing, social…) antes de o agent mudar código.",
+    category: "developers",
+    url: `${GH_DINO}/tree/master/packages/dino-skills`,
+    status: "installable",
+    install: "npx dino-skills start",
+  },
   {
     id: "dino-review",
     source: "dino",
     name: "Dino Review",
     description:
-      "Review de landing/SaaS no padrão dino (ship viral): hero, CTA único, prova, pricing, OG. Roda com npx dino-skills.",
+      "Review de landing/SaaS no padrão dino (ship viral): hero, CTA único, prova, pricing, OG.",
     category: "marketing",
     url: `${GH_DINO}/tree/master/packages/dino-skills/skills/dino-review`,
     status: "installable",
-    install: "npx dino-skills start",
+    install: "npx dino-skills get dino-review",
   },
 
   // —— Developers ——

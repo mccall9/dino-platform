@@ -259,8 +259,11 @@ export function resolveInstallCmd(skill: {
   ) {
     return raw
   }
-  if (skill.id === "dino-review") {
+  if (skill.id === "dino-skills-root") {
     return "npx dino-skills start"
+  }
+  if (skill.id === "dino-review") {
+    return "npx dino-skills get dino-review"
   }
   if (skill.url?.includes("github.com")) {
     const base = skill.url.replace(/\/tree\/[^/]+.*$/, "")
@@ -275,8 +278,12 @@ export function resolveAltInstallCmd(skill: {
   id: string
   url?: string
 }): string | null {
+  if (skill.id === "dino-skills-root") {
+    return "npx skills add https://github.com/mccall9/dino-platform --skill dino-skills-root"
+  }
   if (skill.id === "dino-review") {
     return "npx skills add https://github.com/mccall9/dino-platform --skill dino-review"
   }
-  return null
+  // Any skill in the pack can be loaded via get
+  return `npx dino-skills get ${skill.id}`
 }

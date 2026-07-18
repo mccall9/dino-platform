@@ -1,31 +1,40 @@
 # dino-skills
 
-CLI + agent skills do **dino** (Clube dos Curiosos / dino.blog).
+Pack npm com **todas** as skills do inventário dino (design, marketing, social, review, revops…).
 
-## Quick start
+## How to use
 
 ```bash
 npx dino-skills start
-npx dino-skills list
-npx dino-skills get dino-review
 ```
 
-## Install skill into an agent
+Peça pro agent:
+
+> Run `npx dino-skills start` and pick the right skill before changing anything.
+
+## CLI
 
 ```bash
+npx dino-skills categories
+npx dino-skills list
+npx dino-skills list --category marketing
+npx dino-skills get dino-review
+npx dino-skills get revops
+npx dino-skills path cro
+```
+
+## Install into agent
+
+```bash
+npx skills add https://github.com/mccall9/dino-platform --skill dino-skills-root
+# or a specific skill
 npx skills add https://github.com/mccall9/dino-platform --skill dino-review
 ```
 
-## Skills in this pack
-
-| Skill | What |
-|-------|------|
-| `dino-review` | Product / landing review no padrão dino (ship viral, checklist de conversão). |
-
-Catalog: [dino-platform.vercel.app](https://dino-platform.vercel.app)
-
-## Local monorepo
+## Sync (monorepo)
 
 ```bash
-node packages/dino-skills/bin/dino-skills.mjs start
+node scripts/sync-dino-skills-pack.mjs
 ```
+
+Catalog web: [dino-platform.vercel.app](https://dino-platform.vercel.app)

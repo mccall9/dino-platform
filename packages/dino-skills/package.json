@@ -1,7 +1,7 @@
 {
   "name": "dino-skills",
-  "version": "0.1.0",
-  "description": "Dino Skills CLI — ship-ready agent skills (dino-review and more).",
+  "version": "0.2.0",
+  "description": "Dino Skills — npm pack com o inventário vivo de agent skills (design, marketing, social, review, revops).",
   "type": "module",
   "bin": {
     "dino-skills": "./bin/dino-skills.mjs"
@@ -9,14 +9,18 @@
   "files": [
     "bin",
     "skills",
+    "catalog.json",
     "README.md"
   ],
   "keywords": [
     "skills",
     "agents",
     "dino",
-    "marc-lou",
-    "product-review",
+    "claude",
+    "codex",
+    "cursor",
+    "marketing",
+    "design",
     "cli"
   ],
   "license": "MIT",

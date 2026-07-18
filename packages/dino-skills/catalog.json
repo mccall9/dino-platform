@@ -1,0 +1,329 @@
+{
+  "name": "dino-skills",
+  "version": "0.2.0",
+  "homepage": "https://dino-platform.vercel.app",
+  "skills": [
+    {
+      "id": "dino-skills-root",
+      "name": "Dino Skills Root",
+      "source": "dino",
+      "category": "developers",
+      "description": "Router do pack dino-skills — escolhe a skill certa antes de o agent sair mudando código."
+    },
+    {
+      "id": "dino-review",
+      "name": "Dino Review",
+      "source": "dino",
+      "category": "marketing",
+      "description": "Review de landing/SaaS no padrão dino (ship viral): hero, CTA único, prova, pricing, OG."
+    },
+    {
+      "id": "create-skill",
+      "name": "Create Skill",
+      "source": "grok",
+      "category": "developers",
+      "description": "Cria skill nova no Grok (SKILL.md + scripts) com entrevista e scaffold completo."
+    },
+    {
+      "id": "check-work",
+      "name": "Check Work",
+      "source": "grok",
+      "category": "developers",
+      "description": "Verifica o trabalho com subagent: diff, build, testes e correção antes de dar por pronto."
+    },
+    {
+      "id": "superpowers",
+      "name": "Superpowers",
+      "source": "obra",
+      "category": "developers",
+      "description": "Processo agentic: brainstorm → plano → TDD → subagents → review. Evita o agent sair codando no escuro."
+    },
+    {
+      "id": "context7",
+      "name": "Context7",
+      "source": "upstash",
+      "category": "developers",
+      "description": "Docs e exemplos de libs no contexto (anti-hallucination de API antiga). CLI ou MCP."
+    },
+    {
+      "id": "imagine",
+      "name": "Imagine",
+      "source": "grok",
+      "category": "developers",
+      "description": "Workflow de image_gen / image_edit no Grok: prompt craft, referência e consistência de asset."
+    },
+    {
+      "id": "company-skills-catalog",
+      "name": "Company Skills Catalog",
+      "source": "dino",
+      "category": "developers",
+      "description": "Mapa do inventário de packs (dev, design, marketing, social…) e como carregar cada um."
+    },
+    {
+      "id": "design-taste-frontend",
+      "name": "Design Taste Frontend",
+      "source": "taste",
+      "category": "designers",
+      "description": "Anti-slop de landing/portfolio: direção visual real, audit-first, sem UI genérica de IA."
+    },
+    {
+      "id": "frontend-design",
+      "name": "Frontend Design",
+      "source": "anthropics",
+      "category": "designers",
+      "description": "Interfaces com filosofia estética nomeada — tipografia, cor e composição intencional."
+    },
+    {
+      "id": "design-brief",
+      "name": "Design Brief",
+      "source": "julian",
+      "category": "designers",
+      "description": "Brief de design por entrevista + exploração do código — base antes de construir UI."
+    },
+    {
+      "id": "design-flow",
+      "name": "Design Flow",
+      "source": "julian",
+      "category": "designers",
+      "description": "Fluxo completo design→build: brief, tokens, frontend, review em sequência guiada."
+    },
+    {
+      "id": "design-review",
+      "name": "Design Review",
+      "source": "julian",
+      "category": "designers",
+      "description": "Crítica estruturada: hierarquia, consistência, responsivo, a11y e fidelidade ao brief."
+    },
+    {
+      "id": "design-tokens",
+      "name": "Design Tokens",
+      "source": "julian",
+      "category": "designers",
+      "description": "Gera tokens (CSS vars / Tailwind): light/dark, type ramp, spacing e componentes."
+    },
+    {
+      "id": "grill-me",
+      "name": "Grill Me",
+      "source": "julian",
+      "category": "designers",
+      "description": "Entrevista implacável até fechar decisões de design/plano — zero ambiguidade."
+    },
+    {
+      "id": "brief-to-tasks",
+      "name": "Brief → Tasks",
+      "source": "julian",
+      "category": "designers",
+      "description": "Quebra o brief em checklist de fatias verticais independentes e buildáveis."
+    },
+    {
+      "id": "information-architecture",
+      "name": "Information Architecture",
+      "source": "julian",
+      "category": "designers",
+      "description": "Estrutura do produto: nav, hierarquia, URLs, fluxos — antes do visual."
+    },
+    {
+      "id": "emil-design-eng",
+      "name": "Emil Design Eng",
+      "source": "emil",
+      "category": "designers",
+      "description": "Polimento de UI no espírito Emil Kowalski: micro-detalhe, motion e sensação de software caro."
+    },
+    {
+      "id": "apple-design",
+      "name": "Apple Design",
+      "source": "grok",
+      "category": "designers",
+      "description": "Gestos, springs, materiais, tipografia óptica — fundações de interface no estilo Apple."
+    },
+    {
+      "id": "transitions-dev",
+      "name": "Transitions.dev",
+      "source": "jakub",
+      "category": "designers",
+      "description": "Micro-transições de produção (modal, badge, sheet…) com tokens de duração/easing."
+    },
+    {
+      "id": "improve-animations",
+      "name": "Improve Animations",
+      "source": "grok",
+      "category": "designers",
+      "description": "Auditoria de motion no código + plano priorizado do que animar (e do que não)."
+    },
+    {
+      "id": "brandkit",
+      "name": "Brandkit",
+      "source": "dino",
+      "category": "designers",
+      "description": "Brand kits premium: logo system, guidelines board, identidade dark-tech / editorial."
+    },
+    {
+      "id": "high-end-visual-design",
+      "name": "High-End Visual Design",
+      "source": "dino",
+      "category": "designers",
+      "description": "Padrões de agência: type, sombra, card, spacing — bloqueia defaults baratos de IA."
+    },
+    {
+      "id": "product-marketing",
+      "name": "Product Marketing",
+      "source": "coreyhaines",
+      "category": "marketing",
+      "description": "Contexto de produto (ICP, positioning) em `.agents/product-marketing.md` — base das outras skills de growth."
+    },
+    {
+      "id": "copywriting",
+      "name": "Copywriting",
+      "source": "coreyhaines",
+      "category": "marketing",
+      "description": "Copy de conversão para home, landing, pricing e feature pages — claro, específico, acionável."
+    },
+    {
+      "id": "cro",
+      "name": "CRO",
+      "source": "coreyhaines",
+      "category": "marketing",
+      "description": "Otimização de conversão em páginas e forms: o que mata o clique e o que consertar primeiro."
+    },
+    {
+      "id": "launch",
+      "name": "Launch",
+      "source": "coreyhaines",
+      "category": "marketing",
+      "description": "Plano de lançamento / PH / feature release: checklist, momentum e conversão de interesse."
+    },
+    {
+      "id": "marketing-plan",
+      "name": "Marketing Plan",
+      "source": "coreyhaines",
+      "category": "marketing",
+      "description": "Plano AARRR completo (90 dias / 12 meses): aquisição, ativação, retenção, referral, revenue."
+    },
+    {
+      "id": "marketing-ideas",
+      "name": "Marketing Ideas",
+      "source": "coreyhaines",
+      "category": "marketing",
+      "description": "Ideias e táticas de growth quando trava o “como divulgar isso?”."
+    },
+    {
+      "id": "offers",
+      "name": "Offers",
+      "source": "coreyhaines",
+      "category": "marketing",
+      "description": "Desenho de oferta: value stack, bônus, garantia, scarcity — o que está por baixo da copy."
+    },
+    {
+      "id": "pricing",
+      "name": "Pricing",
+      "source": "coreyhaines",
+      "category": "marketing",
+      "description": "Decisões de preço, packaging, freemium vs pago e framing de valor."
+    },
+    {
+      "id": "revops",
+      "name": "RevOps / Revenue",
+      "source": "coreyhaines",
+      "category": "marketing",
+      "description": "Revenue operations: MQL/SQL, scoring, routing, pipeline, CRM, handoff marketing→sales."
+    },
+    {
+      "id": "seo-audit",
+      "name": "SEO Audit",
+      "source": "coreyhaines",
+      "category": "marketing",
+      "description": "Auditoria técnica e on-page: ranking, indexação, Core Web Vitals e drops de tráfego."
+    },
+    {
+      "id": "ads",
+      "name": "Ads",
+      "source": "coreyhaines",
+      "category": "marketing",
+      "description": "Campanhas pagas (Google/Meta/LinkedIn): targeting, ROAS, retargeting e budget."
+    },
+    {
+      "id": "ab-testing",
+      "name": "A/B Testing",
+      "source": "coreyhaines",
+      "category": "marketing",
+      "description": "Hipótese, variantes, significância e backlog de experimentos de growth."
+    },
+    {
+      "id": "emails",
+      "name": "Emails",
+      "source": "coreyhaines",
+      "category": "marketing",
+      "description": "Sequências, drip, onboarding e lifecycle e-mail com automação."
+    },
+    {
+      "id": "customer-research",
+      "name": "Customer Research",
+      "source": "coreyhaines",
+      "category": "marketing",
+      "description": "ICP, entrevistas, VOC, reviews e mining — o que o cliente realmente diz."
+    },
+    {
+      "id": "post-writer",
+      "name": "Post Writer",
+      "source": "charlie",
+      "category": "social",
+      "description": "Posts LinkedIn na minha voz (about-me / voice.md) a partir de notas ou ideia solta."
+    },
+    {
+      "id": "post-scorer",
+      "name": "Post Scorer",
+      "source": "charlie",
+      "category": "social",
+      "description": "Nota o post com base no histórico real de performance — não em dica genérica."
+    },
+    {
+      "id": "content-matrix",
+      "name": "Content Matrix",
+      "source": "charlie",
+      "category": "social",
+      "description": "32+ ideias de post cruzando pilares × formatos (tabela pronta pro mês)."
+    },
+    {
+      "id": "hook-generator",
+      "name": "Hook Generator",
+      "source": "charlie",
+      "category": "social",
+      "description": "6 aberturas clickbait no formato 2 linhas — dígitos, “How I”, contraste."
+    },
+    {
+      "id": "gemini-carousel",
+      "name": "Gemini Carousel",
+      "source": "charlie",
+      "category": "social",
+      "description": "Carrossel LinkedIn slide a slide: brief → aprovação → prompts de imagem."
+    },
+    {
+      "id": "voice-builder",
+      "name": "Voice Builder",
+      "source": "charlie",
+      "category": "social",
+      "description": "Perfil de voz a partir de entrevista + samples — base de todo conteúdo escrito."
+    },
+    {
+      "id": "youtube-thumbnail",
+      "name": "YouTube Thumbnail",
+      "source": "charlie",
+      "category": "social",
+      "description": "Thumbnail de alta CTR com foto de referência, título e cores de marca."
+    },
+    {
+      "id": "reels-scripting",
+      "name": "Reels Scripting",
+      "source": "charlie",
+      "category": "social",
+      "description": "Script de Reel a partir de referência + newsletter — tom e repurpose."
+    },
+    {
+      "id": "social",
+      "name": "Social",
+      "source": "charlie",
+      "category": "social",
+      "description": "Conteúdo e calendário multi-rede: LinkedIn, X, Reels, Shorts, scheduling."
+    }
+  ]
+}

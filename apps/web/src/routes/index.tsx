@@ -42,23 +42,25 @@ const FILTERS: Array<SkillCategory | "all"> = [
   "social",
 ]
 
+/** Primary how-to: one npm pack for the whole collection (UI Skills style). */
+const HOW_TO_CMD = "npx dino-skills start"
 const HOW_TO_PROMPT =
-  "Roda dino-review na home do dino e me dá o scorecard + top 5 fixes."
+  "Run `npx dino-skills start` and pick the right skill before changing anything."
 
 function DinoSkillsHome() {
   const [filter, setFilter] = React.useState<SkillCategory | "all">("all")
-  const [copied, setCopied] = React.useState(false)
+  const [copied, setCopied] = React.useState<"cmd" | "prompt" | null>(null)
 
   const skills: SkillCatalogEntry[] =
     filter === "all"
       ? SKILLS_CATALOG
       : SKILLS_CATALOG.filter((s) => s.category === filter)
 
-  async function copyPrompt() {
+  async function copyText(text: string, which: "cmd" | "prompt") {
     try {
-      await navigator.clipboard.writeText(HOW_TO_PROMPT)
-      setCopied(true)
-      window.setTimeout(() => setCopied(false), 1600)
+      await navigator.clipboard.writeText(text)
+      setCopied(which)
+      window.setTimeout(() => setCopied(null), 1600)
     } catch {
       /* ignore */
     }
@@ -94,7 +96,7 @@ function DinoSkillsHome() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
-            Coleção de skills do meu setup — design, marketing, código e o
+            Pack npm com as skills do meu setup — design, marketing, código e o
             resto que o agent carrega quando constrói comigo.
           </motion.p>
 
@@ -106,22 +108,49 @@ function DinoSkillsHome() {
           >
             <h2>How to use</h2>
             <p>
-              Peça pro agent carregar a skill certa antes de mudar código ou
-              copy. Exemplo:
+              Um pacote, todas as skills. Peça pro agent rodar o CLI primeiro
+              pra escolher a skill certa antes de mudar código ou copy.
             </p>
             <button
               type="button"
               className="ds-cmd"
-              onClick={copyPrompt}
+              onClick={() => copyText(HOW_TO_CMD, "cmd")}
+              aria-label="Copiar comando npm"
+            >
+              <code>
+                <span className="tok-cmd">npx</span>{" "}
+                <span className="tok-sub">dino-skills</span>{" "}
+                <span className="tok-sub">start</span>
+              </code>
+              <span className="ds-cmd-icon" aria-hidden>
+                {copied === "cmd" ? <Check size={15} /> : <Copy size={15} />}
+              </span>
+            </button>
+            <button
+              type="button"
+              className="ds-cmd ds-cmd-secondary"
+              onClick={() => copyText(HOW_TO_PROMPT, "prompt")}
               aria-label="Copiar prompt de exemplo"
             >
               <code>{HOW_TO_PROMPT}</code>
               <span className="ds-cmd-icon" aria-hidden>
-                {copied ? <Check size={15} /> : <Copy size={15} />}
+                {copied === "prompt" ? (
+                  <Check size={15} />
+                ) : (
+                  <Copy size={15} />
+                )}
               </span>
             </button>
             <p className="ds-howto-foot">
-              Ou navega a collection abaixo e pede pelo nome / id da skill.
+              Depois:{" "}
+              <code className="ds-inline-code">
+                npx dino-skills list
+              </code>{" "}
+              ·{" "}
+              <code className="ds-inline-code">
+                npx dino-skills get dino-review
+              </code>{" "}
+              · ou abre a collection abaixo.
             </p>
           </motion.div>
         </section>
