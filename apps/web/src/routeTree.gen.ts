@@ -36,22 +36,22 @@ const AgentsIdRoute = AgentsIdRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const SkillsIdRoute = SkillsIdRouteImport.update({
-  id: '/skills/$id',
-  path: '/skills/$id',
-  getParentRoute: () => rootRouteImport,
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => SkillsRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/runs': typeof RunsRoute
-  '/skills': typeof SkillsRoute
+  '/skills': typeof SkillsRouteWithChildren
   '/agents/$id': typeof AgentsIdRoute
   '/skills/$id': typeof SkillsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/runs': typeof RunsRoute
-  '/skills': typeof SkillsRoute
+  '/skills': typeof SkillsRouteWithChildren
   '/agents/$id': typeof AgentsIdRoute
   '/skills/$id': typeof SkillsIdRoute
 }
@@ -59,7 +59,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/runs': typeof RunsRoute
-  '/skills': typeof SkillsRoute
+  '/skills': typeof SkillsRouteWithChildren
   '/agents/$id': typeof AgentsIdRoute
   '/skills/$id': typeof SkillsIdRoute
 }
@@ -74,9 +74,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   RunsRoute: typeof RunsRoute
-  SkillsRoute: typeof SkillsRoute
+  SkillsRoute: typeof SkillsRouteWithChildren
   AgentsIdRoute: typeof AgentsIdRoute
-  SkillsIdRoute: typeof SkillsIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -111,20 +110,29 @@ declare module '@tanstack/react-router' {
     }
     '/skills/$id': {
       id: '/skills/$id'
-      path: '/skills/$id'
+      path: '/$id'
       fullPath: '/skills/$id'
       preLoaderRoute: typeof SkillsIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof SkillsRoute
     }
   }
 }
 
+interface SkillsRouteChildren {
+  SkillsIdRoute: typeof SkillsIdRoute
+}
+
+const SkillsRouteChildren: SkillsRouteChildren = {
+  SkillsIdRoute: SkillsIdRoute,
+}
+
+const SkillsRouteWithChildren = SkillsRoute._addFileChildren(SkillsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   RunsRoute: RunsRoute,
-  SkillsRoute: SkillsRoute,
+  SkillsRoute: SkillsRouteWithChildren,
   AgentsIdRoute: AgentsIdRoute,
-  SkillsIdRoute: SkillsIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

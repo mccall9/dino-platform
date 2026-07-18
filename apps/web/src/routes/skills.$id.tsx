@@ -22,6 +22,7 @@ const ALIASES: Record<string, string> = {
 }
 
 export const Route = createFileRoute("/skills/$id")({
+  // Nested under /skills layout (Outlet). fullPath remains /skills/$id
   loader: ({ params }) => {
     const alias = ALIASES[params.id]
     if (alias) {
