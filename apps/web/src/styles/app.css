@@ -11,7 +11,7 @@
   --line: rgba(255, 255, 255, 0.1);
   --line-strong: rgba(255, 255, 255, 0.16);
   --green: #3ecf7a;
-  --font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --max: 44rem;
   --max-wide: 52rem;
@@ -331,12 +331,10 @@ a.ds-card:hover {
 
 .ds-card-id {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 600;
   letter-spacing: -0.03em;
   color: #fff;
-  font-family: var(--mono);
-  font-size: 0.86rem;
 }
 
 .ds-card p {
@@ -392,4 +390,383 @@ a.ds-card:hover {
 
 .platform-shell {
   min-height: 100dvh;
+}
+
+/* ── Skill detail (UI Skills pattern) ── */
+.sk-header-inner {
+  max-width: 48rem;
+}
+
+.sk-nav-arrows {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.sk-arrow {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.55rem;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  background: transparent;
+  transition: 0.15s var(--ease);
+}
+
+a.sk-arrow:hover {
+  color: #fff;
+  border-color: var(--line-strong);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.sk-arrow.is-disabled {
+  opacity: 0.3;
+}
+
+.sk-detail {
+  width: min(100% - 2rem, 42rem);
+  margin: 0 auto;
+  padding: 1.75rem 0 4rem;
+}
+
+.sk-crumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--faint);
+}
+
+.sk-crumb a:hover {
+  color: var(--muted);
+}
+
+.sk-crumb-current {
+  color: var(--muted);
+}
+
+.sk-detail-head {
+  margin-bottom: 1.75rem;
+}
+
+.sk-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.sk-title-row h1 {
+  margin: 0;
+  font-size: clamp(1.65rem, 4vw, 2rem);
+  font-weight: 650;
+  letter-spacing: -0.04em;
+  color: #fff;
+  line-height: 1.15;
+}
+
+.sk-gh {
+  display: grid;
+  place-items: center;
+  color: var(--faint);
+  transition: color 0.15s var(--ease);
+}
+
+.sk-gh:hover {
+  color: #fff;
+}
+
+.sk-source-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.75rem;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.sk-source-line i {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff6b6b, #f7b267);
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.15);
+}
+
+.sk-desc {
+  margin: 0.85rem 0 0;
+  max-width: 38rem;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.sk-install {
+  margin-bottom: 1.5rem;
+}
+
+.sk-install h2 {
+  margin: 0 0 0.65rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.sk-install-cmd {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease);
+}
+
+.sk-install-cmd:hover {
+  border-color: var(--line-strong);
+}
+
+.sk-install-code {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+.sk-install-code .tok-cmd {
+  color: #f59e0b;
+}
+
+.sk-install-code .tok-sub {
+  color: #60a5fa;
+}
+
+.sk-install-code .tok-flag {
+  color: var(--muted);
+}
+
+.sk-install-code .tok-url {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.sk-copy-ico {
+  flex-shrink: 0;
+  color: var(--faint);
+  margin-top: 0.1rem;
+}
+
+.sk-install-cmd:hover .sk-copy-ico {
+  color: var(--green);
+}
+
+/* doc card */
+.sk-doc {
+  position: relative;
+  padding: 1.25rem 1.2rem 1.5rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+}
+
+.sk-doc-copy {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.85rem;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--faint);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.25rem 0.4rem;
+  border-radius: 0.35rem;
+}
+
+.sk-doc-copy:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* markdown inside skill */
+.sk-md {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.sk-frontmatter {
+  margin: 0 0 1.35rem;
+  padding: 0;
+  background: transparent;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--faint);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.sk-yaml-fence {
+  color: rgba(255, 255, 255, 0.28);
+}
+
+.sk-yaml-key {
+  color: #c084fc;
+}
+
+.sk-yaml-colon {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.sk-yaml-val {
+  color: var(--faint);
+}
+
+.sk-body h1,
+.sk-body h2,
+.sk-body h3,
+.sk-body h4 {
+  margin: 1.35rem 0 0.55rem;
+  color: #fff;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.sk-body h1 {
+  font-size: 1.35rem;
+  margin-top: 0.25rem;
+}
+
+.sk-body h2 {
+  font-size: 1.12rem;
+}
+
+.sk-body h3 {
+  font-size: 1rem;
+}
+
+.sk-body h4 {
+  font-size: 0.92rem;
+}
+
+.sk-body p {
+  margin: 0 0 0.85rem;
+}
+
+.sk-body ul,
+.sk-body ol {
+  margin: 0 0 0.95rem;
+  padding-left: 1.2rem;
+}
+
+.sk-body li {
+  margin: 0.25rem 0;
+}
+
+.sk-body li::marker {
+  color: var(--faint);
+}
+
+.sk-body strong {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.sk-body a {
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.sk-inline-code {
+  font-family: var(--mono);
+  font-size: 0.84em;
+  padding: 0.1em 0.35em;
+  border-radius: 0.3rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.sk-code {
+  margin: 0 0 1rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 0.65rem;
+  border: 1px solid var(--line);
+  background: #0f0f0f;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.sk-body blockquote {
+  margin: 0 0 1rem;
+  padding: 0.55rem 0 0.55rem 0.9rem;
+  border-left: 2px solid rgba(62, 207, 122, 0.45);
+  color: var(--faint);
+}
+
+.sk-body hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 1.25rem 0;
+}
+
+.sk-pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.sk-pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 0.7rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  transition: 0.15s var(--ease);
+}
+
+.sk-pager-link:hover {
+  border-color: var(--line-strong);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.sk-pager-link span {
+  font-size: 0.72rem;
+  color: var(--faint);
+}
+
+.sk-pager-link strong {
+  font-size: 0.86rem;
+  font-weight: 600;
+  font-family: var(--mono);
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.sk-pager-link.is-next {
+  text-align: right;
+  justify-self: end;
 }

@@ -168,9 +168,22 @@ function DinoSkillsHome() {
             <p className="ds-empty">Nada nessa busca. Tenta outro termo.</p>
           ) : (
             <ul className="ds-grid">
-              {skills.map((skill, i) => {
-                const body = (
-                  <>
+              {skills.map((skill, i) => (
+                <motion.li
+                  key={skill.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: Math.min(0.04 + i * 0.02, 0.35),
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
+                  <Link
+                    to="/skills/$id"
+                    params={{ id: skill.id }}
+                    className="ds-card"
+                  >
                     <h3 className="ds-card-id">{skill.id}</h3>
                     <p>{skill.description}</p>
                     <div className="ds-card-foot">
@@ -179,34 +192,9 @@ function DinoSkillsHome() {
                         {skill.source ?? CATEGORY_LABEL[skill.category]}
                       </span>
                     </div>
-                  </>
-                )
-                return (
-                  <motion.li
-                    key={skill.id}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.4,
-                      delay: Math.min(0.04 + i * 0.02, 0.35),
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                  >
-                    {skill.url ? (
-                      <a
-                        href={skill.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="ds-card"
-                      >
-                        {body}
-                      </a>
-                    ) : (
-                      <div className="ds-card">{body}</div>
-                    )}
-                  </motion.li>
-                )
-              })}
+                  </Link>
+                </motion.li>
+              ))}
             </ul>
           )}
         </main>
