@@ -820,6 +820,7 @@ a.ds-card:hover {
 
 .ds-card-id {
   margin: 0;
+  font-family: var(--font);
   font-size: 0.92rem;
   font-weight: 600;
   letter-spacing: -0.03em;
@@ -927,6 +928,7 @@ a.ds-card:hover {
 
 .sk-title-row h1 {
   margin: 0;
+  font-family: var(--font);
   font-size: clamp(1.65rem, 4vw, 2rem);
   font-weight: 650;
   letter-spacing: -0.04em;
@@ -1309,11 +1311,11 @@ a.ds-card:hover {
 }
 
 .sk-pager-link strong {
-  font-size: 0.86rem;
+  font-family: var(--font);
+  font-size: 0.9rem;
   font-weight: 600;
-  font-family: var(--mono);
   color: #fff;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .sk-pager-link.is-next {
