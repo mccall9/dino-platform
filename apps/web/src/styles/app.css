@@ -855,13 +855,20 @@ a.ds-card:hover {
 
 .ds-footer {
   width: min(100% - 2rem, var(--max));
-  margin: 0 auto;
-  padding: 1.25rem 0 2.25rem;
+  margin: 2.75rem auto 0;
+  padding: 2rem 0 2.5rem;
   border-top: 1px solid var(--line);
   text-align: center;
   font-size: 0.78rem;
   color: var(--faint);
   line-height: 1.5;
+}
+
+/* Discover page: linha ainda mais longe do grid */
+.ds-discover .ds-footer {
+  width: 100%;
+  margin-top: 3.5rem;
+  padding-top: 2.25rem;
 }
 
 .ds-footer strong {
