@@ -8,6 +8,7 @@ import {
   type SkillCatalogEntry,
 } from "@dino/shared"
 import { AgentIcon } from "~/components/AgentIcon"
+import { LocaleSwitch } from "~/components/LocaleSwitch"
 import { useI18n } from "~/lib/i18n"
 import { useShellMode, type ShellMode } from "~/lib/shell-mode"
 
@@ -71,18 +72,21 @@ export function SkillSearch() {
 
   return (
     <>
-      <button
-        type="button"
-        className="ds-search-trigger"
-        onClick={() => setOpen(true)}
-        aria-label={isAgent ? t("nav.searchAgents") : t("nav.search")}
-        aria-haspopup="dialog"
-        aria-expanded={open}
-      >
-        <Search size={14} strokeWidth={2} aria-hidden />
-        <span>{isAgent ? t("nav.searchAgents") : t("nav.search")}</span>
-        <kbd className="ds-search-kbd">{isMac ? "⌘K" : "Ctrl K"}</kbd>
-      </button>
+      <div className="ds-top-right">
+        <LocaleSwitch />
+        <button
+          type="button"
+          className="ds-search-trigger"
+          onClick={() => setOpen(true)}
+          aria-label={isAgent ? t("nav.searchAgents") : t("nav.search")}
+          aria-haspopup="dialog"
+          aria-expanded={open}
+        >
+          <Search size={14} strokeWidth={2} aria-hidden />
+          <span>{isAgent ? t("nav.searchAgents") : t("nav.search")}</span>
+          <kbd className="ds-search-kbd">{isMac ? "⌘K" : "Ctrl K"}</kbd>
+        </button>
+      </div>
 
       {open ? (
         <SkillSearchPalette mode={mode} onClose={() => setOpen(false)} />

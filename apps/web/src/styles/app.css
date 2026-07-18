@@ -128,14 +128,22 @@
   text-wrap: pretty;
 }
 
-/* language BR / US */
-.ds-locale {
+/* top-right chrome: flags + search */
+.ds-top-right {
   position: fixed;
   top: 1rem;
-  left: 1rem;
+  right: 1rem;
   z-index: 41;
   display: inline-flex;
-  gap: 0.25rem;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* language BR / US — beside search */
+.ds-locale {
+  position: static;
+  display: inline-flex;
+  gap: 0.2rem;
   padding: 0.22rem;
   border-radius: 999px;
   border: 1px solid var(--line);
@@ -189,10 +197,10 @@
   font-weight: 700;
 }
 
-/* mode toggle (skills / agents) — under language */
+/* mode toggle (skills / agents) — top left */
 .ds-mode-bar {
   position: fixed;
-  top: 3.55rem;
+  top: 1rem;
   left: 1rem;
   z-index: 40;
   display: inline-flex;
@@ -680,12 +688,9 @@
   }
 }
 
-/* floating Search trigger (no navbar) */
+/* floating Search trigger (no navbar) — in .ds-top-right */
 .ds-search-trigger {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 40;
+  position: static;
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -747,13 +752,12 @@
 /* Extra soft blur on page content while search is open */
 html.ds-search-open .ds-shell > .ds-ambient,
 html.ds-search-open .ds-shell > .ds-content,
-html.ds-search-open .ds-shell > .ds-mode-bar,
-html.ds-search-open .ds-locale {
+html.ds-search-open .ds-shell > .ds-mode-bar {
   filter: blur(10px);
   transition: filter 0.2s var(--ease);
 }
 
-html.ds-search-open .ds-search-trigger {
+html.ds-search-open .ds-top-right {
   opacity: 0;
   pointer-events: none;
 }
