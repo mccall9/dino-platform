@@ -9,6 +9,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   // —— Developers / agent ops ——
   {
     id: "create-skill",
+    source: "grok",
     name: "Create Skill",
     description:
       "Cria skill nova no Grok (SKILL.md + scripts) com entrevista e scaffold completo.",
@@ -19,6 +20,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "check-work",
+    source: "grok",
     name: "Check Work",
     description:
       "Verifica o trabalho com subagent: diff, build, testes e correção antes de dar por pronto.",
@@ -29,6 +31,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "superpowers",
+    source: "obra",
     name: "Superpowers",
     description:
       "Processo agentic: brainstorm → plano → TDD → subagents → review. Evita o agent sair codando no escuro.",
@@ -39,6 +42,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "context7",
+    source: "upstash",
     name: "Context7",
     description:
       "Docs e exemplos de libs no contexto (anti-hallucination de API antiga). CLI ou MCP.",
@@ -49,6 +53,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "imagine",
+    source: "grok",
     name: "Imagine",
     description:
       "Workflow de image_gen / image_edit no Grok: prompt craft, referência e consistência de asset.",
@@ -59,6 +64,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "company-skills-catalog",
+    source: "dino",
     name: "Company Skills Catalog",
     description:
       "Mapa do inventário de packs (dev, design, marketing, social…) e como carregar cada um.",
@@ -71,6 +77,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   // —— Designers ——
   {
     id: "design-taste-frontend",
+    source: "taste",
     name: "Design Taste Frontend",
     description:
       "Anti-slop de landing/portfolio: direção visual real, audit-first, sem UI genérica de IA.",
@@ -81,6 +88,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "frontend-design",
+    source: "anthropics",
     name: "Frontend Design",
     description:
       "Interfaces com filosofia estética nomeada — tipografia, cor e composição intencional.",
@@ -91,6 +99,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "design-brief",
+    source: "julian",
     name: "Design Brief",
     description:
       "Brief de design por entrevista + exploração do código — base antes de construir UI.",
@@ -101,6 +110,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "design-flow",
+    source: "julian",
     name: "Design Flow",
     description:
       "Fluxo completo design→build: brief, tokens, frontend, review em sequência guiada.",
@@ -111,6 +121,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "design-review",
+    source: "julian",
     name: "Design Review",
     description:
       "Crítica estruturada: hierarquia, consistência, responsivo, a11y e fidelidade ao brief.",
@@ -121,6 +132,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "design-tokens",
+    source: "julian",
     name: "Design Tokens",
     description:
       "Gera tokens (CSS vars / Tailwind): light/dark, type ramp, spacing e componentes.",
@@ -131,6 +143,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "grill-me",
+    source: "julian",
     name: "Grill Me",
     description:
       "Entrevista implacável até fechar decisões de design/plano — zero ambiguidade.",
@@ -141,6 +154,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "brief-to-tasks",
+    source: "julian",
     name: "Brief → Tasks",
     description:
       "Quebra o brief em checklist de fatias verticais independentes e buildáveis.",
@@ -151,6 +165,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "information-architecture",
+    source: "julian",
     name: "Information Architecture",
     description:
       "Estrutura do produto: nav, hierarquia, URLs, fluxos — antes do visual.",
@@ -161,6 +176,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "emil-design-eng",
+    source: "emil",
     name: "Emil Design Eng",
     description:
       "Polimento de UI no espírito Emil Kowalski: micro-detalhe, motion e sensação de software caro.",
@@ -171,6 +187,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "apple-design",
+    source: "grok",
     name: "Apple Design",
     description:
       "Gestos, springs, materiais, tipografia óptica — fundações de interface no estilo Apple.",
@@ -181,6 +198,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "transitions-dev",
+    source: "jakub",
     name: "Transitions.dev",
     description:
       "Micro-transições de produção (modal, badge, sheet…) com tokens de duração/easing.",
@@ -191,6 +209,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "improve-animations",
+    source: "grok",
     name: "Improve Animations",
     description:
       "Auditoria de motion no código + plano priorizado do que animar (e do que não).",
@@ -201,6 +220,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "brandkit",
+    source: "dino",
     name: "Brandkit",
     description:
       "Brand kits premium: logo system, guidelines board, identidade dark-tech / editorial.",
@@ -211,6 +231,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "high-end-visual-design",
+    source: "dino",
     name: "High-End Visual Design",
     description:
       "Padrões de agência: type, sombra, card, spacing — bloqueia defaults baratos de IA.",
@@ -223,6 +244,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   // —— Marketing (pack Corey + Marc Lou) ——
   {
     id: "marclou-review",
+    source: "Marc Lou",
     name: "Marc Lou Review",
     description:
       "Review brutal de landing/SaaS no estilo Marc Lou: hero, CTA único, prova, pricing, OG e copy viral.",
@@ -233,6 +255,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "product-marketing",
+    source: "coreyhaines",
     name: "Product Marketing",
     description:
       "Contexto de produto (ICP, positioning) em `.agents/product-marketing.md` — base das outras skills de growth.",
@@ -243,6 +266,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "copywriting",
+    source: "coreyhaines",
     name: "Copywriting",
     description:
       "Copy de conversão para home, landing, pricing e feature pages — claro, específico, acionável.",
@@ -253,6 +277,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "cro",
+    source: "coreyhaines",
     name: "CRO",
     description:
       "Otimização de conversão em páginas e forms: o que mata o clique e o que consertar primeiro.",
@@ -263,6 +288,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "launch",
+    source: "coreyhaines",
     name: "Launch",
     description:
       "Plano de lançamento / PH / feature release: checklist, momentum e conversão de interesse.",
@@ -273,6 +299,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "marketing-plan",
+    source: "coreyhaines",
     name: "Marketing Plan",
     description:
       "Plano AARRR completo (90 dias / 12 meses): aquisição, ativação, retenção, referral, revenue.",
@@ -283,6 +310,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "marketing-ideas",
+    source: "coreyhaines",
     name: "Marketing Ideas",
     description:
       "Ideias e táticas de growth quando trava o “como divulgar isso?”.",
@@ -293,6 +321,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "offers",
+    source: "coreyhaines",
     name: "Offers",
     description:
       "Desenho de oferta: value stack, bônus, garantia, scarcity — o que está por baixo da copy.",
@@ -303,6 +332,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "pricing",
+    source: "coreyhaines",
     name: "Pricing",
     description:
       "Decisões de preço, packaging, freemium vs pago e framing de valor.",
@@ -313,6 +343,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "seo-audit",
+    source: "coreyhaines",
     name: "SEO Audit",
     description:
       "Auditoria técnica e on-page: ranking, indexação, Core Web Vitals e drops de tráfego.",
@@ -323,6 +354,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "ads",
+    source: "coreyhaines",
     name: "Ads",
     description:
       "Campanhas pagas (Google/Meta/LinkedIn): targeting, ROAS, retargeting e budget.",
@@ -333,6 +365,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "ab-testing",
+    source: "coreyhaines",
     name: "A/B Testing",
     description:
       "Hipótese, variantes, significância e backlog de experimentos de growth.",
@@ -343,6 +376,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "emails",
+    source: "coreyhaines",
     name: "Emails",
     description:
       "Sequências, drip, onboarding e lifecycle e-mail com automação.",
@@ -353,6 +387,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "customer-research",
+    source: "coreyhaines",
     name: "Customer Research",
     description:
       "ICP, entrevistas, VOC, reviews e mining — o que o cliente realmente diz.",
@@ -365,6 +400,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   // —— Social ——
   {
     id: "post-writer",
+    source: "charlie",
     name: "Post Writer",
     description:
       "Posts LinkedIn na minha voz (about-me / voice.md) a partir de notas ou ideia solta.",
@@ -375,6 +411,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "post-scorer",
+    source: "charlie",
     name: "Post Scorer",
     description:
       "Nota o post com base no histórico real de performance — não em dica genérica.",
@@ -385,6 +422,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "content-matrix",
+    source: "charlie",
     name: "Content Matrix",
     description:
       "32+ ideias de post cruzando pilares × formatos (tabela pronta pro mês).",
@@ -395,6 +433,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "hook-generator",
+    source: "charlie",
     name: "Hook Generator",
     description:
       "6 aberturas clickbait no formato 2 linhas — dígitos, “How I”, contraste.",
@@ -405,6 +444,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "gemini-carousel",
+    source: "charlie",
     name: "Gemini Carousel",
     description:
       "Carrossel LinkedIn slide a slide: brief → aprovação → prompts de imagem.",
@@ -415,6 +455,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "voice-builder",
+    source: "charlie",
     name: "Voice Builder",
     description:
       "Perfil de voz a partir de entrevista + samples — base de todo conteúdo escrito.",
@@ -425,6 +466,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "youtube-thumbnail",
+    source: "charlie",
     name: "YouTube Thumbnail",
     description:
       "Thumbnail de alta CTR com foto de referência, título e cores de marca.",
@@ -435,6 +477,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "reels-scripting",
+    source: "charlie",
     name: "Reels Scripting",
     description:
       "Script de Reel a partir de referência + newsletter — tom e repurpose.",
@@ -445,6 +488,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   },
   {
     id: "social",
+    source: "charlie",
     name: "Social",
     description:
       "Conteúdo e calendário multi-rede: LinkedIn, X, Reels, Shorts, scheduling.",

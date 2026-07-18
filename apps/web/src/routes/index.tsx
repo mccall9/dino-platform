@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { motion } from "motion/react"
+import { Check, Copy, Search } from "lucide-react"
 import * as React from "react"
 import {
   SKILLS_CATALOG,
@@ -15,7 +16,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "O que o dino já sabe fazer — skills de verdade, do jeito que eu trabalho.",
+          "Coleção de skills do setup do dino — o manual que o agent usa comigo.",
       },
     ],
   }),
@@ -32,14 +33,6 @@ const CATEGORY_LABEL: Record<SkillCategory | "all", string> = {
   legal: "legal",
 }
 
-const STATUS_LABEL: Record<string, string> = {
-  local: "no meu setup",
-  installable: "instalável",
-  "plugin-only": "plugin",
-  "mcp-runtime": "runtime",
-}
-
-/** Só categorias que o inventário vivo realmente tem. */
 const FILTERS: Array<SkillCategory | "all"> = [
   "all",
   "developers",
@@ -48,170 +41,180 @@ const FILTERS: Array<SkillCategory | "all"> = [
   "social",
 ]
 
+const HOW_TO_PROMPT =
+  "Roda marclou-review na home do dino e me dá o scorecard + top 5 fixes."
+
 function DinoSkillsHome() {
   const [filter, setFilter] = React.useState<SkillCategory | "all">("all")
+  const [query, setQuery] = React.useState("")
+  const [copied, setCopied] = React.useState(false)
 
-  const skills: SkillCatalogEntry[] =
-    filter === "all"
-      ? SKILLS_CATALOG
-      : SKILLS_CATALOG.filter((s) => s.category === filter)
+  const skills: SkillCatalogEntry[] = React.useMemo(() => {
+    const byCat =
+      filter === "all"
+        ? SKILLS_CATALOG
+        : SKILLS_CATALOG.filter((s) => s.category === filter)
+    const q = query.trim().toLowerCase()
+    if (!q) return byCat
+    return byCat.filter(
+      (s) =>
+        s.id.includes(q) ||
+        s.name.toLowerCase().includes(q) ||
+        s.description.toLowerCase().includes(q) ||
+        (s.source?.toLowerCase().includes(q) ?? false),
+    )
+  }, [filter, query])
+
+  async function copyPrompt() {
+    try {
+      await navigator.clipboard.writeText(HOW_TO_PROMPT)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1600)
+    } catch {
+      /* ignore */
+    }
+  }
 
   return (
     <div className="ds-shell">
-      {/* personal grain for shiny title */}
-      <svg width="0" height="0" className="absolute" aria-hidden="true">
-        <filter id="ds-noise">
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.9"
-            numOctaves="2"
-            stitchTiles="stitch"
-          />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0"
-          />
-          <feComposite in2="SourceGraphic" operator="in" result="noise" />
-          <feBlend in="SourceGraphic" in2="noise" mode="multiply" />
-        </filter>
-      </svg>
-
-      <div className="ds-video" aria-hidden="true">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260508_064122_c4750c0e-7476-4b44-94a2-a85a65c63bf2.mp4"
-        />
-      </div>
-
       <div className="ds-content">
         <header className="ds-header">
           <div className="ds-header-inner">
             <Link to="/" className="ds-brand">
               Dino <span>Skills</span>
             </Link>
-            <p className="ds-sig">build in public · clube dos curiosos</p>
+            <label className="ds-search">
+              <Search size={14} strokeWidth={2} aria-hidden />
+              <input
+                type="search"
+                placeholder="Buscar skill…"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                aria-label="Buscar skill"
+              />
+            </label>
           </div>
         </header>
 
         <section className="ds-hero" aria-labelledby="ds-title">
-          <motion.div
-            className="ds-eyebrow"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <i />
-            inventário vivo · do jeito que eu construo
-          </motion.div>
-
           <motion.h1
             id="ds-title"
             className="ds-title"
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="ds-title-line">O que o dino</span>
-            <span className="ds-title-accent">já sabe.</span>
+            DINO SKILLS
           </motion.h1>
 
           <motion.p
             className="ds-lead"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            Coleção de skills do meu setup — design, marketing, código e o
+            resto que o agent carrega quando constrói comigo.
+          </motion.p>
+
+          <motion.div
+            className="ds-howto"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.55, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
-            Skills reais do meu setup — design, marketing, código e o resto que
-            carrego quando construo em público. Não é marketplace. É o manual
-            que o agent usa quando trabalha comigo.
-          </motion.p>
-
-          <motion.p
-            className="ds-personal"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.42 }}
-          >
-            “Se eu fosse o agent, é assim que eu trabalharia.”
-          </motion.p>
+            <h2>How to use</h2>
+            <p>
+              Peça pro agent carregar a skill certa antes de mudar código ou
+              copy. Exemplo:
+            </p>
+            <button
+              type="button"
+              className="ds-cmd"
+              onClick={copyPrompt}
+              aria-label="Copiar prompt de exemplo"
+            >
+              <code>{HOW_TO_PROMPT}</code>
+              <span className="ds-cmd-icon" aria-hidden>
+                {copied ? <Check size={15} /> : <Copy size={15} />}
+              </span>
+            </button>
+            <p className="ds-howto-foot">
+              Ou navega a collection abaixo e pede pelo nome / id da skill.
+            </p>
+          </motion.div>
         </section>
 
-        <div className="ds-filters" role="list" aria-label="Filtrar skills">
-          {FILTERS.map((c) => (
-            <button
-              key={c}
-              type="button"
-              role="listitem"
-              className="ds-chip"
-              data-active={filter === c ? "true" : "false"}
-              onClick={() => setFilter(c)}
-            >
-              {CATEGORY_LABEL[c]}
-            </button>
-          ))}
+        <div className="ds-collection-head">
+          <h2>Collection</h2>
+          <div className="ds-filters" role="list" aria-label="Filtrar skills">
+            {FILTERS.map((c) => (
+              <button
+                key={c}
+                type="button"
+                role="listitem"
+                className="ds-chip"
+                data-active={filter === c ? "true" : "false"}
+                onClick={() => setFilter(c)}
+              >
+                {CATEGORY_LABEL[c]}
+              </button>
+            ))}
+          </div>
         </div>
 
         <main className="ds-main">
-          <ul className="ds-grid">
-            {skills.map((skill, i) => {
-              const cardInner = (
-                <>
-                  <div className="ds-card-top">
-                    <h2>{skill.name}</h2>
-                    <span className="ds-badge ds-badge-green">
-                      {STATUS_LABEL[skill.status] ?? skill.status}
-                    </span>
-                  </div>
-                  <p>{skill.description}</p>
-                  <div className="ds-card-meta">
-                    <span className="ds-badge">
-                      {CATEGORY_LABEL[skill.category]}
-                    </span>
-                  </div>
-                  {skill.install ? (
-                    <p className="ds-install">{skill.install}</p>
-                  ) : null}
-                </>
-              )
-              const cardClass = "ds-card liquid-glass"
-              return (
-                <motion.li
-                  key={skill.id}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.45,
-                    delay: Math.min(0.08 + i * 0.03, 0.5),
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                >
-                  {skill.url ? (
-                    <a
-                      href={skill.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={cardClass}
-                    >
-                      {cardInner}
-                    </a>
-                  ) : (
-                    <div className={cardClass}>{cardInner}</div>
-                  )}
-                </motion.li>
-              )
-            })}
-          </ul>
+          {skills.length === 0 ? (
+            <p className="ds-empty">Nada nessa busca. Tenta outro termo.</p>
+          ) : (
+            <ul className="ds-grid">
+              {skills.map((skill, i) => {
+                const body = (
+                  <>
+                    <h3 className="ds-card-id">{skill.id}</h3>
+                    <p>{skill.description}</p>
+                    <div className="ds-card-foot">
+                      <span className="ds-source">
+                        <i aria-hidden />
+                        {skill.source ?? CATEGORY_LABEL[skill.category]}
+                      </span>
+                    </div>
+                  </>
+                )
+                return (
+                  <motion.li
+                    key={skill.id}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.4,
+                      delay: Math.min(0.04 + i * 0.02, 0.35),
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                  >
+                    {skill.url ? (
+                      <a
+                        href={skill.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ds-card"
+                      >
+                        {body}
+                      </a>
+                    ) : (
+                      <div className="ds-card">{body}</div>
+                    )}
+                  </motion.li>
+                )
+              })}
+            </ul>
+          )}
         </main>
 
         <footer className="ds-footer">
           <p>
-            <strong>Dino Skills</strong> · parte do mundo dino.blog / Clube dos
-            Curiosos
-            <br />
-            sem pitch, sem botão — só o inventário
+            <strong>Dino Skills</strong> · inventário vivo · dino.blog / Clube
+            dos Curiosos
           </p>
         </footer>
       </div>

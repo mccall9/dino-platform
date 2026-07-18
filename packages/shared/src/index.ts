@@ -98,6 +98,8 @@ export type SkillCatalogEntry = {
   status: SkillStatus
   /** Short install / path hint. */
   install?: string
+  /** Origin / author chip (UI Skills style). */
+  source?: string
 }
 
 export type SkillsListResponse = {
