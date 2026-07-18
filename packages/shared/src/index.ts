@@ -105,8 +105,8 @@ export type SkillCatalogEntry = {
    * Rest of the catalog appears after “See all skills”.
    */
   featured?: boolean
-  /** AI runtimes this skill is tuned for (claude, gpt, grok, kimi). */
-  runtimes?: Array<"claude" | "gpt" | "grok" | "kimi">
+  /** Coding agents this skill is tuned for. */
+  runtimes?: string[]
 }
 
 export type SkillsListResponse = {

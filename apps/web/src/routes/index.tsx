@@ -127,7 +127,7 @@ function DinoSkillsHome() {
             transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
             {agentMode
-              ? "Claude, GPT, Grok e Kimi — onde o pack roda. Mesma estrutura, modo agent: origem real e skills por runtime."
+              ? "Claude Code, Cursor, Codex, Copilot… — agents que carregam o pack. Mesma estrutura, modo claro + azul."
               : "Pack npm com as skills do meu setup — design, marketing, código e o resto que o agent carrega quando constrói comigo."}
           </motion.p>
 
@@ -262,12 +262,10 @@ function DinoSkillsHome() {
                       className="ds-card ds-card-agent"
                     >
                       <div className="ds-agent-card-top">
+                        <span className="ds-agent-mark" aria-hidden>
+                          {rt.mark}
+                        </span>
                         <h3 className="ds-card-id">{rt.name}</h3>
-                        <span
-                          className="ds-agent-dot"
-                          style={{ background: rt.accent }}
-                          aria-hidden
-                        />
                       </div>
                       <p>{rt.description}</p>
                       <div className="ds-card-foot">

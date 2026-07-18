@@ -11,7 +11,7 @@ export const Route = createFileRoute("/runtimes/")({
       {
         name: "description",
         content:
-          "Claude, GPT, Grok, Kimi — onde o pack dino-skills roda e quais skills cada um carrega.",
+          "Browse AI agents that support Dino Skills — Claude Code, Cursor, Codex, Copilot, and more.",
       },
     ],
   }),
@@ -32,16 +32,15 @@ function RuntimesCatalogPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
-          Agents that run the pack
+          Agents
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
         >
-          Claude, GPT, Grok e Kimi — cada um com origem, como instalar o pack e
-          as skills que encaixam melhor. Mesma estrutura do inventário, modo
-          agent.
+          Browse AI agents that support Dino Skills. Same pack — install once,
+          load in Claude Code, Cursor, Codex, Copilot, and friends.
         </motion.p>
       </header>
 
@@ -55,7 +54,7 @@ function RuntimesCatalogPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{
                 duration: 0.4,
-                delay: Math.min(0.04 + i * 0.05, 0.35),
+                delay: Math.min(0.04 + i * 0.04, 0.4),
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
@@ -65,12 +64,10 @@ function RuntimesCatalogPage() {
                 className="ds-card ds-card-agent"
               >
                 <div className="ds-agent-card-top">
+                  <span className="ds-agent-mark" aria-hidden>
+                    {rt.mark}
+                  </span>
                   <h3 className="ds-card-id">{rt.name}</h3>
-                  <span
-                    className="ds-agent-dot"
-                    style={{ background: rt.accent }}
-                    aria-hidden
-                  />
                 </div>
                 <p>{rt.description}</p>
                 <div className="ds-card-foot">

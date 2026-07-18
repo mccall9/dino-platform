@@ -146,8 +146,75 @@
 .ds-agent-card-top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
+  gap: 0.55rem;
+}
+
+.ds-agent-mark {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  background: color-mix(in srgb, var(--bg-soft) 80%, #fff);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.ds-agent-mark-lg {
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: 0.85rem;
+}
+
+.ds-agent-title-row {
+  gap: 0.65rem;
+}
+
+.ds-agent-bestfor {
+  margin: 0.75rem 0 0;
+  font-size: 0.88rem;
+  color: var(--faint);
+  line-height: 1.5;
+}
+
+.ds-agent-bestfor strong {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.ds-howto-agent {
+  margin: 0 0 2rem;
+  width: 100%;
+}
+
+.ds-agent-topics h2,
+.ds-other-agents h2 {
+  margin: 0 0 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.ds-agent-topics {
+  margin-bottom: 2.25rem;
+}
+
+.ds-agent-skills-grid {
+  margin-top: 1rem;
+}
+
+.ds-other-agents {
+  margin-bottom: 1.5rem;
+}
+
+.sk-desc-soft {
+  margin-top: 0.65rem !important;
+  color: var(--faint) !important;
 }
 
 .ds-agent-dot {
