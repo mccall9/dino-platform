@@ -628,10 +628,23 @@
   align-items: flex-start;
   justify-content: center;
   padding: 12vh 1rem 2rem;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  animation: ds-palette-in 0.15s var(--ease);
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(22px) saturate(1.15);
+  -webkit-backdrop-filter: blur(22px) saturate(1.15);
+  animation: ds-palette-in 0.18s var(--ease);
+}
+
+/* Extra soft blur on page content while search is open */
+html.ds-search-open .ds-shell > .ds-ambient,
+html.ds-search-open .ds-shell > .ds-content,
+html.ds-search-open .ds-shell > .ds-mode-bar {
+  filter: blur(10px);
+  transition: filter 0.2s var(--ease);
+}
+
+html.ds-search-open .ds-search-trigger {
+  opacity: 0;
+  pointer-events: none;
 }
 
 @keyframes ds-palette-in {
@@ -651,11 +664,72 @@
   border-radius: 0.95rem;
   border: 1px solid var(--line-strong);
   background: #141414;
+  color: #f2f2f2;
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.04),
     0 24px 80px rgba(0, 0, 0, 0.55);
   overflow: hidden;
   animation: ds-palette-pop 0.18s var(--ease);
+}
+
+/* Agents mode — light palette matching blue shell */
+.ds-palette-root[data-mode="agents"] {
+  background: rgba(2, 100, 150, 0.22);
+  backdrop-filter: blur(26px) saturate(1.2);
+  -webkit-backdrop-filter: blur(26px) saturate(1.2);
+}
+
+.ds-palette-root[data-mode="agents"] .ds-palette {
+  background: #ffffff;
+  color: #0b1220;
+  border-color: rgba(2, 132, 199, 0.28);
+  box-shadow:
+    0 0 0 1px rgba(2, 132, 199, 0.08),
+    0 28px 80px rgba(2, 100, 150, 0.22);
+}
+
+.ds-palette-root[data-mode="agents"] .ds-palette-search {
+  border-bottom-color: rgba(2, 132, 199, 0.16);
+  color: rgba(11, 18, 32, 0.55);
+}
+
+.ds-palette-root[data-mode="agents"] .ds-palette-search input {
+  color: #0b1220;
+}
+
+.ds-palette-root[data-mode="agents"] .ds-palette-search input::placeholder {
+  color: rgba(11, 18, 32, 0.4);
+}
+
+.ds-palette-root[data-mode="agents"] .ds-palette-item-id {
+  color: #0b1220;
+}
+
+.ds-palette-root[data-mode="agents"] .ds-palette-item-src,
+.ds-palette-root[data-mode="agents"] .ds-palette-item-desc,
+.ds-palette-root[data-mode="agents"] .ds-palette-empty,
+.ds-palette-root[data-mode="agents"] .ds-palette-foot {
+  color: rgba(11, 18, 32, 0.55);
+}
+
+.ds-palette-root[data-mode="agents"] .ds-palette-item[data-active="true"] {
+  background: rgba(2, 132, 199, 0.1);
+}
+
+.ds-palette-root[data-mode="agents"] .ds-palette-foot {
+  border-top-color: rgba(2, 132, 199, 0.14);
+}
+
+.ds-palette-root[data-mode="agents"] .ds-palette-hints kbd {
+  border-color: rgba(2, 132, 199, 0.22);
+  background: rgba(2, 132, 199, 0.06);
+  color: rgba(11, 18, 32, 0.65);
+}
+
+.ds-palette-agent-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
 }
 
 @keyframes ds-palette-pop {

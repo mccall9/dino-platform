@@ -12,6 +12,7 @@ import { AgentIcon } from "~/components/AgentIcon"
 import { SkillSearch } from "~/components/SkillSearch"
 import { SourceChip } from "~/components/SourceChip"
 import { skillsForRuntime } from "~/lib/runtimes"
+import { ShellModeProvider } from "~/lib/shell-mode"
 
 export const Route = createFileRoute("/")({
   component: DinoSkillsHome,
@@ -71,6 +72,7 @@ function DinoSkillsHome() {
   }
 
   return (
+    <ShellModeProvider mode={mode}>
     <div
       className={`ds-shell${agentMode ? " ds-mode-agent" : ""}`}
       data-mode={mode}
@@ -339,5 +341,6 @@ function DinoSkillsHome() {
         </footer>
       </div>
     </div>
+    </ShellModeProvider>
   )
 }
