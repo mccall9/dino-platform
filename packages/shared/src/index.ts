@@ -93,10 +93,10 @@ export type SkillCatalogEntry = {
   name: string
   description: string
   category: SkillCategory
-  /** Primary public link (GitHub, Claude plugin, docs). */
-  url: string
+  /** Public link when it exists; empty for local-only skills. */
+  url?: string
   status: SkillStatus
-  /** Short install / load hint. */
+  /** Short install / path hint. */
   install?: string
 }
 

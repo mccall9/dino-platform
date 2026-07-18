@@ -39,15 +39,13 @@ const STATUS_LABEL: Record<string, string> = {
   "mcp-runtime": "runtime",
 }
 
+/** Só categorias que o inventário vivo realmente tem. */
 const FILTERS: Array<SkillCategory | "all"> = [
   "all",
   "developers",
   "designers",
   "marketing",
   "social",
-  "finance",
-  "small-business",
-  "legal",
 ]
 
 function DinoSkillsHome() {
@@ -158,23 +156,9 @@ function DinoSkillsHome() {
 
         <main className="ds-main">
           <ul className="ds-grid">
-            {skills.map((skill, i) => (
-              <motion.li
-                key={skill.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.45,
-                  delay: Math.min(0.08 + i * 0.03, 0.5),
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-              >
-                <a
-                  href={skill.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ds-card liquid-glass"
-                >
+            {skills.map((skill, i) => {
+              const cardInner = (
+                <>
                   <div className="ds-card-top">
                     <h2>{skill.name}</h2>
                     <span className="ds-badge ds-badge-green">
@@ -190,9 +174,35 @@ function DinoSkillsHome() {
                   {skill.install ? (
                     <p className="ds-install">{skill.install}</p>
                   ) : null}
-                </a>
-              </motion.li>
-            ))}
+                </>
+              )
+              const cardClass = "ds-card liquid-glass"
+              return (
+                <motion.li
+                  key={skill.id}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.45,
+                    delay: Math.min(0.08 + i * 0.03, 0.5),
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
+                  {skill.url ? (
+                    <a
+                      href={skill.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cardClass}
+                    >
+                      {cardInner}
+                    </a>
+                  ) : (
+                    <div className={cardClass}>{cardInner}</div>
+                  )}
+                </motion.li>
+              )
+            })}
           </ul>
         </main>
 
