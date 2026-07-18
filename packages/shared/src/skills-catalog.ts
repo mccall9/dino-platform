@@ -19,6 +19,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   {
     id: "dino-skills-root",
     source: "dino",
+    featured: true,
     name: "Dino Skills Root",
     description:
       "Router do pack npm dino-skills — escolhe a skill certa (design, marketing, social…) antes de o agent mudar código.",
@@ -30,6 +31,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   {
     id: "dino-review",
     source: "dino",
+    featured: true,
     name: "Dino Review",
     description:
       "Review de landing/SaaS no padrão dino (ship viral): hero, CTA único, prova, pricing, OG.",
@@ -98,6 +100,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   {
     id: "company-skills-catalog",
     source: "dino",
+    featured: true,
     name: "Company Skills Catalog",
     description:
       "Mapa do inventário de packs (dev, design, marketing, social…) e como carregar cada um.",
@@ -254,6 +257,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   {
     id: "brandkit",
     source: "dino",
+    featured: true,
     name: "Brandkit",
     description:
       "Brand kits premium: logo system, guidelines board, identidade dark-tech / editorial.",
@@ -265,6 +269,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
   {
     id: "high-end-visual-design",
     source: "dino",
+    featured: true,
     name: "High-End Visual Design",
     description:
       "Padrões de agência: type, sombra, card, spacing — bloqueia defaults baratos de IA.",

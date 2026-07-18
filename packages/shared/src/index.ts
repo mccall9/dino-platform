@@ -100,6 +100,11 @@ export type SkillCatalogEntry = {
   install?: string
   /** Origin / author chip (UI Skills style). */
   source?: string
+  /**
+   * Dino-owned skill shown on the home collection by default.
+   * Rest of the catalog appears after “See all skills”.
+   */
+  featured?: boolean
 }
 
 export type SkillsListResponse = {
