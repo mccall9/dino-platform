@@ -34,20 +34,26 @@ const CATEGORY_LABEL: Record<SkillCategory | "all", string> = {
   legal: "legal",
 }
 
-/** Primary how-to: one npm pack for the whole collection (UI Skills style). */
-const HOW_TO_CMD = "npx dino-skills start"
+/** How to use: install = baixar pack · start = rodar protocol */
+const HOW_TO_INSTALL = "npx dino-skills install"
+const HOW_TO_START = "npx dino-skills start"
 const HOW_TO_PROMPT =
-  "Run `npx dino-skills start` and pick the right skill before changing anything."
+  "Run `npx dino-skills install` then `npx dino-skills start` and pick the right skill."
 
 const OWN_SKILLS = SKILLS_CATALOG.filter(
   (s) => s.featured || s.source === "dino",
 )
 
 function DinoSkillsHome() {
-  const [copied, setCopied] = React.useState<"cmd" | "prompt" | null>(null)
+  const [copied, setCopied] = React.useState<
+    "install" | "start" | "prompt" | null
+  >(null)
   const skills: SkillCatalogEntry[] = OWN_SKILLS
 
-  async function copyText(text: string, which: "cmd" | "prompt") {
+  async function copyText(
+    text: string,
+    which: "install" | "start" | "prompt",
+  ) {
     try {
       await navigator.clipboard.writeText(text)
       setCopied(which)
@@ -99,14 +105,35 @@ function DinoSkillsHome() {
           >
             <h2>How to use</h2>
             <p>
-              Um pacote, todas as skills. Peça pro agent rodar o CLI primeiro
-              pra escolher a skill certa antes de mudar código ou copy.
+              <strong>Install</strong> baixa o pack no agent.{" "}
+              <strong>Start</strong> roda o protocol pra escolher a skill.
             </p>
+            <p className="ds-howto-label">1 · Baixar o pack</p>
             <button
               type="button"
               className="ds-cmd"
-              onClick={() => copyText(HOW_TO_CMD, "cmd")}
-              aria-label="Copiar comando npm"
+              onClick={() => copyText(HOW_TO_INSTALL, "install")}
+              aria-label="Copiar comando install"
+            >
+              <code>
+                <span className="tok-cmd">npx</span>{" "}
+                <span className="tok-sub">dino-skills</span>{" "}
+                <span className="tok-sub">install</span>
+              </code>
+              <span className="ds-cmd-icon" aria-hidden>
+                {copied === "install" ? (
+                  <Check size={15} />
+                ) : (
+                  <Copy size={15} />
+                )}
+              </span>
+            </button>
+            <p className="ds-howto-label">2 · Rodar / escolher skill</p>
+            <button
+              type="button"
+              className="ds-cmd"
+              onClick={() => copyText(HOW_TO_START, "start")}
+              aria-label="Copiar comando start"
             >
               <code>
                 <span className="tok-cmd">npx</span>{" "}
@@ -114,7 +141,11 @@ function DinoSkillsHome() {
                 <span className="tok-sub">start</span>
               </code>
               <span className="ds-cmd-icon" aria-hidden>
-                {copied === "cmd" ? <Check size={15} /> : <Copy size={15} />}
+                {copied === "start" ? (
+                  <Check size={15} />
+                ) : (
+                  <Copy size={15} />
+                )}
               </span>
             </button>
             <button
@@ -133,12 +164,15 @@ function DinoSkillsHome() {
               </span>
             </button>
             <p className="ds-howto-foot">
-              Depois:{" "}
-              <code className="ds-inline-code">npx dino-skills list</code> ·{" "}
+              Flags:{" "}
               <code className="ds-inline-code">
-                npx dino-skills get dino-review
+                install --global
               </code>{" "}
-              · ou abre a collection abaixo.
+              ·{" "}
+              <code className="ds-inline-code">
+                install --dir ./skills
+              </code>{" "}
+              · collection abaixo.
             </p>
           </motion.div>
         </section>

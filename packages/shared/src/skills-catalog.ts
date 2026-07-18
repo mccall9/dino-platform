@@ -26,7 +26,7 @@ export const SKILLS_CATALOG: SkillCatalogEntry[] = [
     category: "developers",
     url: `${GH_DINO}/tree/master/packages/dino-skills`,
     status: "installable",
-    install: "npx dino-skills start",
+    install: "npx dino-skills install",
   },
   {
     id: "dino-review",

@@ -260,7 +260,7 @@ export function resolveInstallCmd(skill: {
     return raw
   }
   if (skill.id === "dino-skills-root") {
-    return "npx dino-skills start"
+    return "npx dino-skills install"
   }
   if (skill.id === "dino-review") {
     return "npx dino-skills get dino-review"
@@ -279,7 +279,7 @@ export function resolveAltInstallCmd(skill: {
   url?: string
 }): string | null {
   if (skill.id === "dino-skills-root") {
-    return "npx skills add https://github.com/mccall9/dino-platform --skill dino-skills-root"
+    return "npx dino-skills start"
   }
   if (skill.id === "dino-review") {
     return "npx skills add https://github.com/mccall9/dino-platform --skill dino-review"

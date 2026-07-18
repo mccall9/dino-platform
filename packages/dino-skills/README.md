@@ -1,8 +1,22 @@
 # dino-skills
 
-Pack npm com **todas** as skills do inventário dino (design, marketing, social, review, revops…).
+Pack npm com as skills do dino.
 
-## How to use
+## 1) Baixar o pack (install)
+
+Copia **todas** as skills para a pasta do agent:
+
+```bash
+npx dino-skills install
+```
+
+| Flag | Destino |
+|------|---------|
+| (default) | `./.agents/skills` (ou `.claude/skills` se existir) |
+| `--global` / `-g` | `~/.agents/skills` |
+| `--dir ./path` | pasta custom |
+
+## 2) Rodar (protocol)
 
 ```bash
 npx dino-skills start
@@ -10,31 +24,30 @@ npx dino-skills start
 
 Peça pro agent:
 
-> Run `npx dino-skills start` and pick the right skill before changing anything.
+> Run `npx dino-skills install` then `npx dino-skills start` and pick the right skill.
 
-## CLI
+## Outros comandos
 
 ```bash
-npx dino-skills categories
 npx dino-skills list
 npx dino-skills list --category marketing
 npx dino-skills get dino-review
-npx dino-skills get revops
 npx dino-skills path cro
 ```
 
-## Install into agent
+## Alt (skills CLI)
 
 ```bash
 npx skills add https://github.com/mccall9/dino-platform --skill dino-skills-root
-# or a specific skill
-npx skills add https://github.com/mccall9/dino-platform --skill dino-review
 ```
 
-## Sync (monorepo)
+## Publish
 
 ```bash
-node scripts/sync-dino-skills-pack.mjs
+cd packages/dino-skills
+npm publish --access public
 ```
 
-Catalog web: [dino-platform.vercel.app](https://dino-platform.vercel.app)
+Até publicar: `node packages/dino-skills/bin/dino-skills.mjs install`
+
+Catalog: https://dino-platform.vercel.app

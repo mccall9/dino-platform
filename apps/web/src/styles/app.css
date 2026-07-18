@@ -468,6 +468,19 @@
   color: var(--faint) !important;
 }
 
+.ds-howto-label {
+  margin: 0.85rem 0 0.4rem !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--faint) !important;
+}
+
+.ds-howto-label + .ds-cmd {
+  margin-top: 0;
+}
+
 .ds-cmd {
   display: flex;
   align-items: center;

@@ -1,7 +1,7 @@
 {
   "name": "dino-skills",
-  "version": "0.2.0",
-  "description": "Dino Skills — npm pack com o inventário vivo de agent skills (design, marketing, social, review, revops).",
+  "version": "0.3.0",
+  "description": "Dino Skills — baixe o pack (install) e rode o CLI (start). Design, marketing, social, review, revops.",
   "type": "module",
   "bin": {
     "dino-skills": "./bin/dino-skills.mjs"
