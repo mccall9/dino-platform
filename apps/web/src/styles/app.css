@@ -128,29 +128,14 @@
   text-wrap: pretty;
 }
 
-/* top-right chrome: flags + search */
-.ds-top-right {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 41;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-}
-
-/* language BR / US — beside search */
+/* language BR / US — footer / compact */
 .ds-locale {
-  position: static;
   display: inline-flex;
   gap: 0.2rem;
   padding: 0.22rem;
   border-radius: 999px;
   border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--bg-elev) 88%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .ds-locale-btn {
@@ -688,9 +673,12 @@
   }
 }
 
-/* floating Search trigger (no navbar) — in .ds-top-right */
+/* floating Search trigger (no navbar) */
 .ds-search-trigger {
-  position: static;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 40;
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -757,9 +745,121 @@ html.ds-search-open .ds-shell > .ds-mode-bar {
   transition: filter 0.2s var(--ease);
 }
 
-html.ds-search-open .ds-top-right {
+html.ds-search-open .ds-search-trigger {
   opacity: 0;
   pointer-events: none;
+}
+
+/* First-visit language popup */
+.ds-locale-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(18px) saturate(1.1);
+  -webkit-backdrop-filter: blur(18px) saturate(1.1);
+  animation: ds-palette-in 0.2s var(--ease);
+}
+
+.ds-locale-gate-card {
+  width: min(100%, 22rem);
+  padding: 1.6rem 1.4rem 1.35rem;
+  border-radius: 1.15rem;
+  border: 1px solid var(--line-strong);
+  background: #161616;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 28px 80px rgba(0, 0, 0, 0.55);
+  animation: ds-palette-pop 0.22s var(--ease);
+}
+
+.ds-locale-gate-kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+
+.ds-locale-gate-title {
+  margin: 0.55rem 0 0;
+  font-size: 1.35rem;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  color: #fff;
+}
+
+.ds-locale-gate-lead {
+  margin: 0.4rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.ds-locale-gate-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-top: 1.25rem;
+}
+
+.ds-locale-gate-btn {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.85rem 0.95rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.15s var(--ease),
+    background 0.15s var(--ease),
+    transform 0.15s var(--ease);
+}
+
+.ds-locale-gate-btn:hover {
+  border-color: var(--line-strong);
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+}
+
+.ds-locale-gate-btn .ds-flag {
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.ds-locale-gate-btn-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.ds-locale-gate-btn-text strong {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.ds-locale-gate-btn-text span {
+  font-size: 0.75rem;
+  color: var(--faint);
+}
+
+.ds-outro-bottom-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
 }
 
 @keyframes ds-palette-in {

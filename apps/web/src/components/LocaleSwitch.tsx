@@ -1,7 +1,15 @@
 import { useI18n, type Locale } from "~/lib/i18n"
 
-/** BR / US flag toggle — site-wide language (default pt-BR). */
-export function LocaleSwitch({ className = "" }: { className?: string }) {
+type Variant = "footer" | "inline"
+
+/** Compact language switch — use in footer (default) so chrome stays clean. */
+export function LocaleSwitch({
+  className = "",
+  variant = "footer",
+}: {
+  className?: string
+  variant?: Variant
+}) {
   const { locale, setLocale, t } = useI18n()
 
   function pick(next: Locale) {
@@ -10,7 +18,7 @@ export function LocaleSwitch({ className = "" }: { className?: string }) {
 
   return (
     <div
-      className={`ds-locale ${className}`.trim()}
+      className={`ds-locale ds-locale-${variant} ${className}`.trim()}
       role="group"
       aria-label={t("locale.switch")}
     >

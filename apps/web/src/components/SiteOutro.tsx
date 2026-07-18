@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router"
 import * as React from "react"
 import { RUNTIMES_CATALOG, SKILLS_CATALOG } from "@dino/shared"
+import { LocaleSwitch } from "~/components/LocaleSwitch"
 import { useI18n } from "~/lib/i18n"
 
 const EMAIL_KEY = "dino-skills-subscribe-email"
@@ -178,9 +179,10 @@ export function SiteOutro() {
 
       <div className="ds-outro-bottom">
         <p>{t("site.copy", { year })}</p>
-        <p>
+        <div className="ds-outro-bottom-right">
+          <LocaleSwitch />
           <a href="mailto:hello@dino.blog">{t("site.work")}</a>
-        </p>
+        </div>
       </div>
     </div>
   )
