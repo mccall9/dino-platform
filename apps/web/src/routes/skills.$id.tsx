@@ -64,6 +64,14 @@ function SkillDetailPage() {
 
   return (
     <div className="ds-shell">
+      <div className="ds-ambient" aria-hidden="true">
+        <div className="ds-orb ds-orb-a" />
+        <div className="ds-orb ds-orb-b" />
+        <div className="ds-orb ds-orb-c" />
+        <div className="ds-ambient-grid" />
+        <div className="ds-ambient-vignette" />
+      </div>
+
       <SkillSearch />
 
       <div className="ds-content">
