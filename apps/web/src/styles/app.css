@@ -2,9 +2,9 @@
 
 /* Dino Skills — dark catalog inspired by UI Skills layout */
 :root {
-  --bg: #121212;
-  --bg-elev: #1a1a1a;
-  --bg-soft: #1e1e1e;
+  --bg: #161616;
+  --bg-elev: #1e1e1e;
+  --bg-soft: #222222;
   --ink: #f2f2f2;
   --muted: rgba(255, 255, 255, 0.55);
   --faint: rgba(255, 255, 255, 0.38);
@@ -126,7 +126,7 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 90% 70% at 50% 40%, transparent 30%, rgba(18, 18, 18, 0.5) 100%);
+    radial-gradient(ellipse 90% 70% at 50% 40%, transparent 30%, rgba(22, 22, 22, 0.48) 100%);
 }
 
 @keyframes ds-drift-a {
