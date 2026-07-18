@@ -16,6 +16,7 @@ import { SourceChip } from "~/components/SourceChip"
 import { AGENTS_LIVE } from "~/lib/feature-flags"
 import { useI18n } from "~/lib/i18n"
 import { skillsForRuntime } from "~/lib/runtimes"
+import { skillDescription } from "~/lib/skill-i18n"
 import { ShellModeProvider } from "~/lib/shell-mode"
 
 export const Route = createFileRoute("/")({
@@ -43,6 +44,7 @@ type HomeMode = "skills" | "agents"
 
 function DinoSkillsHome() {
   const { t, locale } = useI18n()
+  const desc = (s: (typeof skills)[0]) => skillDescription(s, locale)
   const [mode, setMode] = React.useState<HomeMode>("skills")
   const [copied, setCopied] = React.useState<
     "install" | "start" | "prompt" | null
@@ -323,7 +325,7 @@ function DinoSkillsHome() {
                       className="ds-card"
                     >
                       <h3 className="ds-card-id">{skill.id}</h3>
-                      <p>{skill.description}</p>
+                      <p>{desc(skill)}</p>
                       <div className="ds-card-foot">
                         <SourceChip source={skill.source} />
                       </div>

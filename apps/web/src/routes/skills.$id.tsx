@@ -15,6 +15,10 @@ import {
   resolveAltInstallCmd,
   resolveInstallCmd,
 } from "~/lib/skill-md"
+import {
+  localizeSkillMarkdown,
+  skillDescription,
+} from "~/lib/skill-i18n"
 import { resolveSourceOrigin } from "@dino/shared"
 
 const ALIASES: Record<string, string> = {
@@ -64,11 +68,13 @@ export const Route = createFileRoute("/skills/$id")({
 })
 
 function SkillDetailPage() {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
   const { skill, prev, next, related } = Route.useLoaderData()
   const installCmd = resolveInstallCmd(skill)
   const altInstall = resolveAltInstallCmd(skill)
-  const md = SKILLS_CONTENT[skill.id] ?? buildFallbackSkillMd(skill)
+  const rawMd = SKILLS_CONTENT[skill.id] ?? buildFallbackSkillMd(skill)
+  const md = localizeSkillMarkdown(rawMd, skill, locale)
+  const lead = skillDescription(skill, locale)
 
   const [copiedInstall, setCopiedInstall] = React.useState<"main" | "alt" | null>(
     null,
@@ -132,7 +138,7 @@ function SkillDetailPage() {
               ) : null}
             </div>
 
-            <p className="sk-desc">{skill.description}</p>
+            <p className="sk-desc">{lead}</p>
           </header>
 
           <section className="sk-install" aria-labelledby="sk-install-title">
@@ -200,7 +206,9 @@ function SkillDetailPage() {
                       <span className="sk-related-id">
                         {skill.source ? `${skill.source}/${r.id}` : r.id}
                       </span>
-                      <span className="sk-related-desc">{r.description}</span>
+                      <span className="sk-related-desc">
+                        {skillDescription(r, locale)}
+                      </span>
                     </Link>
                   </li>
                 ))}

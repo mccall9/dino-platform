@@ -91,7 +91,10 @@ export type SkillCategory =
 export type SkillCatalogEntry = {
   id: string
   name: string
+  /** Short description (Portuguese — default site language). */
   description: string
+  /** English short description for en-US UI. Falls back to description. */
+  descriptionEn?: string
   category: SkillCategory
   /** Public link when it exists; empty for local-only skills. */
   url?: string

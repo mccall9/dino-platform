@@ -9,19 +9,25 @@ import {
 } from "@dino/shared"
 import { AgentIcon } from "~/components/AgentIcon"
 import { useI18n } from "~/lib/i18n"
+import { skillDescription } from "~/lib/skill-i18n"
 import { useShellMode, type ShellMode } from "~/lib/shell-mode"
 
-function filterSkills(query: string): SkillCatalogEntry[] {
+function filterSkills(
+  query: string,
+  locale: "pt-BR" | "en-US",
+): SkillCatalogEntry[] {
   const q = query.trim().toLowerCase()
   if (!q) return SKILLS_CATALOG
-  return SKILLS_CATALOG.filter(
-    (s) =>
+  return SKILLS_CATALOG.filter((s) => {
+    const desc = skillDescription(s, locale).toLowerCase()
+    return (
       s.id.includes(q) ||
       s.name.toLowerCase().includes(q) ||
-      s.description.toLowerCase().includes(q) ||
+      desc.includes(q) ||
       (s.source?.toLowerCase().includes(q) ?? false) ||
-      s.category.includes(q),
-  )
+      s.category.includes(q)
+    )
+  })
 }
 
 function filterAgents(query: string): RuntimeCatalogEntry[] {
@@ -98,7 +104,7 @@ function SkillSearchPalette({
   mode: ShellMode
   onClose: () => void
 }) {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
   const navigate = useNavigate()
   const [query, setQuery] = React.useState("")
   const [active, setActive] = React.useState(0)
@@ -107,8 +113,8 @@ function SkillSearchPalette({
   const isAgent = mode === "agents"
 
   const skillResults = React.useMemo(
-    () => (isAgent ? [] : filterSkills(query)),
-    [query, isAgent],
+    () => (isAgent ? [] : filterSkills(query, locale)),
+    [query, isAgent, locale],
   )
   const agentResults = React.useMemo(
     () => (isAgent ? filterAgents(query) : []),
@@ -255,7 +261,7 @@ function SkillSearchPalette({
                   {skill.source ?? skill.category}
                 </span>
                 <span className="ds-palette-item-desc">
-                  {skill.description}
+                  {skillDescription(skill, locale)}
                 </span>
               </button>
             ))

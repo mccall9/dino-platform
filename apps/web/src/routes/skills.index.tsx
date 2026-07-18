@@ -9,6 +9,7 @@ import {
 import { SiteOutro } from "~/components/SiteOutro"
 import { SourceChip } from "~/components/SourceChip"
 import { useI18n } from "~/lib/i18n"
+import { skillDescription } from "~/lib/skill-i18n"
 
 export const Route = createFileRoute("/skills/")({
   component: SkillsCatalogPage,
@@ -32,7 +33,7 @@ const FILTERS: Array<SkillCategory | "all"> = [
 ]
 
 function SkillsCatalogPage() {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
   const [filter, setFilter] = React.useState<SkillCategory | "all">("all")
 
   const label = (c: SkillCategory | "all") => {
@@ -112,7 +113,7 @@ function SkillsCatalogPage() {
               className="ds-card"
             >
               <h3 className="ds-card-id">{skill.id}</h3>
-              <p>{skill.description}</p>
+              <p>{skillDescription(skill, locale)}</p>
               <div className="ds-card-foot">
                 <SourceChip source={skill.source} />
               </div>

@@ -16,6 +16,7 @@ import { SourceChip } from "~/components/SourceChip"
 import { AGENTS_LIVE } from "~/lib/feature-flags"
 import { useI18n } from "~/lib/i18n"
 import { skillsForRuntime, skillsForRuntimeTopic } from "~/lib/runtimes"
+import { skillDescription } from "~/lib/skill-i18n"
 
 const IDS = new Set(RUNTIMES_CATALOG.map((r) => r.id))
 
@@ -58,7 +59,7 @@ export const Route = createFileRoute("/runtimes/$id")({
 })
 
 function RuntimeDetailPage() {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
   const { runtime, prev, next, others } = Route.useLoaderData()
   const [topic, setTopic] = React.useState<SkillCategory | "all">("all")
   const [copied, setCopied] = React.useState<"cmd" | "prompt" | null>(null)
@@ -201,7 +202,9 @@ function RuntimeDetailPage() {
                 className="sk-related-card"
               >
                 <span className="sk-related-id">{s.id}</span>
-                <span className="sk-related-desc">{s.description}</span>
+                <span className="sk-related-desc">
+                  {skillDescription(s, locale)}
+                </span>
                 <span className="ds-card-foot" style={{ marginTop: "0.35rem" }}>
                   <SourceChip source={s.source} />
                 </span>
